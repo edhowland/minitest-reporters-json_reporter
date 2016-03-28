@@ -3,7 +3,6 @@
 require 'json'
 require 'time'
 require 'minitest'
-
 require 'minitest/reporters'
 
 require_relative 'json_reporter/version'
@@ -23,6 +22,10 @@ module MiniTest
         @errored = 0
         @passed = 0
         @storage = {
+          status: {
+            code: "Failed",
+            color: 'red'
+          },
           metadata: {
             generated_by: self.class.name,
             version: MiniTest::Reporters::JsonReporter::VERSION,
@@ -41,6 +44,7 @@ module MiniTest
 
       def report
         super
+        set_status # sets the sucess or failure and color in the status object
         @storage[:statistics][:total] =@passed + @skipped + @failed + @errored 
         @storage[:statistics][:failed] = @failed
         @storage[:statistics][:errored] = @errored
@@ -53,6 +57,20 @@ module MiniTest
 
 
       private
+
+      def set_status
+        green = (@skipped.zero? && @failed.zero? && @errored.zero?)
+        yellow = (@skipped > 0 && @failed.zero? && @errored.zero?)
+        red = (@failed > 0 || @errored > 0)
+
+        if yellow
+          @storage[:status][:color] = 'yellow'
+          @storage[:status][:code] = 'Passed with skipped tests'
+        elsif green
+          @storage[:status][:color] = 'green'
+          @storage[:status][:code] = 'Success'
+        end
+      end
 
       def location(exception)
         last_before_assertion = ''
