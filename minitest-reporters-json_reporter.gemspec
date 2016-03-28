@@ -1,6 +1,8 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'minitest/reporters'
+
 require 'minitest/reporters/json_reporter/version'
 
 Gem::Specification.new do |spec|
@@ -27,6 +29,8 @@ See: https://atom.io. Originally written to interface with the Viper Audible edi
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+  spec.add_runtime_dependency 'minitest', "~> 5.7"
+  spec.add_runtime_dependency 'minitest-reporters', "~> 1.1.8"
 
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
