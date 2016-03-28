@@ -9,8 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["edhowland"]
   spec.email         = ["ed.howland@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = %q{JSON Reporter format for minitest-reporters gem.}
+  spec.description   = %q{    Formats the output of a MiniTest run as JSON. Useful for interfacing MiniTest or MiniSpec to IDEs or programming text editors, such as the Atom editor. 
+See: https://atom.io. Originally written to interface with the Viper Audible editor for blind programmers. See https://github.com/edhowland/viper}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
 
