@@ -1,8 +1,11 @@
 # Minitest::Reporters::JsonReporter
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/minitest/reporters/json_reporter`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
+You can use this gem to interface MiniTest output into automated tools or IDEs or programmer's editors. An
+example interface might be to the Atom editor: [https://atom.io](https://atom.io)
+I originally wrote this gem to interface to the Viper audible  Programmer's editor for the blind programmer community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
 
-TODO: Delete this and the text above, and describe your gem
+
 
 ## Installation
 
@@ -22,17 +25,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this line to your 'spec_helper.rb' or 'test_helper.rb':
 
-## Development
+```
+require 'minitest/reporters/json_reporter'
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+In that same file, add something like this near the bottom of the file:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+MiniTest::Reporters.use! [ MiniTest::Reporters::JsonReporter.new ]
+```
+
+Then run your tests as normal. You will get a JSON formatted string in stdout.
+There are 5 objects contained within this output:
+
+1. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format.
+2. status -  Status of the overall test run. Can be 'Success', 'Passed with skipped tests' or 'Failed'. There also a color attribute: green, yellow or red - respectfully.
+3. statistics - Contains counts of the status of test cases. Includes: Total, Skipped, Failed Errored and Passed.
+4. fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test.
+5. skips - Array of each skipped. Each object contains the information as a failed test, including the skip message, if any.
+
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/minitest-reporters-json_reporter/fork )
+1. Fork it ( https://github.com/edhowland/minitest-reporters-json_reporter/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
