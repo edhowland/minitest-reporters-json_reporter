@@ -104,15 +104,21 @@ module MiniTest
         status('skipped', test, :skipped?) do |e|
           @storage[:skips] << e
           @skipped += 1
-        end 
+        end
       end
 
       def errored(test)
-        status('error', test, :error?) { |e| @storage[:fails] << e; @errored += 1 }
+        status('error', test, :error?) do |e|
+          @storage[:fails] << e
+          @errored += 1
+        end
       end
 
       def failed(test)
-        status('failure', test, :failure) { |e| @storage[:fails] << e; @failed += 1 }
+        status('failure', test, :failure) do |e|
+          @storage[:fails] << e
+          @failed += 1
+        end
       end
 
       def passed(_test)
