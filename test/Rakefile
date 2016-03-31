@@ -7,7 +7,6 @@ Rake::TestTask.new do |t|
   t.pattern = '*_spec.rb'
 end
 
-
 Rake::TestTask.new do |t|
   t.name = 'test'
   t.pattern = '*_test.rb'
