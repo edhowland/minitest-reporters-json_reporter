@@ -58,7 +58,7 @@ module MiniTest
       def set_status
         green = (@skipped.zero? && @failed.zero? && @errored.zero?)
         yellow = (@skipped > 0 && @failed.zero? && @errored.zero?)
-        red = (@failed > 0 || @errored > 0)
+        #        red = (@failed > 0 || @errored > 0)
 
         if yellow
           @storage[:status][:color] = 'yellow'
@@ -81,12 +81,12 @@ module MiniTest
       end
 
       def fault_h(type, test, e)
-        { 
+        {
           type: type,
           class: test.class.name,
           name: test.name,
           message: e.message,
-          location: location(e) 
+          location: location(e)
         }
       end
 
@@ -101,7 +101,10 @@ module MiniTest
       end
 
       def skipped(test)
-        status('skipped', test, :skipped?) { |e| @storage[:skips] << e; @skipped += 1 }
+        status('skipped', test, :skipped?) do |e|
+          @storage[:skips] << e
+          @skipped += 1
+        end 
       end
 
       def errored(test)
