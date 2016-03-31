@@ -1,0 +1,9 @@
+# rubocop.yml - settings for Rubocop Ruby static code analyzer
+Metrics/LineLength:
+  Exclude:
+    - 'minitest-reporters-json_reporter.gemspec'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
