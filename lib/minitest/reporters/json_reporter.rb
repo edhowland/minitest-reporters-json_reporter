@@ -11,8 +11,7 @@ require_relative 'json_reporter/version'
 module MiniTest
   # MiniTest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # JsonReporter - MiniTest Reporter that produces a JSON output for interface in IDEs, Programmer's text editor.
-    # See the Viper Audible editor for Blind Programmers: https://github.com/edhowland/viper
+    # MiniTest Reporter that produces a JSON output for interface in IDEs, editor
     class JsonReporter < BaseReporter
       def initialize(opts = {})
         super(opts)
@@ -82,7 +81,13 @@ module MiniTest
       end
 
       def fault_h(type, test, e)
-        { type: type, class: test.class.name, name: test.name, message: e.message, location: location(e) }
+        { 
+          type: type,
+          class: test.class.name,
+          name: test.name,
+          message: e.message,
+          location: location(e) 
+        }
       end
 
       def status(type, test, msg, &_blk)

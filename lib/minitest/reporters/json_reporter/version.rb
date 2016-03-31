@@ -4,8 +4,7 @@
 module MiniTest
   # MiniTest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # JsonReporter - MiniTest Reporter that produces a JSON output for interface in IDEs, editor.
-    # See the Viper Audible editor for Blind Programmers: https://github.com/edhowland/viper
+    # MiniTest Reporter that produces a JSON output for interface in IDEs, editor.
     class JsonReporter < BaseReporter
       VERSION = '0.1.0'.freeze
     end

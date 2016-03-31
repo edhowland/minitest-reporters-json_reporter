@@ -1,5 +1,7 @@
 # rubocop.yml - settings for Rubocop Ruby static code analyzer
 Metrics/LineLength:
+  Max: 85
+
   Exclude:
     - 'minitest-reporters-json_reporter.gemspec'
 
