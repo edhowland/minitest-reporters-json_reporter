@@ -5,6 +5,8 @@ You can use this gem to interface MiniTest output into automated tools or IDEs o
 example interface might be to the Atom editor: [https://atom.io](https://atom.io)
 I originally wrote this gem to interface to the Viper audible  Programmer's editor for the blind programmer community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
 
+## Version 0.1.0rubo.
+
 
 
 ## Installation
