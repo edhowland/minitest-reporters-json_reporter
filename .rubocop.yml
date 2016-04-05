@@ -11,3 +11,5 @@ Style/Documentation:
 #Style/Semicolon:
 #  Exclude:
 #    - 'lib/minitest/reporters/json_reporter.rb'
+Metrics/ClassLength:
+  Max: 120
