@@ -39,6 +39,7 @@ module MiniTest
           skips: []
         }
       end
+
       def record(test)
         super
         skipped(test) || errored(test) || failed(test) || passed(test)
