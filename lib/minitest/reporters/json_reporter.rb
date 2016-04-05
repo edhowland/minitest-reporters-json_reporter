@@ -20,18 +20,19 @@ module MiniTest
         @errored = 0
         @passed = 0
         @storage = {
-          status: {
-            code: 'Failed',
-            color: 'red'
-          },
-          metadata: {
-            generated_by: self.class.name,
-            version: MiniTest::Reporters::JsonReporter::VERSION,
-            time: Time.now.utc.iso8601
-          },
+          status:red_status,
+          metadata: metadata_h,
           statistics: {},
           fails: [],
           skips: []
+        }
+      end
+
+      def metadata_h
+        {
+          generated_by: self.class.name,
+          version: MiniTest::Reporters::JsonReporter::VERSION,
+          time: Time.now.utc.iso8601
         }
       end
 
@@ -61,12 +62,31 @@ module MiniTest
         #        red = (@failed > 0 || @errored > 0)
 
         if yellow
-          @storage[:status][:color] = 'yellow'
-          @storage[:status][:code] = 'Passed with skipped tests'
+          @storage[:status] = yellow_status
         elsif green
-          @storage[:status][:color] = 'green'
-          @storage[:status][:code] = 'Success'
+          @storage[:status] = green_status
         end
+      end
+
+      def red_status
+        {
+          code: 'Failed',
+          color: 'red'
+        }
+      end
+
+      def yellow_status
+        {
+          code: 'Passed, with skipped tests',
+          color: 'yellow'
+        }
+      end
+
+      def green_status
+        {
+          code: 'Success',
+          color: 'green'
+        }
       end
 
       def location(exception)
