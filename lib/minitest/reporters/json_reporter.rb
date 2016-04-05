@@ -19,13 +19,7 @@ module MiniTest
         @failed = 0
         @errored = 0
         @passed = 0
-        @storage = {
-          status:red_status,
-          metadata: metadata_h,
-          statistics: {},
-          fails: [],
-          skips: []
-        }
+        @storage = init_status
       end
 
       def metadata_h
@@ -36,6 +30,15 @@ module MiniTest
         }
       end
 
+      def init_status
+        {
+          status: red_status,
+          metadata: metadata_h,
+          statistics: {},
+          fails: [],
+          skips: []
+        }
+      end
       def record(test)
         super
         skipped(test) || errored(test) || failed(test) || passed(test)
