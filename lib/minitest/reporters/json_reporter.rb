@@ -58,16 +58,24 @@ module MiniTest
         output($stdout, @storage)
       end
 
+      def yellow?
+        @skipped > 0 && !red? 
+      end
+
+      def green?
+        !red? && !yellow?
+      end
+
+      def red?
+        @failed +  @errored > 0
+      end
+
       private
 
       def set_status
-        green = (@skipped.zero? && @failed.zero? && @errored.zero?)
-        yellow = (@skipped > 0 && @failed.zero? && @errored.zero?)
-        #        red = (@failed > 0 || @errored > 0)
-
-        if yellow
+        if yellow?
           @storage[:status] = yellow_status
-        elsif green
+        elsif green?
           @storage[:status] = green_status
         end
       end
