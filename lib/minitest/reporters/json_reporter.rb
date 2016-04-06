@@ -83,6 +83,7 @@ module MiniTest
       def color_h(code, color)
         { code: code, color: color }
       end
+
       def red_status
         color_h('Failed', 'red')
       end
