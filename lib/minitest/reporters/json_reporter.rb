@@ -7,45 +7,48 @@ require 'minitest/reporters'
 
 require_relative 'json_reporter/version'
 
-
 # MiniTest namespace - plugins must live here
 module MiniTest
   # MiniTest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # JsonReporter - MiniTest Reporter that produces a JSON output for interface in IDEs, Programmer's text editor.
-    # See the Viper Audible editor for Blind Programmers: https://github.com/edhowland/viper
+    # MiniTest Reporter that produces a JSON output for interface in IDEs, editor
     class JsonReporter < BaseReporter
-      def initialize opts={}
+      def initialize(opts = {})
         super(opts)
         @skipped = 0
         @failed = 0
         @errored = 0
         @passed = 0
-        @storage = {
-          status: {
-            code: "Failed",
-            color: 'red'
-          },
-          metadata: {
-            generated_by: self.class.name,
-            version: MiniTest::Reporters::JsonReporter::VERSION,
-            time: Time.now.utc.iso8601
-          },
+        @storage = init_status
+      end
+
+      def metadata_h
+        {
+          generated_by: self.class.name,
+          version: MiniTest::Reporters::JsonReporter::VERSION,
+          time: Time.now.utc.iso8601
+        }
+      end
+
+      def init_status
+        {
+          status: red_status,
+          metadata: metadata_h,
           statistics: {},
           fails: [],
-            skips: []
+          skips: []
         }
       end
 
       def record(test)
         super
-        skipped(test) || errored(test) || failed(test)  || passed(test)
+        skipped(test) || errored(test) || failed(test) || passed(test)
       end
 
       def report
         super
         set_status # sets the sucess or failure and color in the status object
-        @storage[:statistics][:total] =@passed + @skipped + @failed + @errored 
+        @storage[:statistics][:total] = @passed + @skipped + @failed + @errored
         @storage[:statistics][:failed] = @failed
         @storage[:statistics][:errored] = @errored
         @storage[:statistics][:skipped] = @skipped
@@ -55,21 +58,42 @@ module MiniTest
         output($stdout, @storage)
       end
 
+      def yellow?
+        @skipped > 0 && !red?
+      end
+
+      def green?
+        !red? && !yellow?
+      end
+
+      def red?
+        @failed + @errored > 0
+      end
 
       private
 
       def set_status
-        green = (@skipped.zero? && @failed.zero? && @errored.zero?)
-        yellow = (@skipped > 0 && @failed.zero? && @errored.zero?)
-        red = (@failed > 0 || @errored > 0)
-
-        if yellow
-          @storage[:status][:color] = 'yellow'
-          @storage[:status][:code] = 'Passed with skipped tests'
-        elsif green
-          @storage[:status][:color] = 'green'
-          @storage[:status][:code] = 'Success'
+        if yellow?
+          @storage[:status] = yellow_status
+        elsif green?
+          @storage[:status] = green_status
         end
+      end
+
+      def color_h(code, color)
+        { code: code, color: color }
+      end
+
+      def red_status
+        color_h('Failed', 'red')
+      end
+
+      def yellow_status
+        color_h('Passed, with skipped tests', 'yellow')
+      end
+
+      def green_status
+        color_h('Success', 'green')
       end
 
       def location(exception)
@@ -83,12 +107,17 @@ module MiniTest
         last_before_assertion.sub(/:in .*$/, '')
       end
 
-
       def fault_h(type, test, e)
-        {type: type, class: test.class.name, name: test.name,message: e.message, location: location(e)} 
+        {
+          type: type,
+          class: test.class.name,
+          name: test.name,
+          message: e.message,
+          location: location(e)
+        }
       end
 
-      def status(type, test, msg, &blk)
+      def status(type, test, msg, &_blk)
         result = test.send(msg)
         if result
           e = fault_h(type, test, test.failure)
@@ -99,18 +128,27 @@ module MiniTest
       end
 
       def skipped(test)
-        status('skipped', test, :skipped?) { |e|@storage[:skips] << e;  @skipped += 1 }
+        status('skipped', test, :skipped?) do |e|
+          @storage[:skips] << e
+          @skipped += 1
+        end
       end
 
       def errored(test)
-        status('error', test, :error?) { |e| @storage[:fails] << e;  @errored += 1 }
+        status('error', test, :error?) do |e|
+          @storage[:fails] << e
+          @errored += 1
+        end
       end
 
       def failed(test)
-        status('failure', test, :failure) {|e|@storage[:fails] << e;  @failed += 1 }
+        status('failure', test, :failure) do |e|
+          @storage[:fails] << e
+          @failed += 1
+        end
       end
 
-      def passed(test)
+      def passed(_test)
         @passed += 1
       end
 

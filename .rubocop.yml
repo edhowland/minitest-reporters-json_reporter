@@ -1,0 +1,15 @@
+# rubocop.yml - settings for Rubocop Ruby static code analyzer
+Metrics/LineLength:
+  Max: 85
+  Exclude:
+    - 'minitest-reporters-json_reporter.gemspec'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+#Style/Semicolon:
+#  Exclude:
+#    - 'lib/minitest/reporters/json_reporter.rb'
+Metrics/ClassLength:
+  Max: 120
