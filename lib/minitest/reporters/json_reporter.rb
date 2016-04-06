@@ -59,7 +59,7 @@ module MiniTest
       end
 
       def yellow?
-        @skipped > 0 && !red? 
+        @skipped > 0 && !red?
       end
 
       def green?
@@ -67,7 +67,7 @@ module MiniTest
       end
 
       def red?
-        @failed +  @errored > 0
+        @failed + @errored > 0
       end
 
       private
@@ -80,25 +80,19 @@ module MiniTest
         end
       end
 
+      def color_h(code, color)
+        { code: code, color: color }
+      end
       def red_status
-        {
-          code: 'Failed',
-          color: 'red'
-        }
+        color_h('Failed', 'red')
       end
 
       def yellow_status
-        {
-          code: 'Passed, with skipped tests',
-          color: 'yellow'
-        }
+        color_h('Passed, with skipped tests', 'yellow')
       end
 
       def green_status
-        {
-          code: 'Success',
-          color: 'green'
-        }
+        color_h('Success', 'green')
       end
 
       def location(exception)
