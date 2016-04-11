@@ -5,7 +5,7 @@ require_relative 'spec_helper'
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
 
-  describe 'ctor' do
+  describe 'initialize' do
     it 'should be an instance of MiniTest::Reporters::JsonReporter' do
       obj.must_be_instance_of MiniTest::Reporters::JsonReporter
     end

@@ -51,11 +51,6 @@ module MiniTest
         super
         set_status # sets the sucess or failure and color in the status object
         @storage[:statistics] = statistics_h
-#        @storage[:statistics][:total] = @passed + @skipped + @failed + @errored
-#        @storage[:statistics][:failed] = @failed
-#        @storage[:statistics][:errored] = @errored
-#        @storage[:statistics][:skipped] = @skipped
-#        @storage[:statistics][:passed] = @passed
 
         # output JSON
         output($stdout, @storage)
