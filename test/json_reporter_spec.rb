@@ -18,6 +18,25 @@ describe MiniTest::Reporters::JsonReporter do
       obj.storage[:statistics][:total].must_equal 0
     end
 
+    it 'should have 0 fails' do
+      obj.storage[:statistics][:failed].must_equal 0
+    end
+
+    it 'should have 0 errors' do
+      obj.storage[:statistics][:errored].must_equal 0
+    end
+
+
+    it 'should have 0 skips' do
+      obj.storage[:statistics][:skipped].must_equal 0
+    end
+
+    it 'should have 0 passes' do
+      obj.storage[:statistics][:passed].must_equal 0
+    end
+
+
+
 
     it 'should have empty fails' do
       obj.storage[:fails].must_be_empty
@@ -25,6 +44,17 @@ describe MiniTest::Reporters::JsonReporter do
 
     it 'should have empty skips' do
       obj.storage[:skips].must_be_empty
+    end
+
+    it 'should not be red?' do
+      obj.red?.wont_equal true
+    end
+
+    it 'should not be yellow?' do
+      obj.yellow?.wont_equal true
+    end
+    it 'should be green?' do
+      obj.green?.must_equal true
     end
 
   end
