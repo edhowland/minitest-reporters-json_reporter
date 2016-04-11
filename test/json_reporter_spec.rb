@@ -11,7 +11,7 @@ describe MiniTest::Reporters::JsonReporter do
     end
 
     it 'should have default initial hash' do
-      obj.storage[:status][:color].must_equal 'red'
+      obj.storage[:status][:code].must_equal 'Success'
     end
 
     it 'should have 0 tests' do
@@ -56,6 +56,11 @@ describe MiniTest::Reporters::JsonReporter do
     it 'should be green?' do
       obj.green?.must_equal true
     end
+
+    it 'should be status.color "green"' do
+      obj.storage[:status][:color].must_equal 'green'
+    end
+
 
   end
 end

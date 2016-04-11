@@ -34,7 +34,7 @@ module MiniTest
 
       def init_status
         {
-          status: red_status,
+          status: green_status,
           metadata: metadata_h,
           statistics: statistics_h,
           fails: [],
