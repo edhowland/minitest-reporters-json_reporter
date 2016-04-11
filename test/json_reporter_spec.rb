@@ -26,7 +26,6 @@ describe MiniTest::Reporters::JsonReporter do
       obj.storage[:statistics][:errored].must_equal 0
     end
 
-
     it 'should have 0 skips' do
       obj.storage[:statistics][:skipped].must_equal 0
     end
@@ -34,9 +33,6 @@ describe MiniTest::Reporters::JsonReporter do
     it 'should have 0 passes' do
       obj.storage[:statistics][:passed].must_equal 0
     end
-
-
-
 
     it 'should have empty fails' do
       obj.storage[:fails].must_be_empty
@@ -67,8 +63,10 @@ describe MiniTest::Reporters::JsonReporter do
 
     it 'should have metadata.version == [correct version]' do
       obj.storage[:metadata][:version].must_equal MiniTest::Reporters::JsonReporter::VERSION
-end    
+    end    
 
-
+    it 'should have metadata.time of length 20' do
+      obj.storage[:metadata][:time].length.must_equal 20
+    end    
   end
 end
