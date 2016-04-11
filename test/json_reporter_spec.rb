@@ -61,6 +61,14 @@ describe MiniTest::Reporters::JsonReporter do
       obj.storage[:status][:color].must_equal 'green'
     end
 
+    it 'should have metadata.generated_by == MiniTest::Reporters::JsonReporter' do
+      obj.storage[:metadata][:generated_by].must_equal 'Minitest::Reporters::JsonReporter'
+    end
+
+    it 'should have metadata.version == [correct version]' do
+      obj.storage[:metadata][:version].must_equal MiniTest::Reporters::JsonReporter::VERSION
+end    
+
 
   end
 end
