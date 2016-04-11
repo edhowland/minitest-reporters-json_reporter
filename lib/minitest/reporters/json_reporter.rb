@@ -71,12 +71,12 @@ module MiniTest
       private
 
       def set_status
-        if red?
-          @storage[:status] = red_status
+        @storage[:status] = if red?
+          red_status
         elsif yellow?
-          @storage[:status] = yellow_status
-        elsif green?
-          @storage[:status] = green_status
+          yellow_status
+        else
+          green_status
         end
       end
 
