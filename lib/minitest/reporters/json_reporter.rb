@@ -22,6 +22,8 @@ module MiniTest
         @storage = init_status
       end
 
+      attr_reader :storage
+
       def metadata_h
         {
           generated_by: self.class.name,
