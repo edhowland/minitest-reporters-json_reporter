@@ -14,6 +14,11 @@ describe MiniTest::Reporters::JsonReporter do
       obj.storage[:status][:color].must_equal 'red'
     end
 
+    it 'should have 0 tests' do
+      obj.storage[:statistics][:total].must_equal 0
+    end
+
+
     it 'should have empty fails' do
       obj.storage[:fails].must_be_empty
     end

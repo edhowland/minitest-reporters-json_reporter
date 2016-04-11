@@ -36,7 +36,7 @@ module MiniTest
         {
           status: red_status,
           metadata: metadata_h,
-          statistics: {},
+          statistics: statistics_h,
           fails: [],
           skips: []
         }
@@ -50,11 +50,12 @@ module MiniTest
       def report
         super
         set_status # sets the sucess or failure and color in the status object
-        @storage[:statistics][:total] = @passed + @skipped + @failed + @errored
-        @storage[:statistics][:failed] = @failed
-        @storage[:statistics][:errored] = @errored
-        @storage[:statistics][:skipped] = @skipped
-        @storage[:statistics][:passed] = @passed
+        @storage[:statistics] = statistics_h
+#        @storage[:statistics][:total] = @passed + @skipped + @failed + @errored
+#        @storage[:statistics][:failed] = @failed
+#        @storage[:statistics][:errored] = @errored
+#        @storage[:statistics][:skipped] = @skipped
+#        @storage[:statistics][:passed] = @passed
 
         # output JSON
         output($stdout, @storage)
@@ -96,6 +97,10 @@ module MiniTest
 
       def green_status
         color_h('Success', 'green')
+      end
+
+      def statistics_h
+        { total: @failed + @errored + @skipped + @passed, failed: @failed, errored: @errored, skipped: @skipped, passed: @passed }
       end
 
       def location(exception)
