@@ -173,6 +173,26 @@ end
           skips[0][:type].must_equal 'skipped'
         end
 
+        it 'should have name.length > 0' do
+          skips[0][:name].length.must_be :>, 0
+        end
+
+        it 'should have class: SkipTest' do
+          skips[0][:class].must_equal 'SkipTest'
+        end
+
+        it 'should have message.length > 0' do
+          skips[0][:message].length.must_be :>, 0
+        end
+
+        it 'should have location: xxxxx_test.rb:23' do
+          skips[0][:location].must_equal 'xxxxx_test.rb:23'
+        end
+
+
+
+
+
       end
 
 end
