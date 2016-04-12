@@ -147,10 +147,19 @@ describe MiniTest::Reporters::JsonReporter do
 
     describe 'when running a skipped test' do
       let(:skipper) { SkipTest.new }
-      subject { rpt.record(skipper); rpt.yellow? }
-      it 'should record a skipped test' do
-        subject.must_equal true
+      subject { rpt.record(skipper); rpt }
+      it 'should be yellow' do
+        subject.yellow?.must_equal true
       end
+
+      it 'should have non empty skips' do
+        subject.storage[:skips].wont_be_empty
+      end
+
+      it 'should have empty fails' do
+        subject.storage[:fails].must_be_empty
+      end
+
 end
 
     describe 'when running a failed test' do
@@ -163,6 +172,11 @@ end
       it 'should have non-empty fails' do
         subject.storage[:fails].wont_be_empty
       end
+
+      it 'should have empty skips' do
+        subject.storage[:skips].must_be_empty
+      end
+
     end
   end
 end
