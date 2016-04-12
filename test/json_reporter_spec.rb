@@ -155,9 +155,13 @@ end
 
     describe 'when running a failed test' do
       let(:bad) { FailTest.new }
-      subject { rpt.record(bad); rpt.red? }
-      it 'should record a failed test' do
-        subject.must_equal true
+      subject { rpt.record(bad); rpt }
+      it 'should be red' do
+        subject.red?.must_equal true
+      end
+
+      it 'should have non-empty fails' do
+        subject.storage[:fails].wont_be_empty
       end
     end
   end
