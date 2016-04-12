@@ -19,7 +19,7 @@ class FakeTest
   end
 
     def failure
-    false
+    nil
   end
 
     def error?
@@ -57,6 +57,14 @@ class SkipTest < FakeTest
     'skipped'
   end
 end
+
+# TODO: class documentation
+class FailTest < SkipTest
+    def skipped?
+    false
+  end
+end
+
 
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
@@ -143,9 +151,14 @@ describe MiniTest::Reporters::JsonReporter do
       it 'should record a skipped test' do
         subject.must_equal true
       end
-
-
 end
 
+    describe 'when running a failed test' do
+      let(:bad) { FailTest.new }
+      subject { rpt.record(bad); rpt.red? }
+      it 'should record a failed test' do
+        subject.must_equal true
+      end
+    end
   end
 end
