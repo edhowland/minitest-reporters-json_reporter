@@ -25,12 +25,38 @@ class FakeTest
     def error?
     false
   end
+end
 
+# TODO: class documentation
+class FakeException
+    def message
+    'message'
+  end
 
-
+  def backtrace
+    []
+  end
 end
 
 
+# TODO: class documentation
+class SkipTest < FakeTest
+    def skipped?
+    true
+  end
+
+    def passed?
+    false
+  end
+
+  def failure
+    FakeException.new
+  end
+
+  def name
+    'skipped'
+  end
+end
 
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
@@ -102,12 +128,24 @@ describe MiniTest::Reporters::JsonReporter do
 
   describe 'record' do
   let(:rpt) { MiniTest::Reporters::JsonReporter.new }
+    describe 'when running a passing test' do
     let(:passer) { FakeTest.new }
     subject { rpt.record(passer); rpt.green? }
 
     it 'should record a passing test' do
       subject.must_equal true
     end
+    end
+
+    describe 'when running a skipped test' do
+      let(:skipper) { SkipTest.new }
+      subject { rpt.record(skipper); rpt.yellow? }
+      it 'should record a skipped test' do
+        subject.must_equal true
+      end
+
+
+end
 
   end
 end
