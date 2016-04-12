@@ -103,8 +103,10 @@ describe MiniTest::Reporters::JsonReporter do
   describe 'record' do
   let(:rpt) { MiniTest::Reporters::JsonReporter.new }
     let(:passer) { FakeTest.new }
-    it 'should do anything' do
-      rpt.record(passer)
+    subject { rpt.record(passer); rpt.green? }
+
+    it 'should record a passing test' do
+      subject.must_equal true
     end
 
   end
