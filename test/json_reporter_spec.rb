@@ -117,6 +117,8 @@ describe MiniTest::Reporters::JsonReporter do
       obj.green?.must_equal true
     end
 
+
+
     it 'should be status.color "green"' do
       obj.storage[:status][:color].must_equal 'green'
     end
@@ -138,11 +140,16 @@ describe MiniTest::Reporters::JsonReporter do
   let(:rpt) { MiniTest::Reporters::JsonReporter.new }
     describe 'when running a passing test' do
     let(:passer) { FakeTest.new }
-    subject { rpt.record(passer); rpt.green? }
+    subject { rpt.record(passer); rpt }
 
-    it 'should record a passing test' do
-      subject.must_equal true
+    it 'should be green' do
+      subject.green?.must_equal true
     end
+
+      it 'should have empty skips, fails' do
+        subject.storage[:fails].must_be_empty
+        subject.storage[:skips].must_be_empty
+end
     end
 
     describe 'when running a skipped test' do
