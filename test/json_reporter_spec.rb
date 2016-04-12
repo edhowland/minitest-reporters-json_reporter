@@ -1,6 +1,36 @@
 # json_reporter_spec.rb - specs for json_reporter
 
 require_relative 'spec_helper'
+# TODO: class documentation
+class FakeTest
+    def initialize 
+    @assertions = 0
+  end
+
+  attr_reader :assertions
+
+    def passed?
+    true
+  end
+
+
+    def skipped?
+    false
+  end
+
+    def failure
+    false
+  end
+
+    def error?
+    false
+  end
+
+
+
+end
+
+
 
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
@@ -68,5 +98,14 @@ describe MiniTest::Reporters::JsonReporter do
     it 'should have metadata.time of length 20' do
       obj.storage[:metadata][:time].length.must_equal 20
     end    
+  end
+
+  describe 'record' do
+  let(:rpt) { MiniTest::Reporters::JsonReporter.new }
+    let(:passer) { FakeTest.new }
+    it 'should do anything' do
+      rpt.record(passer)
+    end
+
   end
 end
