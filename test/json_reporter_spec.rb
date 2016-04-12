@@ -167,6 +167,14 @@ end
         subject.storage[:fails].must_be_empty
       end
 
+      describe 'skips[0]' do
+  let(:skips) { rpt.record(skipper); rpt.storage[:skips] }
+        it 'should have type: skipped' do
+          skips[0][:type].must_equal 'skipped'
+        end
+
+      end
+
 end
 
     describe 'when running a failed test' do
