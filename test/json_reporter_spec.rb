@@ -34,7 +34,7 @@ class FakeException
   end
 
   def backtrace
-    []
+    ["xxxxx_test.rb:23"]
   end
 end
 
@@ -182,6 +182,14 @@ end
 
       it 'should have empty skips' do
         subject.storage[:skips].must_be_empty
+      end
+
+      describe 'fails' do
+        let(:fails) { rpt.record(bad); rpt.storage[:fails] }
+        it 'should have non-empty location' do
+          fails[0][:location].wont_be_empty
+        end
+
       end
 
     end
