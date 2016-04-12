@@ -30,7 +30,7 @@ end
 # TODO: class documentation
 class FakeException
     def message
-    'message'
+    'failed test'
   end
 
   def backtrace
@@ -188,6 +188,22 @@ end
         let(:fails) { rpt.record(bad); rpt.storage[:fails] }
         it 'should have non-empty location' do
           fails[0][:location].wont_be_empty
+        end
+
+        it 'should have class FailTest' do
+          fails[0][:class].must_equal 'FailTest'
+        end
+
+        it 'should have message: failed test' do
+          fails[0][:message].must_equal 'failed test'
+        end
+
+        it 'should have type: failure' do
+          fails[0][:type].must_equal 'failure'
+        end
+
+        it 'should have name length > 0' do
+          fails[0][:name].length.must_be :>, 0
         end
 
       end
