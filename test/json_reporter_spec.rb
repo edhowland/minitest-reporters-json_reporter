@@ -65,6 +65,13 @@ class FailTest < SkipTest
   end
 end
 
+# TODO: class documentation
+class ErrorTest < FailTest
+    def error?
+    true
+  end
+end
+
 
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
@@ -233,9 +240,23 @@ end
         it 'should have name length > 0' do
           fails[0][:name].length.must_be :>, 0
         end
+      end
+    end
 
+    describe 'when running error test' do
+  let(:err) { ErrorTest.new }
+      subject { rpt.record(err); rpt }
+
+      it 'should be red' do
+        subject.red?.must_equal true 
       end
 
-    end
+      it 'should have skips:empty, fails == 1' do
+        subject.storage[:fails].wont_be_empty
+        subject.storage[:skips].must_be_empty
+      end
+
+end
+
   end
 end
