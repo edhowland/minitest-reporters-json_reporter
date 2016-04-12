@@ -256,6 +256,30 @@ end
         subject.storage[:skips].must_be_empty
       end
 
+      describe 'fails[0]' do
+          let(:fails) { rpt.record(err); rpt.storage[:fails] }
+
+        it 'should have type: error' do
+          fails[0][:type].must_equal 'error'
+        end
+
+        it 'should have class: ErrorTest' do
+          fails[0][:class].must_equal 'ErrorTest'
+        end
+
+        it 'should have name.length > 0' do
+          fails[0][:name].length.must_be :>, 0
+        end
+
+        it 'should have location.length > 0' do
+          fails[0][:location].length.must_be :>, 0
+        end
+
+
+
+
+end
+
 end
 
   end
