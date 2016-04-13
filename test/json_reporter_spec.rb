@@ -1,9 +1,8 @@
 # json_reporter_spec.rb - specs for json_reporter
 
 require_relative 'spec_helper'
-# TODO: class documentation
 class FakeTest
-    def initialize 
+  def initialize 
     @assertions = 0
   end
 
@@ -12,7 +11,6 @@ class FakeTest
     def passed?
     true
   end
-
 
     def skipped?
     false
@@ -27,9 +25,8 @@ class FakeTest
   end
 end
 
-# TODO: class documentation
 class FakeException
-    def message
+  def message
     'failed test'
   end
 
@@ -38,10 +35,8 @@ class FakeException
   end
 end
 
-
-# TODO: class documentation
 class SkipTest < FakeTest
-    def skipped?
+  def skipped?
     true
   end
 
@@ -58,20 +53,17 @@ class SkipTest < FakeTest
   end
 end
 
-# TODO: class documentation
 class FailTest < SkipTest
-    def skipped?
+  def skipped?
     false
   end
 end
 
-# TODO: class documentation
 class ErrorTest < FailTest
-    def error?
+  def error?
     true
   end
 end
-
 
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
@@ -124,8 +116,6 @@ describe MiniTest::Reporters::JsonReporter do
       obj.green?.must_equal true
     end
 
-
-
     it 'should be status.color "green"' do
       obj.storage[:status][:color].must_equal 'green'
     end
@@ -156,7 +146,7 @@ describe MiniTest::Reporters::JsonReporter do
       it 'should have empty skips, fails' do
         subject.storage[:fails].must_be_empty
         subject.storage[:skips].must_be_empty
-end
+      end
     end
 
     describe 'when running a skipped test' do
@@ -175,7 +165,7 @@ end
       end
 
       describe 'skips[0]' do
-  let(:skips) { rpt.record(skipper); rpt.storage[:skips] }
+        let(:skips) { rpt.record(skipper); rpt.storage[:skips] }
         it 'should have type: skipped' do
           skips[0][:type].must_equal 'skipped'
         end
@@ -195,14 +185,8 @@ end
         it 'should have location: xxxxx_test.rb:23' do
           skips[0][:location].must_equal 'xxxxx_test.rb:23'
         end
-
-
-
-
-
       end
-
-end
+    end
 
     describe 'when running a failed test' do
       let(:bad) { FailTest.new }
@@ -244,7 +228,7 @@ end
     end
 
     describe 'when running error test' do
-  let(:err) { ErrorTest.new }
+      let(:err) { ErrorTest.new }
       subject { rpt.record(err); rpt }
 
       it 'should be red' do
@@ -257,7 +241,7 @@ end
       end
 
       describe 'fails[0]' do
-          let(:fails) { rpt.record(err); rpt.storage[:fails] }
+        let(:fails) { rpt.record(err); rpt.storage[:fails] }
 
         it 'should have type: error' do
           fails[0][:type].must_equal 'error'
@@ -274,13 +258,7 @@ end
         it 'should have location.length > 0' do
           fails[0][:location].length.must_be :>, 0
         end
-
-
-
-
-end
-
-end
-
+      end
+    end
   end
 end
