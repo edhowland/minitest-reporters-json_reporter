@@ -224,6 +224,12 @@ describe MiniTest::Reporters::JsonReporter do
         it 'should have name length > 0' do
           fails[0][:name].length.must_be :>, 0
         end
+
+        it 'should have empty backtrace' do
+          fails[0][:backtrace].wont_be_nil 
+          fails[0][:backtrace].must_be_empty
+        end
+
       end
     end
 
@@ -258,6 +264,13 @@ describe MiniTest::Reporters::JsonReporter do
         it 'should have location.length > 0' do
           fails[0][:location].length.must_be :>, 0
         end
+
+
+        it 'should have non-empty backtrace' do
+          fails[0][:backtrace].wont_be_nil 
+          fails[0][:backtrace].wont_be_empty
+        end
+
       end
     end
   end

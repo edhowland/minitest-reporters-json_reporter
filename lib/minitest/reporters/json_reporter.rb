@@ -117,7 +117,8 @@ module MiniTest
           class: test.class.name,
           name: test.name,
           message: e.message,
-          location: location(e)
+          location: location(e),
+          backtrace: (type == 'failure' ? [] : e.backtrace)
         }
       end
 
