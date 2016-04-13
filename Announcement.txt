@@ -4,21 +4,31 @@ Home, Code: https://github.com/edhowland/minitest-reporters-json_reporter
 Bugs: https://github.com/edhowland/minitest-reporters-json_reporter/issues
 
 minitest-reporters-json_reporter is an extension to the Ruby minitest-reporters gem that provides JSON output from your MiniTest or MiniSpec test run.
+
+This version is the preliminary version before doing a PR to the mainline MiniTest::Reporters gem.
+It includes a normal unit test in the test folder of the source repository.
+It also includes a customizable output file destination: test/report/json_report.json, some other file or stdout.
+It also includes the passed tests if the --verbose flag is passed.
+It also embeds the backtrace for error fails.
+
+Abstract
+
 JSON has become the lingua franca of interprogram communications. There are several  very good output formats
 for MiniTest, but no JSON format until now. If you want to hook up an IDE or some other automatic
 framework, it is natural to send output in some parsable format like XML or JSON. This extension summarizes the result of
 a test run in  format like JSON.a test run in an easible consumable format.
 
-
 Usage is very simple. Just require 'minitest/reporters/json_reporter' in your test_helper.rb or spec_helper.rb.
 This gem also depends on 'minitest' and 'minitest/reporters'.  Then, you should also invoke the use! method of MiniTest::Reporters class with a call to MiniTest::Reporters::JsonReporter.new. 
 Here is an example test_helper.rb:
+# ... Other requires
 
 require 'minitest/reporters/json_reporter'
-# ... Other requires
 require 'minitest/autorun'
 
 MiniTest::Reporters.use! [MiniTest::Reporters::JsonReporter.new]
+# ...
+# End of test_helper.rb
 
 Here is the URLs for the dependent gems:
 
@@ -31,14 +41,14 @@ minitest-reporters (1.1.8) : https://rubygems.org/gems/minitest-reporters
 minitest-reporters-json_reporter (0.1.1) : https://rubygems.org/gems/minitest-reporters-json_reporter
 
 The JSON format is sent to stdout when you run a test or all tests.
-There are 5 objects contained within this output:
+There are 5 (or 6)  objects contained within this output:
 
-1. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format.
-2. status -  Status of the overall test run. Can be 'Success', 'Passed with skipped tests' or 'Failed'. There also a color attribute: green, yellow or red - respectfully.
+1. status -  Status of the overall test run. Can be 'Success', 'Passed with skipped tests' or 'Failed'. There also a color attribute: green, yellow or red - respectfully.
+2. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format.
 3. statistics - Contains counts of the status of test cases. Includes: Total, Skipped, Failed Errored and Passed.
 4. fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test.
 5. skips - Array of each skipped. Each object contains the information as a failed test, including the skip message, if any.
-
+6. passes: (Optional: if --verbose is passed to the test): Class name, name and location of the passed test.
 Here is a sample test run:
 
 vagrant ruby report_spec.rb  
@@ -50,6 +60,3 @@ Here is how you might view only the color of the test:
 
 $ ruby blog_test.rb  | jq -r .status.color
 green
-
-
- 
