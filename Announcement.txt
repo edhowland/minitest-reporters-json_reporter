@@ -60,3 +60,9 @@ Here is how you might view only the color of the test:
 
 $ ruby blog_test.rb  | jq -r .status.color
 green
+
+If you find this gem useful, please send me a note about how you are using it.
+I would be interested if you are hooking it up to an automated framework like CI, CD or a code editor or IDE.
+Thanks, Ed
+
+Author: Ed Howland email: ed.howland@gmail.com
