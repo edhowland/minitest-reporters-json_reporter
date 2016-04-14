@@ -43,7 +43,7 @@ Then run your tests as normal. You will get a JSON formatted string in stdout.
 There are 5 or 6   objects contained within this output: The 6th object: passes is only included if the --verbose option was passed to the test.
 
 1. status -  Status of the overall test run. Can be 'Success', 'Passed with skipped tests' or 'Failed'. There also a color attribute: green, yellow or red - respectfully.
-2. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format.
+2. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format. Also include options object computed by super classes including command line arguments.
 3. statistics - Contains counts of the status of test cases. Includes: Total, Skipped, Failed Errored and Passed.
 4. fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test and the backtrace if an error type.
 5. skips - Array of each skipped. Each object contains the information as a failed test, including the skip message, if any.

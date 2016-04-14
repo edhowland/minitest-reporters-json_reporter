@@ -13,8 +13,8 @@ module MiniTest
   module Reporters
     # MiniTest Reporter that produces a JSON output for interface in IDEs, editor
     class JsonReporter < BaseReporter
-      def initialize(opts = {})
-        super(opts)
+      def initialize
+        super
         @skipped = 0
         @failed = 0
         @errored = 0
@@ -49,7 +49,9 @@ module MiniTest
 
       def report
         super
+
         set_status # sets the sucess or failure and color in the status object
+        @storage[:metadata][:options] = options # options only exists once test run starts
         @storage[:statistics] = statistics_h
 
         # output JSON
