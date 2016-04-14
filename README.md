@@ -40,14 +40,80 @@ MiniTest::Reporters.use! [ MiniTest::Reporters::JsonReporter.new ]
 ```
 
 Then run your tests as normal. You will get a JSON formatted string in stdout.
-There are 5 objects contained within this output:
+There are 5 or 6   objects contained within this output: The 6th object: passes is only included if the --verbose option was passed to the test.
 
-1. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format.
-2. status -  Status of the overall test run. Can be 'Success', 'Passed with skipped tests' or 'Failed'. There also a color attribute: green, yellow or red - respectfully.
+1. status -  Status of the overall test run. Can be 'Success', 'Passed with skipped tests' or 'Failed'. There also a color attribute: green, yellow or red - respectfully.
+2. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format.
 3. statistics - Contains counts of the status of test cases. Includes: Total, Skipped, Failed Errored and Passed.
-4. fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test.
+4. fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test and the backtrace if an error type.
 5. skips - Array of each skipped. Each object contains the information as a failed test, including the skip message, if any.
+6. passes - Array of passing tests if the --verbose option was passed to the test.
 
+Here is a sample output:
+
+```
+{
+  "status": {
+    "code": "Failed",
+    "color": "red"
+  },
+  "metadata": {
+    "generated_by": "Minitest::Reporters::JsonReporter",
+    "version": "0.1.1",
+    "time": "2016-04-14T16:09:40Z"
+  },
+  "statistics": {
+    "total": 5,
+    "failed": 2,
+    "errored": 1,
+    "skipped": 1,
+    "passed": 1
+  },
+  "fails": [
+    {
+      "type": "failure",
+      "class": "failure",
+      "name": "test_0001_anonymous",
+      "message": "Expected: 2\n  Actual: 1",
+      "location": "report_spec.rb:14",
+      "backtrace": []
+    },
+    {
+      "type": "error",
+      "class": "Error",
+      "name": "test_0001_anonymous",
+      "message": "RuntimeError: should fail\n    report_spec.rb:6:in `block (2 levels) in <main>'",
+      "location": "report_spec.rb:6",
+      "backtrace": [
+        "report_spec.rb:6:in `block (2 levels) in <main>'"
+      ]
+    },
+    {
+      "type": "failure",
+      "class": "second failure",
+      "name": "test_0001_anonymous",
+      "message": "Expected: 9\n  Actual: 3",
+      "location": "report_spec.rb:20",
+      "backtrace": []
+    }
+  ],
+  "skips": [
+    {
+      "type": "skipped",
+      "class": "skipped test",
+      "name": "test_0001_anonymous",
+      "message": "what a layabout",
+      "location": "report_spec.rb:32",
+      "backtrace": [
+        "report_spec.rb:32:in `block (2 levels) in <main>'"
+      ]
+    }
+  ]
+}
+
+```
+
+^.
 
 ## Contributing
 
@@ -56,3 +122,7 @@ There are 5 objects contained within this output:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+Note: Extra credit if git flow feature branching was used.
+
+^.
