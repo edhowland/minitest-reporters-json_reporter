@@ -51,7 +51,7 @@ module MiniTest
         super
 
         set_status # sets the sucess or failure and color in the status object
-        @storage[:metadata][:options] = options # options only exists once test run starts
+        @storage[:metadata][:options] = transform_store(options) # options only exists once test run starts
         @storage[:statistics] = statistics_h
 
         # output JSON
@@ -162,6 +162,17 @@ module MiniTest
       # I/O
       def output(io, body)
         io.write(JSON.dump(body))
+      end
+
+      # transform_store options: make pretty object for our JSON [metadata.options]
+      # If :io is the IO class and == $stdout: "STDOUT"
+      # Delete key: total_count
+      def transform_store opts
+        o = opts.clone
+        o[:io] = o[:io].class.name
+        o[:io] = 'STDOUT' if opts[:io] == $stdout
+        o.delete(:total_count)
+        o
       end
     end
   end
