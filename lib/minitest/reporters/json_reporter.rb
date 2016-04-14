@@ -55,7 +55,7 @@ module MiniTest
         @storage[:statistics] = statistics_h
 
         # output JSON
-        output($stdout, @storage)
+        output(options[:io], @storage)
       end
 
       def yellow?
