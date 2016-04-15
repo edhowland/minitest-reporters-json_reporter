@@ -114,14 +114,17 @@ module MiniTest
       end
 
       def fault_h(type, test, e)
-        {
+        h = {
           type: type,
           class: test.class.name,
           name: test.name,
-          message: e.message,
-          location: location(e),
-          backtrace: (type == 'failure' ? [] : filter_backtrace(e.backtrace))
         }
+        unless e.nil?
+          h[:message] = e.message
+          h[:location] =location(e), 
+          h[:backtrace] = (type == 'error' ? filter_backtrace(e.backtrace) : [])
+        end
+        h
       end
 
       def status(type, test, msg, &_blk)
@@ -155,7 +158,12 @@ module MiniTest
         end
       end
 
-      def passed(_test)
+      def passed(test)
+        status('pass', test, :passed?) do |e|
+          @storage[:passes] ||= []
+          @storage[:passes] << e
+        end if options[:verbose]
+
         @passed += 1
       end
 
