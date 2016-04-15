@@ -2,14 +2,17 @@
 Metrics/LineLength:
   Max: 85
   Exclude:
+    - 'test/**/*'
     - 'minitest-reporters-json_reporter.gemspec'
 
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
-#Style/Semicolon:
-#  Exclude:
+Style/Semicolon:
+  Exclude:
+    - 'test/**/*'
 #    - 'lib/minitest/reporters/json_reporter.rb'
+
 Metrics/ClassLength:
   Max: 120

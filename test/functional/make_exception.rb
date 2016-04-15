@@ -2,8 +2,7 @@
 
 # TODO: class documentation
 class DivByZero
-
-    def do_it
+  def do_it
     5 / 0
   end
 end

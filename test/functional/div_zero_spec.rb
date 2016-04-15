@@ -9,5 +9,5 @@ describe 'DivByZero' do
     subject { make_exception }
 
     specify { subject }
-end
+  end
 end

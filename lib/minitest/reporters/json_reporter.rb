@@ -75,12 +75,12 @@ module MiniTest
 
       def set_status
         @storage[:status] = if red?
-          red_status
-        elsif yellow?
-          yellow_status
-        else
-          green_status
-        end
+                              red_status
+                            elsif yellow?
+                              yellow_status
+                            else
+                              green_status
+                            end
       end
 
       def color_h(code, color)
@@ -110,24 +110,27 @@ module MiniTest
           break if s =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/
           last_before_assertion = s
         end
-        str = last_before_assertion
 
         last_before_assertion.sub(/:in .*$/, '')
       end
 
-      def fault_h(type, test, e)
-        h = {
+      def test_detail(type, test)
+        {
           type: type,
           class: test.class.name,
-          name: test.name,
+          name: test.name
         }
+      end
+
+      def fault_h(type, test, e)
+        h = test_detail(type, test)
         unless e.nil?
           h[:message] = e.message
-          h[:location] =location(e) 
+          h[:location] = location(e)
 
-        unless type == 'skipped'
+          unless type == 'skipped'
             h[:backtrace] = (type == 'error' ? filter_backtrace(e.backtrace) : [])
-        end
+          end
         end
         h
       end
@@ -180,7 +183,7 @@ module MiniTest
       # transform_store options: make pretty object for our JSON [metadata.options]
       # If :io is the IO class and == $stdout: "STDOUT"
       # Delete key: total_count
-      def transform_store opts
+      def transform_store(opts)
         o = opts.clone
         o[:io] = o[:io].class.name
         o[:io] = 'STDOUT' if opts[:io] == $stdout

@@ -2,27 +2,27 @@
 
 require_relative 'spec_helper'
 class FakeTest
-  def initialize 
+  def initialize
     @assertions = 0
   end
 
   attr_reader :assertions
 
-    def passed?
+  def passed?
     true
-  end
+end
 
-    def skipped?
+  def skipped?
     false
-  end
+end
 
-    def failure
+  def failure
     nil
-  end
+end
 
-    def error?
+  def error?
     false
-  end
+end
 end
 
 class FakeException
@@ -31,7 +31,7 @@ class FakeException
   end
 
   def backtrace
-    ["xxxxx_test.rb:23"]
+    ['xxxxx_test.rb:23']
   end
 end
 
@@ -40,9 +40,9 @@ class SkipTest < FakeTest
     true
   end
 
-    def passed?
+  def passed?
     false
-  end
+end
 
   def failure
     FakeException.new
@@ -126,22 +126,22 @@ describe MiniTest::Reporters::JsonReporter do
 
     it 'should have metadata.version == [correct version]' do
       obj.storage[:metadata][:version].must_equal MiniTest::Reporters::JsonReporter::VERSION
-    end    
+    end
 
     it 'should have metadata.time of length 20' do
       obj.storage[:metadata][:time].length.must_equal 20
-    end    
+    end
   end
 
   describe 'record' do
-  let(:rpt) { MiniTest::Reporters::JsonReporter.new }
+    let(:rpt) { MiniTest::Reporters::JsonReporter.new }
     describe 'when running a passing test' do
-    let(:passer) { FakeTest.new }
-    subject { rpt.record(passer); rpt }
+      let(:passer) { FakeTest.new }
+      subject { rpt.record(passer); rpt }
 
-    it 'should be green' do
-      subject.green?.must_equal true
-    end
+      it 'should be green' do
+        subject.green?.must_equal true
+      end
 
       it 'should have empty skips, fails' do
         subject.storage[:fails].must_be_empty
@@ -226,10 +226,9 @@ describe MiniTest::Reporters::JsonReporter do
         end
 
         it 'should have empty backtrace' do
-          fails[0][:backtrace].wont_be_nil 
+          fails[0][:backtrace].wont_be_nil
           fails[0][:backtrace].must_be_empty
         end
-
       end
     end
 
@@ -238,7 +237,7 @@ describe MiniTest::Reporters::JsonReporter do
       subject { rpt.record(err); rpt }
 
       it 'should be red' do
-        subject.red?.must_equal true 
+        subject.red?.must_equal true
       end
 
       it 'should have skips:empty, fails == 1' do
@@ -265,12 +264,10 @@ describe MiniTest::Reporters::JsonReporter do
           fails[0][:location].length.must_be :>, 0
         end
 
-
         it 'should have non-empty backtrace' do
-          fails[0][:backtrace].wont_be_nil 
+          fails[0][:backtrace].wont_be_nil
           fails[0][:backtrace].wont_be_empty
         end
-
       end
     end
   end
