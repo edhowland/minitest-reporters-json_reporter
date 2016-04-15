@@ -53,6 +53,7 @@ module MiniTest
         set_status # sets the sucess or failure and color in the status object
         @storage[:metadata][:options] = transform_store(options) # options only exists once test run starts
         @storage[:statistics] = statistics_h
+        @storage[:passes] ||= [] if options[:verbose] # Only add this if not already added and verbose option is set
 
         # output JSON
         output(options[:io], @storage)
@@ -109,6 +110,7 @@ module MiniTest
           break if s =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/
           last_before_assertion = s
         end
+        str = last_before_assertion
 
         last_before_assertion.sub(/:in .*$/, '')
       end
@@ -121,8 +123,11 @@ module MiniTest
         }
         unless e.nil?
           h[:message] = e.message
-          h[:location] =location(e), 
-          h[:backtrace] = (type == 'error' ? filter_backtrace(e.backtrace) : [])
+          h[:location] =location(e) 
+
+        unless type == 'skipped'
+            h[:backtrace] = (type == 'error' ? filter_backtrace(e.backtrace) : [])
+        end
         end
         h
       end
