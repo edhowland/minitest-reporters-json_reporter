@@ -7,6 +7,8 @@ require 'minitest/reporters'
 
 require_relative 'json_reporter/version'
 require_relative 'json_reporter/test_detail'
+require_relative 'json_reporter/pass_detail'
+
 
 
 # MiniTest namespace - plugins must live here

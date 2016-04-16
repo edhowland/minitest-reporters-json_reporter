@@ -3,25 +3,29 @@
 require_relative 'spec_helper'
 
 # TODO: class documentation
-class TestDouble
+class TestFaker
     def initialize 
-    @name = 'Fake'
+    @name = 'FakeDouble'
   end
+
+  attr_reader :name
 end
 
 describe MiniTest::Reporters::TestDetail do
   describe 'initialize' do
-    let(:tst) { TestDouble.new }
+    let(:tst) { TestFaker.new }
   let(:det) { MiniTest::Reporters::TestDetail.new(tst) }
 
     it 'should have hash key name' do
       det.to_h[:name].wont_be_nil
       det.to_h[:name].wont_be_empty
+      det.to_h[:name].must_equal 'FakeDouble'
     end
 
     it 'should have hash key class' do
       det.to_h[:class].wont_be_nil
       det.to_h[:class].wont_be_empty
+      det.to_h[:class].must_equal 'TestFaker'
 end
 
     it 'should have hash key: type' do

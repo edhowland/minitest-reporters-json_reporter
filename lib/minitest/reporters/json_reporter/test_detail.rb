@@ -8,8 +8,8 @@ module Reporters
     class TestDetail
       def initialize(test)
         @type = 'unknown'
-        @class_name = 'TestDouble'
-        @name = 'fake'
+        @class_name = test.class.name
+        @name = test.name
       end
 
       def to_h
