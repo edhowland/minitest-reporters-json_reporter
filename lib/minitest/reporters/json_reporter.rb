@@ -54,7 +54,7 @@ module MiniTest
       def report
         super
 
-        set_status # sets the sucess or failure and color in the status object
+        set_status # sets the success or failure and color in the status object
         @storage[:metadata][:options] = transform_store(options) # options only exists once test run starts
         @storage[:statistics] = statistics_h
         @storage[:passes] ||= [] if options[:verbose] # Only add this if not already added and verbose option is set
@@ -171,11 +171,15 @@ module MiniTest
       end
 
       def passed(test)
-        status('pass', test, :passed?) do |e|
-          @storage[:passes] ||= []
-          @storage[:passes] << e
-        end if options[:verbose]
+#        status('pass', test, :passed?) do |e|
+ #         @storage[:passes] ||= []
+  #        @storage[:passes] << e
+   #     end if options[:verbose]
 
+        if options[:verbose]
+          @storage[:passes] ||= []
+          @storage[:passes] << MiniTest::Reporters::PassDetail.new(test).to_h
+        end
         @passed += 1
       end
 
