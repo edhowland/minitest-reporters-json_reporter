@@ -16,6 +16,19 @@ describe MiniTest::Reporters::TestDetail do
 
     it 'should have hash key name' do
       det.to_h[:name].wont_be_nil
+      det.to_h[:name].wont_be_empty
     end
+
+    it 'should have hash key class' do
+      det.to_h[:class].wont_be_nil
+      det.to_h[:class].wont_be_empty
+end
+
+    it 'should have hash key: type' do
+      det.to_h[:type].wont_be_nil
+      det.to_h[:type].wont_be_empty
+    end
+
   end
+
 end
