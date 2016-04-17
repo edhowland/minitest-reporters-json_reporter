@@ -16,7 +16,7 @@ module MiniTest
 
       # returns string of found location of this test from backtrace
       def location
-        @backtrace.reverse.reduce('') {|a, e| break a if e =~ /assert/; e.sub(/:in .*$/, '') }
+        @backtrace.reverse.reduce('') {|a, e| break a if e =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/; e.sub(/:in .*$/, '') }
       end
 
         def to_h
