@@ -12,9 +12,10 @@ class TestFaker
 end
 
 describe MiniTest::Reporters::TestDetail do
-  describe 'initialize' do
     let(:tst) { TestFaker.new }
   let(:det) { MiniTest::Reporters::TestDetail.new(tst) }
+
+  describe 'initialize' do
 
     it 'should have hash key name' do
       det.to_h[:name].wont_be_nil
@@ -33,6 +34,21 @@ end
       det.to_h[:type].wont_be_empty
     end
 
+    it 'should have attr test_obj' do
+      det.test_obj.wont_be_nil
+    end
+
+    it 'should have predicate :nil?' do
+      det.predicate.wont_be_nil
+      det.predicate.must_be_instance_of Symbol
+    end
+
+
   end
 
+  describe 'query' do
+  it 'should return false' do
+      det.query.must_equal false
+    end
+  end
 end

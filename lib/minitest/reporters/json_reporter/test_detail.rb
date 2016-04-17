@@ -10,6 +10,17 @@ module Reporters
         @type = 'unknown'
         @class_name = test.class.name
         @name = test.name
+        @predicate = :nil?
+        @test_obj = test
+      end
+
+      attr_reader :test_obj, :predicate
+
+
+      def query &blk
+        result = @test_obj.send @predicate
+        yield self if result && block_given?
+        result
       end
 
       def to_h

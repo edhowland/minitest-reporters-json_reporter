@@ -9,6 +9,7 @@ module MiniTest
       def initialize(test) 
         super
         @type = 'passed'
+        @predicate = :passed?
       end
     end
   end

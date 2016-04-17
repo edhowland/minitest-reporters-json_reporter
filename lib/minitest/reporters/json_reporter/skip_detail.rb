@@ -9,6 +9,7 @@ module MiniTest
       def initialize(test)
         super
         @type = 'skipped'
+        @predicate = :skipped?
       end
     end
   end
