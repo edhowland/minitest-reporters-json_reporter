@@ -151,9 +151,14 @@ module MiniTest
       end
 
       def skipped(test)
-        status('skipped', test, :skipped?) do |e|
-          @storage[:skips] << e
+#        status('skipped', test, :skipped?) do |e|
+#          @storage[:skips] << e
+#          @skipped += 1
+#        end
+
+        MiniTest::Reporters::SkipDetail.new(test).query do |d|
           @skipped += 1
+          @storage[:skips] << d.to_h
         end
       end
 
