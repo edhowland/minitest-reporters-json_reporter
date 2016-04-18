@@ -3,7 +3,6 @@ def assert expr
   fail('bad juju') unless expr
 end
 
-#binding.pry
 # mk_exc - create an exception for use in  these tests
 def mk_exc message
   assert false
@@ -11,12 +10,56 @@ def mk_exc message
     err
 end
 
-class FaultyTest
+# TODO: class documentation
+class FakeBaseTest
+    def initialize  name
+    @name = name
+    @assertions = 0
+  end
+
+  attr_accessor :assertions
+  attr_reader :name
+
+    def passed?
+    false
+  end
+
+  def skipped?
+    false
+  end
+
+  def error?
+    false
+  end
+
+  def failure
+    nil
+  end
+end
+
+# TODO: class documentation
+class FakePasser < FakeBaseTest
+    def initialize 
+    super 'passer'
+  end
+
+  def passed?
+    true
+  end
+end
+
+
+
+class FaultyTest < FakeBaseTest
   def initialize 
+    super 'juju'
     @failure = mk_exc('bad juju')
   end
 
   attr_reader :failure
 
-  def name; 'juju'; end
+  def error?
+    true
+  end
+
 end

@@ -1,6 +1,8 @@
 # json_reporter_spec.rb - specs for json_reporter
 
 require_relative 'spec_helper'
+require_relative 'detail_helper'
+
 class FakeTest
   def initialize
     @assertions = 0
@@ -136,7 +138,7 @@ describe MiniTest::Reporters::JsonReporter do
   describe 'record' do
     let(:rpt) { MiniTest::Reporters::JsonReporter.new }
     describe 'when running a passing test' do
-      let(:passer) { FakeTest.new }
+      let(:passer) { FakePasser.new }
       subject { rpt.record(passer); rpt }
 
       it 'should be green' do

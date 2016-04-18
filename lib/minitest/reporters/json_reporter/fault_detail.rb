@@ -9,9 +9,7 @@ module MiniTest
       def initialize test
       # Initialize for  FaultDetail - sets up exception stuff: message, location and backtrace
         super test
-        @exception = test.failure
-        @message = @exception.message
-        @backtrace = @exception.backtrace
+
       end
 
       # returns string of found location of this test from backtrace
@@ -26,6 +24,12 @@ module MiniTest
         h
       end
 
+      protected
+      def setup_state
+        @exception =@test_obj.failure
+        @message = @exception.message
+        @backtrace = @exception.backtrace
+      end
     end
   end
 end

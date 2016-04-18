@@ -32,6 +32,7 @@ describe MiniTest::Reporters::SkipDetail do
     end
 
     it 'should have hash key type == skipped' do
+      det.query # must call to setup state after determined if skipped test
       det.to_h[:type].must_equal 'skipped'
     end
   end

@@ -3,7 +3,7 @@
 # TODO module documentation
 module MiniTest
   # TODO module documentation
-module Reporters
+  module Reporters
     # TODO: class documentation
     class TestDetail
       def initialize(test)
@@ -16,10 +16,12 @@ module Reporters
 
       attr_reader :test_obj, :predicate
 
-
       def query &blk
         result = @test_obj.send @predicate
-        yield self if result && block_given?
+        if result
+          setup_state
+          yield self if block_given?
+        end
         result
       end
 
@@ -30,8 +32,11 @@ module Reporters
           name: @name
         }
       end
+
+      protected
+      def setup_state
+      end
     end
   end
 end
-
 
