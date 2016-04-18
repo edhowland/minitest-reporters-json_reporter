@@ -11,6 +11,8 @@ require_relative 'json_reporter/pass_detail'
 require_relative 'json_reporter/fault_detail'
 
 require_relative 'json_reporter/skip_detail'
+require_relative 'json_reporter/error_detail'
+
 
 # MiniTest namespace - plugins must live here
 module MiniTest
