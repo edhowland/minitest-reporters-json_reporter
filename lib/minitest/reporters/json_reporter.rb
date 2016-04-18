@@ -12,9 +12,6 @@ require_relative 'json_reporter/fault_detail'
 
 require_relative 'json_reporter/skip_detail'
 
-
-
-
 # MiniTest namespace - plugins must live here
 module MiniTest
   # MiniTest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
@@ -174,17 +171,15 @@ module MiniTest
         end
       end
 
+      # Examines test if it is passed?. If it is increments @passed and optionally adds PassDetail object to .passes array if options[:verbose] == true
       def passed(test)
-#        status('pass', test, :passed?) do |e|
- #         @storage[:passes] ||= []
-  #        @storage[:passes] << e
-   #     end if options[:verbose]
-
-        if options[:verbose]
-          @storage[:passes] ||= []
-          @storage[:passes] << MiniTest::Reporters::PassDetail.new(test).to_h
+        MiniTest::Reporters::PassDetail.new(test).query do |d|
+          @passed += 1
+          if options[:verbose]
+            @storage[:passes] ||= []
+            @storage[:passes] << d.to_h
+          end
         end
-        @passed += 1
       end
 
       # I/O
