@@ -144,15 +144,6 @@ module MiniTest
         h
       end
 
-      def status(type, test, msg, &_blk)
-        result = test.send(msg)
-        if result
-          e = fault_h(type, test, test.failure)
-          yield(e)
-        end
-
-        result
-      end
 
       def skipped(test)
         MiniTest::Reporters::SkipDetail.new(test).query do |d|
