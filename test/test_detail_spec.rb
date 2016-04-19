@@ -4,19 +4,18 @@ require_relative 'spec_helper'
 
 # TODO: class documentation
 class TestFaker
-    def initialize 
+  def initialize
     @name = 'FakeDouble'
-  end
+end
 
   attr_reader :name
 end
 
 describe MiniTest::Reporters::TestDetail do
-    let(:tst) { TestFaker.new }
+  let(:tst) { TestFaker.new }
   let(:det) { MiniTest::Reporters::TestDetail.new(tst) }
 
   describe 'initialize' do
-
     it 'should have hash key name' do
       det.to_h[:name].wont_be_nil
       det.to_h[:name].wont_be_empty
@@ -27,7 +26,7 @@ describe MiniTest::Reporters::TestDetail do
       det.to_h[:class].wont_be_nil
       det.to_h[:class].wont_be_empty
       det.to_h[:class].must_equal 'TestFaker'
-end
+    end
 
     it 'should have hash key: type' do
       det.to_h[:type].wont_be_nil
@@ -42,12 +41,10 @@ end
       det.predicate.wont_be_nil
       det.predicate.must_be_instance_of Symbol
     end
-
-
   end
 
   describe 'query' do
-  it 'should return false' do
+    it 'should return false' do
       det.query.must_equal false
     end
   end

@@ -6,7 +6,7 @@ module MiniTest
   module Reporters
     # FailDetail Detail of failed test
     class FailDetail < FaultDetail
-      def initialize test
+      def initialize(test)
         super
         @type = 'failure'
         @predicate = :failure

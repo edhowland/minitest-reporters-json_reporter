@@ -3,7 +3,6 @@
 require_relative 'spec_helper'
 require_relative 'detail_helper'
 
-
 describe MiniTest::Reporters::FailDetail do
   describe 'query' do
     let(:tst) { FailTest.new }

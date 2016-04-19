@@ -6,27 +6,27 @@ module MiniTest
   module Reporters
     # FaultDetail - Subclass of TestDetail and superclass for SkipDetail, FailDetail and ErrorDetail
     class FaultDetail < TestDetail
-      def initialize test
-      # Initialize for  FaultDetail - sets up exception stuff: message, location and backtrace
+      def initialize(test)
+        # Initialize for  FaultDetail - sets up exception stuff: message, location and backtrace
         super test
-
       end
 
       # returns string of found location of this test from backtrace
       def location
-        @backtrace.reverse.reduce('') {|a, e| break a if e =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/; e.sub(/:in .*$/, '') }
+        @backtrace.reverse.reduce('') { |a, e| break a if e =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/; e.sub(/:in .*$/, '') }
       end
 
-        def to_h
+      def to_h
         h = super
         h[:message] = @message
         h[:location] = location
         h
-      end
+    end
 
       protected
+
       def setup_state
-        @exception =@test_obj.failure
+        @exception = @test_obj.failure
         @message = @exception.message
         @backtrace = @exception.backtrace
       end

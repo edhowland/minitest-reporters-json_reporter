@@ -5,12 +5,11 @@ require_relative 'detail_helper'
 
 # TODO: class documentation
 class MyErrorDetail < MiniTest::Reporters::FaultDetail
-    def initialize  test
+  def initialize(test)
     super
     @type = 'error'
     @predicate = :error?
-  end
-
+end
 end
 
 describe MiniTest::Reporters::FaultDetail do
@@ -36,6 +35,6 @@ describe MiniTest::Reporters::FaultDetail do
 
       det.to_h[:location].wont_be_nil
       det.to_h[:location].wont_be_empty
-end
-end
+    end
+  end
 end

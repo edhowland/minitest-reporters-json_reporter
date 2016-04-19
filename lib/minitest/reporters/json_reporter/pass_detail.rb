@@ -1,12 +1,12 @@
 # pass_detail.rb - class MiniTest::Reporters::PassDetail
 
-# TODO module documentation
+# MiniTest Namespace for all things Minitest
 module MiniTest
-  # TODO module documentation
+  # Reporters Extensible framework for custom Minitest reporters
   module Reporters
-    # TODO: class documentation
+    # Handler for detail of passed tests
     class PassDetail < MiniTest::Reporters::TestDetail
-      def initialize(test) 
+      def initialize(test)
         super
         @type = 'passed'
         @predicate = :passed?

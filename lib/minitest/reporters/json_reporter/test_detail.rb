@@ -1,10 +1,10 @@
 # test_detail.rb - class MiniTest::Reporters::TestDetail
 
-# TODO module documentation
+# MiniTest Namespace for all things Minitest
 module MiniTest
-  # TODO module documentation
+  # Reporters Extensible framework for custom Minitest reporters
   module Reporters
-    # TODO: class documentation
+    # Base class for detail handlers: skipDetail, PassDetail, ErrorDetail and FailDetail
     class TestDetail
       def initialize(test)
         @type = 'unknown'
@@ -16,7 +16,7 @@ module MiniTest
 
       attr_reader :test_obj, :predicate
 
-      def query &blk
+      def query(&_blk)
         result = (@test_obj.send(@predicate) ? true : false) # force result to be boolean because of failure in Test is not a predicate ?
         if result
           setup_state
@@ -28,15 +28,15 @@ module MiniTest
       def to_h
         {
           type: @type,
-        class: @class_name,
+          class: @class_name,
           name: @name
         }
       end
 
       protected
+
       def setup_state
       end
     end
   end
 end
-

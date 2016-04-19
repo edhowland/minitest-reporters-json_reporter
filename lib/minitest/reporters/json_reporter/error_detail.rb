@@ -6,7 +6,7 @@ module MiniTest
   module Reporters
     # How to handle an error detail
     class ErrorDetail < FaultDetail
-      def initialize test
+      def initialize(test)
         super
         @type = 'error'
         @predicate = :error?
@@ -16,7 +16,7 @@ module MiniTest
 
       def to_h
         h = super
-        h[:backtrace] =@backtrace
+        h[:backtrace] = @backtrace
         h
       end
     end

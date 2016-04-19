@@ -5,7 +5,7 @@ require_relative 'detail_helper'
 
 describe MiniTest::Reporters::ErrorDetail do
   describe 'query' do
-  let(:tst) { FaultyTest.new }
+    let(:tst) { FaultyTest.new }
     let(:det) { MiniTest::Reporters::ErrorDetail.new(tst) }
     subject { det.query }
 

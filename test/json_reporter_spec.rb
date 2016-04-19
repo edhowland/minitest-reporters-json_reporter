@@ -55,11 +55,11 @@ end
   end
 end
 
-#class FailTest < SkipTest
+# class FailTest < SkipTest
 #  def skipped?
 #    false
 #  end
-#end
+# end
 
 class ErrorTest < FailTest
   def error?

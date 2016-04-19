@@ -14,8 +14,6 @@ require_relative 'json_reporter/skip_detail'
 require_relative 'json_reporter/error_detail'
 require_relative 'json_reporter/fail_detail'
 
-
-
 # MiniTest namespace - plugins must live here
 module MiniTest
   # MiniTest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
@@ -144,7 +142,6 @@ module MiniTest
         h
       end
 
-
       def skipped(test)
         MiniTest::Reporters::SkipDetail.new(test).query do |d|
           @skipped += 1
@@ -156,7 +153,7 @@ module MiniTest
         MiniTest::Reporters::ErrorDetail.new(test).query do |d|
           d.backtrace = filter_backtrace(d.backtrace)
           @storage[:fails] << d.to_h
-@errored += 1
+          @errored += 1
         end
       end
 

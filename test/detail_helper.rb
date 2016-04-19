@@ -1,28 +1,28 @@
 # detail_helper.rb - methods, classes for *_detail_spec.rb specs
-def assert expr
+def assert(expr)
   fail('bad juju') unless expr
 end
 
 # mk_exc - create an exception for use in  these tests
-def mk_exc message
+def mk_exc(_message)
   assert false
-  rescue => err
-    err
+rescue => err
+  err
 end
 
 # TODO: class documentation
 class FakeBaseTest
-    def initialize  name
+  def initialize(name)
     @name = name
     @assertions = 0
-  end
+end
 
   attr_accessor :assertions
   attr_reader :name
 
-    def passed?
+  def passed?
     false
-  end
+end
 
   def skipped?
     false
@@ -39,19 +39,17 @@ end
 
 # TODO: class documentation
 class FakePasser < FakeBaseTest
-    def initialize 
+  def initialize
     super 'passer'
-  end
+end
 
   def passed?
     true
   end
 end
 
-
-
 class FaultyTest < FakeBaseTest
-  def initialize 
+  def initialize
     super 'juju'
     @failure = mk_exc('bad juju')
   end
@@ -61,16 +59,15 @@ class FaultyTest < FakeBaseTest
   def error?
     true
   end
-
 end
 
 # TODO: class documentation
 class FailTest < FakeBaseTest
-  def initialize 
+  def initialize
     super 'up creek, less paddle'
   end
 
-    def failure
+  def failure
     mk_exc 'crap'
-  end
+end
 end
