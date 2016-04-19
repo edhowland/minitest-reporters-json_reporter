@@ -153,11 +153,6 @@ module MiniTest
       end
 
       def skipped(test)
-#        status('skipped', test, :skipped?) do |e|
-#          @storage[:skips] << e
-#          @skipped += 1
-#        end
-
         MiniTest::Reporters::SkipDetail.new(test).query do |d|
           @skipped += 1
           @storage[:skips] << d.to_h
@@ -165,11 +160,6 @@ module MiniTest
       end
 
       def errored(test)
-#        status('error', test, :error?) do |e|
-#          @storage[:fails] << e
-#          @errored += 1
-#        end
-
         MiniTest::Reporters::ErrorDetail.new(test).query do |d|
           d.backtrace = filter_backtrace(d.backtrace)
           @storage[:fails] << d.to_h
