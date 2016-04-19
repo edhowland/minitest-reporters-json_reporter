@@ -165,9 +165,15 @@ module MiniTest
       end
 
       def errored(test)
-        status('error', test, :error?) do |e|
-          @storage[:fails] << e
-          @errored += 1
+#        status('error', test, :error?) do |e|
+#          @storage[:fails] << e
+#          @errored += 1
+#        end
+
+        MiniTest::Reporters::ErrorDetail.new(test).query do |d|
+          d.backtrace = filter_backtrace(d.backtrace)
+          @storage[:fails] << d.to_h
+@errored += 1
         end
       end
 

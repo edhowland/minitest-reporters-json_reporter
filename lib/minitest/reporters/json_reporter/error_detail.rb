@@ -12,9 +12,11 @@ module MiniTest
         @predicate = :error?
       end
 
+      attr_accessor :backtrace
+
       def to_h
         h = super
-        h[:backtrace] = @backtrace
+        h[:backtrace] =@backtrace
         h
       end
     end
