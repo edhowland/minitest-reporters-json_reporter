@@ -117,36 +117,12 @@ module MiniTest
         }
       end
 
-      def location(exception)
-        last_before_assertion = ''
-
-        exception.backtrace.reverse_each do |s|
-          break if s =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/
-          last_before_assertion = s
-        end
-
-        last_before_assertion.sub(/:in .*$/, '')
-      end
-
       def test_detail(type, test)
         {
           type: type,
           class: test.class.name,
           name: test.name
         }
-      end
-
-      def fault_h(type, test, e)
-        h = test_detail(type, test)
-        unless e.nil?
-          h[:message] = e.message
-          h[:location] = location(e)
-
-          unless type == 'skipped'
-            h[:backtrace] = (type == 'error' ? filter_backtrace(e.backtrace) : [])
-          end
-        end
-        h
       end
 
       def skipped(test)
