@@ -17,7 +17,7 @@ module MiniTest
       attr_reader :test_obj, :predicate
 
       def query &blk
-        result = @test_obj.send @predicate
+        result = (@test_obj.send(@predicate) ? true : false) # force result to be boolean because of failure in Test is not a predicate ?
         if result
           setup_state
           yield self if block_given?

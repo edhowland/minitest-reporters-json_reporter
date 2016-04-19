@@ -12,6 +12,8 @@ require_relative 'json_reporter/fault_detail'
 
 require_relative 'json_reporter/skip_detail'
 require_relative 'json_reporter/error_detail'
+require_relative 'json_reporter/fail_detail'
+
 
 
 # MiniTest namespace - plugins must live here
@@ -168,8 +170,12 @@ module MiniTest
       end
 
       def failed(test)
-        status('failure', test, :failure) do |e|
-          @storage[:fails] << e
+#        status('failure', test, :failure) do |e|
+#          @storage[:fails] << e
+#          @failed += 1
+#        end
+        MiniTest::Reporters::FailDetail.new(test).query do |d|
+          @storage[:fails] << d.to_h
           @failed += 1
         end
       end

@@ -63,3 +63,14 @@ class FaultyTest < FakeBaseTest
   end
 
 end
+
+# TODO: class documentation
+class FailTest < FakeBaseTest
+  def initialize 
+    super 'up creek, less paddle'
+  end
+
+    def failure
+    mk_exc 'crap'
+  end
+end

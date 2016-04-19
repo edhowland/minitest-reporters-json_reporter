@@ -55,11 +55,11 @@ end
   end
 end
 
-class FailTest < SkipTest
-  def skipped?
-    false
-  end
-end
+#class FailTest < SkipTest
+#  def skipped?
+#    false
+#  end
+#end
 
 class ErrorTest < FailTest
   def error?
@@ -215,8 +215,8 @@ describe MiniTest::Reporters::JsonReporter do
           fails[0][:class].must_equal 'FailTest'
         end
 
-        it 'should have message: failed test' do
-          fails[0][:message].must_equal 'failed test'
+        it 'should have message: bad juju' do
+          fails[0][:message].must_equal 'bad juju'
         end
 
         it 'should have type: failure' do
@@ -227,15 +227,14 @@ describe MiniTest::Reporters::JsonReporter do
           fails[0][:name].length.must_be :>, 0
         end
 
-        it 'should have empty backtrace' do
-          fails[0][:backtrace].wont_be_nil
-          fails[0][:backtrace].must_be_empty
+        it 'should have nil backtrace' do
+          fails[0][:backtrace].must_be_nil
         end
       end
     end
 
     describe 'when running error test' do
-      let(:err) { ErrorTest.new }
+      let(:err) { FaultyTest.new }
       subject { rpt.record(err); rpt }
 
       it 'should be red' do
@@ -254,8 +253,8 @@ describe MiniTest::Reporters::JsonReporter do
           fails[0][:type].must_equal 'error'
         end
 
-        it 'should have class: ErrorTest' do
-          fails[0][:class].must_equal 'ErrorTest'
+        it 'should have class: FaultyTest' do
+          fails[0][:class].must_equal 'FaultyTest'
         end
 
         it 'should have name.length > 0' do
