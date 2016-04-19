@@ -15,14 +15,14 @@ class FakeBaseTest
   def initialize(name)
     @name = name
     @assertions = 0
-end
+  end
 
   attr_accessor :assertions
   attr_reader :name
 
   def passed?
     false
-end
+  end
 
   def skipped?
     false
@@ -41,7 +41,7 @@ end
 class FakePasser < FakeBaseTest
   def initialize
     super 'passer'
-end
+  end
 
   def passed?
     true
@@ -69,5 +69,5 @@ class FailTest < FakeBaseTest
 
   def failure
     mk_exc 'crap'
-end
+  end
 end

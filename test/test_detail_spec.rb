@@ -6,7 +6,7 @@ require_relative 'spec_helper'
 class TestFaker
   def initialize
     @name = 'FakeDouble'
-end
+  end
 
   attr_reader :name
 end

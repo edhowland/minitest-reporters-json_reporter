@@ -4,18 +4,18 @@ require_relative 'spec_helper'
 require_relative 'detail_helper'
 
 # TODO: class documentation
-class MyErrorDetail < MiniTest::Reporters::FaultDetail
-  def initialize(test)
-    super
-    @type = 'error'
-    @predicate = :error?
-end
-end
+# class MyErrorDetail < MiniTest::Reporters::FaultDetail
+#  def initialize(test)
+#    super
+#    @type = 'error'
+#    @predicate = :error?
+# end
+# end
 
 describe MiniTest::Reporters::FaultDetail do
   describe 'to_h' do
     let(:tst) { FaultyTest.new }
-    let(:det) { MyErrorDetail.new(tst) }
+    let(:det) { MiniTest::Reporters::ErrorDetail.new(tst) }
     subject { det.query }
 
     it 'should have hash with superclass' do

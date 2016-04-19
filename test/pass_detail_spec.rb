@@ -16,7 +16,7 @@ end
 class PassedTest
   def initialize
     @name = 'MyPassingTest'
-end
+  end
 
   attr_reader :name
 

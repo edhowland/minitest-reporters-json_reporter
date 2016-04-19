@@ -12,19 +12,19 @@ class FakeTest
 
   def passed?
     true
-end
+  end
 
   def skipped?
     false
-end
+  end
 
   def failure
     nil
-end
+  end
 
   def error?
     false
-end
+  end
 end
 
 class FakeException
@@ -44,7 +44,7 @@ class SkipTest < FakeTest
 
   def passed?
     false
-end
+  end
 
   def failure
     FakeException.new

@@ -1,3 +1,4 @@
+
 # error_detail.rb - class MiniTest::Reporters::ErrorDetail
 
 # MiniTest Namespace for all things Minitest
