@@ -64,8 +64,7 @@ module MiniTest
         # Only add this if not already added and verbose option is set
         @storage[:passes] ||= [] if options[:verbose]
 
-        # output JSON
-        output(options[:io], @storage)
+        options[:io].write(JSON.dump(@storage))
       end
 
       def yellow?
@@ -183,11 +182,6 @@ module MiniTest
             @storage[:passes] << d.to_h
           end
         end
-      end
-
-      # I/O
-      def output(io, body)
-        io.write(JSON.dump(body))
       end
 
       # transform_store options: make pretty object for our JSON [metadata.options]
