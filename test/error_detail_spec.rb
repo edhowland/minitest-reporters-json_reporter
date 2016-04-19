@@ -6,7 +6,7 @@ require_relative 'detail_helper'
 describe MiniTest::Reporters::ErrorDetail do
   describe 'query' do
   let(:tst) { FaultyTest.new }
-    let(:det) { MiniTest::Reporters::ErrorDetail.new(tst, Object.new) }
+    let(:det) { MiniTest::Reporters::ErrorDetail.new(tst) }
     subject { det.query }
 
     it 'should tst.failure.backtrace exists and is not empty' do
