@@ -4,7 +4,7 @@
 module MiniTest
   # Reporters Extensible framework for custom Minitest reporters
   module Reporters
-    # Base class for detail handlers: skipDetail, PassDetail, ErrorDetail and FailDetail
+    # Base class for detail handlers
     class TestDetail
       def initialize(test)
         @type = 'unknown'
@@ -17,7 +17,8 @@ module MiniTest
       attr_reader :test_obj, :predicate
 
       def query(&_blk)
-        result = (@test_obj.send(@predicate) ? true : false) # force result to be boolean because of failure in Test is not a predicate ?
+        # force result to be boolean because of failure in Test is not a predicate ?
+        result = (@test_obj.send(@predicate) ? true : false)
         if result
           setup_state
           yield self if block_given?
