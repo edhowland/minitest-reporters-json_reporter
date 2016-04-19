@@ -170,10 +170,6 @@ module MiniTest
       end
 
       def failed(test)
-#        status('failure', test, :failure) do |e|
-#          @storage[:fails] << e
-#          @failed += 1
-#        end
         MiniTest::Reporters::FailDetail.new(test).query do |d|
           @storage[:fails] << d.to_h
           @failed += 1
