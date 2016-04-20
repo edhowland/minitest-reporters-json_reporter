@@ -49,8 +49,8 @@ class FakePasser < FakeBaseTest
 end
 
 class FaultyTest < FakeBaseTest
-  def initialize
-    super 'juju'
+  def initialize name='juju'
+    super name
     @failure = mk_exc('bad juju')
   end
 
@@ -73,13 +73,13 @@ class FailTest < FakeBaseTest
 end
 
 # TODO: class documentation
-class FakeSkipper < FakeBaseTest
+class FakeSkipper < FaultyTest
   def skipped?
     true
   end
 
-  def failure
-    mk_exc 'skipped'
-  end
+#  def failure
+#    mk_exc 'skipped'
+#  end
 
 end

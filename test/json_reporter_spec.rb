@@ -37,17 +37,6 @@ class FakeException
   end
 end
 
-# class FailTest < SkipTest
-#  def skipped?
-#    false
-#  end
-# end
-
-class ErrorTest < FailTest
-  def error?
-    true
-  end
-end
 
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
