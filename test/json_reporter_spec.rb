@@ -3,40 +3,6 @@
 require_relative 'spec_helper'
 require_relative 'detail_helper'
 
-class FakeTest
-  def initialize
-    @assertions = 0
-  end
-
-  attr_reader :assertions
-
-  def passed?
-    true
-  end
-
-  def skipped?
-    false
-  end
-
-  def failure
-    nil
-  end
-
-  def error?
-    false
-  end
-end
-
-class FakeException
-  def message
-    'failed test'
-  end
-
-  def backtrace
-    ['xxxxx_test.rb:23']
-  end
-end
-
 
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
