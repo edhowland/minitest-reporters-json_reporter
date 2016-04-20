@@ -3,7 +3,6 @@
 require_relative 'spec_helper'
 require_relative 'detail_helper'
 
-
 describe MiniTest::Reporters::JsonReporter do
   let(:obj) { MiniTest::Reporters::JsonReporter.new }
 
