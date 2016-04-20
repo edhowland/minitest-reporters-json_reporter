@@ -64,7 +64,7 @@ module MiniTest
         # Only add this if not already added and verbose option is set
         @storage[:passes] ||= [] if options[:verbose]
 
-        options[:io].write(JSON.dump(@storage))
+        io.write(JSON.dump(@storage))
       end
 
       def yellow?

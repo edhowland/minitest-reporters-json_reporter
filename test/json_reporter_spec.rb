@@ -209,4 +209,14 @@ describe MiniTest::Reporters::JsonReporter do
       end
     end
   end
+
+  describe 'report' do
+    let(:rpt) { MiniTest::Reporters::JsonReporter.new }
+    subject { rpt.start }
+
+    it 'should generate output to stdout' do
+      subject
+      rpt.report
+    end
+  end
 end
