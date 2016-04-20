@@ -211,12 +211,15 @@ describe MiniTest::Reporters::JsonReporter do
   end
 
   describe 'report' do
+    let(:io) { StringIO.new '' }
     let(:rpt) { MiniTest::Reporters::JsonReporter.new }
+    before { $stdout = io }
     subject { rpt.start }
 
     it 'should generate output to stdout' do
       subject
       rpt.report
+      io.to_s.wont_be_empty
     end
   end
 end
