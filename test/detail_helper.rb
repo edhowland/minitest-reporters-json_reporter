@@ -71,3 +71,15 @@ class FailTest < FakeBaseTest
     mk_exc 'crap'
   end
 end
+
+# TODO: class documentation
+class FakeSkipper < FakeBaseTest
+  def skipped?
+    true
+  end
+
+  def failure
+    mk_exc 'skipped'
+  end
+
+end

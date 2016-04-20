@@ -37,24 +37,6 @@ class FakeException
   end
 end
 
-class SkipTest < FakeTest
-  def skipped?
-    true
-  end
-
-  def passed?
-    false
-  end
-
-  def failure
-    FakeException.new
-  end
-
-  def name
-    'skipped'
-  end
-end
-
 # class FailTest < SkipTest
 #  def skipped?
 #    false
@@ -152,7 +134,7 @@ describe MiniTest::Reporters::JsonReporter do
     end
 
     describe 'when running a skipped test' do
-      let(:skipper) { SkipTest.new }
+      let(:skipper) { FakeSkipper.new('will be skipped') }
       subject { rpt.record(skipper); rpt }
       it 'should be yellow' do
         subject.yellow?.must_equal true
@@ -177,15 +159,16 @@ describe MiniTest::Reporters::JsonReporter do
         end
 
         it 'should have class: SkipTest' do
-          skips[0][:class].must_equal 'SkipTest'
+          skips[0][:class].must_equal 'FakeSkipper'
         end
 
         it 'should have message.length > 0' do
           skips[0][:message].length.must_be :>, 0
         end
 
-        it 'should have location: xxxxx_test.rb:23' do
-          skips[0][:location].must_equal 'xxxxx_test.rb:23'
+        it 'should have non nil, non empty location' do
+          skips[0][:location].wont_be_nil
+          skips[0][:location].wont_be_empty
         end
       end
     end
