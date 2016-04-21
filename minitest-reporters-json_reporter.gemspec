@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['ed.howland@gmail.com']
 
   spec.summary       = 'JSON Reporter format for minitest-reporters gem.'
-  spec.description   = '    Formats the output of a MiniTest run as JSON. Useful for interfacing MiniTest or MiniSpec to IDEs or programming text editors, such as the Atom editor.
+  spec.description   = '    Formats the output of a Minitest run as JSON. Useful for interfacing Minitest or MiniSpec to IDEs or programming text editors, such as the Atom editor.
 See: https://atom.io. Originally written to interface with the Viper Audible editor for blind programmers. See https://github.com/edhowland/viper'
   spec.homepage      = 'https://github.com/edhowland/minitest-reporters-json_reporter'
   spec.license       = 'MIT'
@@ -21,6 +21,7 @@ See: https://atom.io. Originally written to interface with the Viper Audible edi
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.required_ruby_version = '~> 2.0'
   spec.add_runtime_dependency 'minitest', '~> 5.7'
   spec.add_runtime_dependency 'minitest-reporters', '~> 1.1.8'
 

@@ -64,11 +64,11 @@
     <div id="content"><div id='filecontents'><h1>Minitest::Reporters::JsonReporter</h1>
 
 <p>This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
-You can use this gem to interface MiniTest output into automated tools like CI, CD or IDEs or code editors. An
+You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
 example interface might be to the Atom editor: <a href="https://atom.io">https://atom.io</a>
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: <a href="https://github.com/edhowland/viper">https://github.com/edhowland/viper</a></p>
 
-<h2>Version 0.1.1</h2>
+<h2>Version 0.2.0</h2>
 
 <h2>Installation</h2>
 
@@ -96,12 +96,10 @@ I originally wrote this gem to interface to the Viper audible  code editor for t
 
 <p>In that same file, add something like this near the bottom of the file:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='const'>MiniTest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='period'>.</span><span class='id identifier rubyid_use!'>use!</span> <span class='lbracket'>[</span> <span class='const'>MiniTest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='op'>::</span><span class='const'>JsonReporter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbracket'>]</span>
+<pre class="code ruby"><code class="ruby"><span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='period'>.</span><span class='id identifier rubyid_use!'>use!</span> <span class='lbracket'>[</span> <span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='op'>::</span><span class='const'>JsonReporter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbracket'>]</span>
 </code></pre>
 
-<p>Then run your tests as normal. You will get a JSON formatted string in stdout.
-The constructor accepts all the arguments as normal MiniTest::Reporters reporters. E.g. you can pass any IO object as the first arg to write the JSON to a file.
-You can also set any options in your test_helper.rb such as :verbose =&gt; true.</p>
+<p>Then run your tests as normal. You will get a JSON formatted string in stdout.</p>
 
 <p>There are 5 or 6   objects contained within this output: The 6th object: passes is only included if the --verbose option was passed to the test or set in the options parameter to the constructor.</p>
 
@@ -135,7 +133,7 @@ You can also set any options in your test_helper.rb such as :verbose =&gt; true.
 </div></div>
 
     <div id="footer">
-  Generated on Thu Apr 21 18:35:45 2016 by
+  Generated on Thu Apr 21 20:48:52 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.2).
 </div>
