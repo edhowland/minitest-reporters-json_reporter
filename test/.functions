@@ -1,0 +1,1 @@
+alias vj='vp ../lib/minitest/reporters/json_reporter.rb'

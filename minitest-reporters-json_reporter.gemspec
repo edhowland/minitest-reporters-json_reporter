@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'JSON Reporter format for minitest-reporters gem.'
   spec.description   = '    Formats the output of a MiniTest run as JSON. Useful for interfacing MiniTest or MiniSpec to IDEs or programming text editors, such as the Atom editor.
 See: https://atom.io. Originally written to interface with the Viper Audible editor for blind programmers. See https://github.com/edhowland/viper'
-  spec.homepage      = "https://github.com/edhowland/minitest-reporters-json_reporter"
+  spec.homepage      = 'https://github.com/edhowland/minitest-reporters-json_reporter'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
