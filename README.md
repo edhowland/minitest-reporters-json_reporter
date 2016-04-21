@@ -127,4 +127,3 @@ $ ruby report_spec.rb  --verbose | jq .
 
 Note: Extra credit if git flow feature branching was used.
 
-^.
