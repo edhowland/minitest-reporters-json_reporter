@@ -9,7 +9,6 @@ require_relative 'json_reporter/version'
 require_relative 'json_reporter/test_detail'
 require_relative 'json_reporter/pass_detail'
 require_relative 'json_reporter/fault_detail'
-
 require_relative 'json_reporter/skip_detail'
 require_relative 'json_reporter/error_detail'
 require_relative 'json_reporter/fail_detail'
@@ -20,8 +19,8 @@ module MiniTest
   module Reporters
     # MiniTest Reporter that produces a JSON output for interface in IDEs, editor
     class JsonReporter < BaseReporter
-      def initialize
-        super
+      def initialize my_options={}
+        super my_options
         @skipped = 0
         @failed = 0
         @errored = 0
@@ -114,14 +113,6 @@ module MiniTest
           errored: @errored,
           skipped: @skipped,
           passed: @passed
-        }
-      end
-
-      def test_detail(type, test)
-        {
-          type: type,
-          class: test.class.name,
-          name: test.name
         }
       end
 
