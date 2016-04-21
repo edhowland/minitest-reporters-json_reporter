@@ -17,8 +17,14 @@ Abstract
 
 JSON has become the lingua franca of interprogram communications. There are several  very good output formats
 for Minitest, but no JSON format until now. If you want to hook up an IDE or some other automatic
-framework, it is natural to send output in some parsable format like XML or JSON. This extension summarizes the result of
+framework like a CI or CD tool, it is natural to send output in some parsable format like XML or JSON. This extension summarizes the result of
 a test run in  format like JSON.a test run in an easible consumable format.
+
+Anti-features:
+
+This version does not include any timing statistics.
+However, you can subclass Minitest::Reporters::JsonReporter and add to the storage accessor any object. This is just a Hash.
+ The class is derived from Minitest::StatisticsReporter wherin you can get this detail.
 
 Usage is very simple. Just require 'minitest/reporters/json_reporter' in your test_helper.rb or spec_helper.rb.
 This gem also depends on 'minitest' and 'minitest/reporters'.  Then, you should also invoke the use! method of Minitest::Reporters class with a call to Minitest::Reporters::JsonReporter.new. 
@@ -34,16 +40,12 @@ Minitest::Reporters.use! [Minitest::Reporters::JsonReporter.new]
 
 Here is the URLs for the dependent gems:
 
-gem list minitest
-
-*** LOCAL GEMS ***
-
 minitest (5.7.0, 5.4.3) : https://rubygems.org/gems/minitest
 minitest-reporters (1.1.8) : https://rubygems.org/gems/minitest-reporters
-minitest-reporters-json_reporter (0.1.1) : https://rubygems.org/gems/minitest-reporters-json_reporter
 
 The JSON format is sent to stdout when you run a test or all tests.
 There are 5 (or 6)  objects contained within this output:
+The 6th object : passes is only present when --verbose or the options[:verbose] is supplied.
 
 1. status -  Status of the overall test run. Can be 'Success', 'Passed with skipped tests' or 'Failed'. There also a color attribute: green, yellow or red - respectfully.
 2. metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format. This also include the parsed command line in the options object.
@@ -51,10 +53,69 @@ There are 5 (or 6)  objects contained within this output:
 4. fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test. Tests that generate an error also contain the filter backtrace.
 5. skips - Array of each skipped. Each object contains the information as a failed test, including the skip message, if any.
 6. passes: (Optional: if --verbose is passed to the test): Class name, name and location of the passed test.
-Here is a sample test run:
 
-vagrant ruby report_spec.rb  
-{"status":{"code":"Failed","color":"red"},"metadata":{"generated_by":"Minitest::Reporters::JsonReporter","version":"0.1.1","time":"2016-04-07T23:31:04Z"},"statistics":{"total":5,"failed":2,"errored":1,"skipped":1,"passed":1},"fails":[{"type":"error","class":"Error","name":"test_0001_anonymous","message":"RuntimeError: should fail\n    report_spec.rb:6:in `block (2 levels) in <main>'","location":"report_spec.rb:6"},{"type":"failure","class":"second failure","name":"test_0001_anonymous","message":"Expected: 9\n  Actual: 3","location":"report_spec.rb:20"},{"type":"failure","class":"failure","name":"test_0001_anonymous","message":"Expected: 2\n  Actual: 1","location":"report_spec.rb:14"}],"skips":[{"type":"skipped","class":"skipped test","name":"test_0001_anonymous","message":"what a layabout","location":"report_spec.rb:32"}]}vagrant 
+Here is a sample test run:
+# Pretty up JSON output with jq
+$ cd test/functional
+$ ruby report_spec.rb   | jq .
+{
+  "status": {
+    "code": "Failed",
+    "color": "red"
+  },
+  "metadata": {
+    "generated_by": "Minitest::Reporters::JsonReporter",
+    "version": "0.2.0",
+    "time": "2016-04-21T19:09:34Z",
+    "options": {
+      "io": "STDOUT",
+      "seed": 2579,
+      "args": "--seed 2579"
+    }
+  },
+  "statistics": {
+    "total": 5,
+    "failed": 2,
+    "errored": 1,
+    "skipped": 1,
+    "passed": 1
+  },
+  "fails": [
+    {
+      "type": "failure",
+      "class": "failure",
+      "name": "test_0001_anonymous",
+      "message": "Expected: 2\n  Actual: 1",
+      "location": "report_spec.rb:14"
+    },
+    {
+      "type": "failure",
+      "class": "second failure",
+      "name": "test_0001_anonymous",
+      "message": "Expected: 9\n  Actual: 3",
+      "location": "report_spec.rb:20"
+    },
+    {
+      "type": "error",
+      "class": "Error",
+      "name": "test_0001_anonymous",
+      "message": "RuntimeError: should fail\n    report_spec.rb:6:in `block (2 levels) in <main>'",
+      "location": "report_spec.rb:6",
+      "backtrace": [
+        "report_spec.rb:6:in `block (2 levels) in <main>'"
+      ]
+    }
+  ],
+  "skips": [
+    {
+      "type": "skipped",
+      "class": "skipped test",
+      "name": "test_0001_anonymous",
+      "message": "what a layabout",
+      "location": "report_spec.rb:32"
+    }
+  ]
+}
 
 You can use JSON parsing tools to get elements or subsets of this format. One such tool is JQ: https://stedolan.github.io/jq/
 
