@@ -89,18 +89,17 @@ describe MiniTest::Reporters::JsonReporter do
 
     describe 'when running a skipped test' do
       let(:skipper) { FakeSkipper.new('will be skipped') }
-    before { $stdout=StringIO.new(''); rpt.start  }
+      before { $stdout = StringIO.new(''); rpt.start }
 
       subject { rpt.record(skipper); rpt.report; rpt }
       it 'should be yellow' do
         subject.yellow?.must_equal true
       end
 
-    it 'should have color : yellow' do
-      subject
-      rpt.storage[:status][:color].must_equal 'yellow'
-    end
-
+      it 'should have color : yellow' do
+        subject
+        rpt.storage[:status][:color].must_equal 'yellow'
+      end
 
       it 'should have non empty skips' do
         subject.storage[:skips].wont_be_empty
@@ -236,15 +235,14 @@ describe MiniTest::Reporters::JsonReporter do
       subject { rpt_fail.report }
       it 'should have storage[:status][:code] == failed' do
         subject
-  rpt_fail.storage[:status][:code].must_equal 'Failed'
+        rpt_fail.storage[:status][:code].must_equal 'Failed'
       end
     end
   end
 
-
   describe 'with verbose option' do
-    let(:rpt) { MiniTest::Reporters::JsonReporter.new :verbose => true }
-    before { $stdout=StringIO.new(''); rpt.start  }
+    let(:rpt) { MiniTest::Reporters::JsonReporter.new verbose: true }
+    before { $stdout = StringIO.new(''); rpt.start }
     subject { rpt.record(FakePasser.new) }
     it 'should have non-nil passes' do
       subject
@@ -252,5 +250,4 @@ describe MiniTest::Reporters::JsonReporter do
       rpt.storage[:passes].wont_be_empty
     end
   end
-
 end

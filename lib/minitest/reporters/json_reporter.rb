@@ -19,7 +19,7 @@ module MiniTest
   module Reporters
     # MiniTest Reporter that produces a JSON output for interface in IDEs, editor
     class JsonReporter < BaseReporter
-      def initialize my_options={}
+      def initialize(my_options = {})
         super my_options
         @skipped = 0
         @failed = 0

@@ -16,3 +16,7 @@ Style/Semicolon:
 
 Metrics/ClassLength:
   Max: 120
+
+Style/GlobalVars:
+  Exclude:
+    - 'test/**/*'
