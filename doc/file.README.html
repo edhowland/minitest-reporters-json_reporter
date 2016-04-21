@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>Minitest::Reporters::JsonReporter</h1>
+
+<p>This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
+You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
+example interface might be to the Atom editor: <a href="https://atom.io">https://atom.io</a>
+I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: <a href="https://github.com/edhowland/viper">https://github.com/edhowland/viper</a></p>
+
+<h2>Version 0.2.0</h2>
+
+<h2>Installation</h2>
+
+<p>Add this line to your application&#39;s Gemfile:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>minitest-reporters-json_reporter</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre class="code ruby"><code class="ruby">$ gem install minitest-reporters-json_reporter
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Add this line to your &#39;spec_helper.rb&#39; or &#39;test_helper.rb&#39;:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>minitest/reporters/json_reporter</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>In that same file, add something like this near the bottom of the file:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='period'>.</span><span class='id identifier rubyid_use!'>use!</span> <span class='lbracket'>[</span> <span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='op'>::</span><span class='const'>JsonReporter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbracket'>]</span>
+</code></pre>
+
+<p>Then run your tests as normal. You will get a JSON formatted string in stdout.</p>
+
+<p>There are 5 or 6   objects contained within this output: The 6th object: passes is only included if the --verbose option was passed to the test or set in the options parameter to the constructor.</p>
+
+<ol>
+<li>status -  Status of the overall test run. Can be &#39;Success&#39;, &#39;Passed with skipped tests&#39; or &#39;Failed&#39;. There also a color attribute: green, yellow or red - respectfully.</li>
+<li>metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format. Also include options object computed by super classes including command line arguments.</li>
+<li>statistics - Contains counts of the status of test cases. Includes: Total, Skipped, Failed Errored and Passed.</li>
+<li>fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test and the filtered backtrace array if an error type.</li>
+<li>skips - Array of each skipped. Each object contains the information as a failed test, including the skip message, if any.</li>
+<li>passes - Array of passing tests if the --verbose option was set . This object is normally absent otherwise.</li>
+</ol>
+
+<p>Here is a sample output:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># Use jq to pretty print the JSON output
+</span></code></pre>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork it ( <a href="https://github.com/edhowland/minitest-reporters-json_reporter/fork">https://github.com/edhowland/minitest-reporters-json_reporter/fork</a> )</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am &#39;Add some feature&#39;</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create a new Pull Request</li>
+</ol>
+
+<p>Note: Extra credit if git flow feature branching was used.</p>
+
+<p>^.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Thu Apr 21 20:48:52 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.2).
+</div>
+
+  </body>
+</html>

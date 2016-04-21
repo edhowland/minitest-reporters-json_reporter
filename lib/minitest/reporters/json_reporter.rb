@@ -1,4 +1,4 @@
-# json_reporter.rb - class MiniTest::Reporters::JsonReporter
+# json_reporter.rb - class Minitest::Reporters::JsonReporter
 
 require 'json'
 require 'time'
@@ -6,15 +6,21 @@ require 'minitest'
 require 'minitest/reporters'
 
 require_relative 'json_reporter/version'
+require_relative 'json_reporter/test_detail'
+require_relative 'json_reporter/pass_detail'
+require_relative 'json_reporter/fault_detail'
+require_relative 'json_reporter/skip_detail'
+require_relative 'json_reporter/error_detail'
+require_relative 'json_reporter/fail_detail'
 
-# MiniTest namespace - plugins must live here
-module MiniTest
-  # MiniTest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
+# Minitest namespace - plugins must live here
+module Minitest
+  # Minitest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # MiniTest Reporter that produces a JSON output for interface in IDEs, editor
+    # Minitest Reporter that produces a JSON output for interface in IDEs, editor
     class JsonReporter < BaseReporter
-      def initialize(opts = {})
-        super(opts)
+      def initialize(my_options = {})
+        super my_options
         @skipped = 0
         @failed = 0
         @errored = 0
@@ -22,19 +28,21 @@ module MiniTest
         @storage = init_status
       end
 
+      attr_reader :storage
+
       def metadata_h
         {
           generated_by: self.class.name,
-          version: MiniTest::Reporters::JsonReporter::VERSION,
+          version: Minitest::Reporters::JsonReporter::VERSION,
           time: Time.now.utc.iso8601
         }
       end
 
       def init_status
         {
-          status: red_status,
+          status: green_status,
           metadata: metadata_h,
-          statistics: {},
+          statistics: statistics_h,
           fails: [],
           skips: []
         }
@@ -47,15 +55,15 @@ module MiniTest
 
       def report
         super
-        set_status # sets the sucess or failure and color in the status object
-        @storage[:statistics][:total] = @passed + @skipped + @failed + @errored
-        @storage[:statistics][:failed] = @failed
-        @storage[:statistics][:errored] = @errored
-        @storage[:statistics][:skipped] = @skipped
-        @storage[:statistics][:passed] = @passed
 
-        # output JSON
-        output($stdout, @storage)
+        set_status # sets the success or failure and color in the status object
+        # options only exists once test run starts
+        @storage[:metadata][:options] = transform_store(options)
+        @storage[:statistics] = statistics_h
+        # Only add this if not already added and verbose option is set
+        @storage[:passes] ||= [] if options[:verbose]
+
+        io.write(JSON.dump(@storage))
       end
 
       def yellow?
@@ -73,11 +81,13 @@ module MiniTest
       private
 
       def set_status
-        if yellow?
-          @storage[:status] = yellow_status
-        elsif green?
-          @storage[:status] = green_status
-        end
+        @storage[:status] = if red?
+                              red_status
+                            elsif yellow?
+                              yellow_status
+                            else
+                              green_status
+                            end
       end
 
       def color_h(code, color)
@@ -96,65 +106,60 @@ module MiniTest
         color_h('Success', 'green')
       end
 
-      def location(exception)
-        last_before_assertion = ''
-
-        exception.backtrace.reverse_each do |s|
-          break if s =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/
-          last_before_assertion = s
-        end
-
-        last_before_assertion.sub(/:in .*$/, '')
-      end
-
-      def fault_h(type, test, e)
+      def statistics_h
         {
-          type: type,
-          class: test.class.name,
-          name: test.name,
-          message: e.message,
-          location: location(e)
+          total: @failed + @errored + @skipped + @passed,
+          failed: @failed,
+          errored: @errored,
+          skipped: @skipped,
+          passed: @passed
         }
       end
 
-      def status(type, test, msg, &_blk)
-        result = test.send(msg)
-        if result
-          e = fault_h(type, test, test.failure)
-          yield(e)
-        end
-
-        result
-      end
-
       def skipped(test)
-        status('skipped', test, :skipped?) do |e|
-          @storage[:skips] << e
+        Minitest::Reporters::SkipDetail.new(test).query do |d|
           @skipped += 1
+          @storage[:skips] << d.to_h
         end
       end
 
       def errored(test)
-        status('error', test, :error?) do |e|
-          @storage[:fails] << e
+        Minitest::Reporters::ErrorDetail.new(test).query do |d|
+          d.backtrace = filter_backtrace(d.backtrace)
+          @storage[:fails] << d.to_h
           @errored += 1
         end
       end
 
       def failed(test)
-        status('failure', test, :failure) do |e|
-          @storage[:fails] << e
+        Minitest::Reporters::FailDetail.new(test).query do |d|
+          @storage[:fails] << d.to_h
           @failed += 1
         end
       end
 
-      def passed(_test)
-        @passed += 1
+      # If it is increments @passed and optionally adds PassDetail object
+      # to .passes array
+      # if options[:verbose] == true
+      def passed(test)
+        Minitest::Reporters::PassDetail.new(test).query do |d|
+          @passed += 1
+          if options[:verbose]
+            @storage[:passes] ||= []
+            @storage[:passes] << d.to_h
+          end
+        end
       end
 
-      # I/O
-      def output(io, body)
-        io.write(JSON.dump(body))
+      # transform_store options: make pretty object for our JSON [metadata.options]
+      # If :io is the IO class and == $stdout: "STDOUT"
+      # Delete key: total_count
+      def transform_store(opts)
+        o = opts.clone
+        o[:io] = o[:io].class.name
+        o[:io] = 'STDOUT' if opts[:io] == $stdout
+        o.delete(:total_count)
+        o
       end
     end
   end

@@ -1,0 +1,58 @@
+{
+  "status": {
+    "code": "Failed",
+    "color": "red"
+  },
+  "metadata": {
+    "generated_by": "Minitest::Reporters::JsonReporter",
+    "version": "0.1.1",
+    "time": "2016-04-14T16:09:40Z"
+  },
+  "statistics": {
+    "total": 5,
+    "failed": 2,
+    "errored": 1,
+    "skipped": 1,
+    "passed": 1
+  },
+  "fails": [
+    {
+      "type": "failure",
+      "class": "failure",
+      "name": "test_0001_anonymous",
+      "message": "Expected: 2\n  Actual: 1",
+      "location": "report_spec.rb:14",
+      "backtrace": []
+    },
+    {
+      "type": "error",
+      "class": "Error",
+      "name": "test_0001_anonymous",
+      "message": "RuntimeError: should fail\n    report_spec.rb:6:in `block (2 levels) in <main>'",
+      "location": "report_spec.rb:6",
+      "backtrace": [
+        "report_spec.rb:6:in `block (2 levels) in <main>'"
+      ]
+    },
+    {
+      "type": "failure",
+      "class": "second failure",
+      "name": "test_0001_anonymous",
+      "message": "Expected: 9\n  Actual: 3",
+      "location": "report_spec.rb:20",
+      "backtrace": []
+    }
+  ],
+  "skips": [
+    {
+      "type": "skipped",
+      "class": "skipped test",
+      "name": "test_0001_anonymous",
+      "message": "what a layabout",
+      "location": "report_spec.rb:32",
+      "backtrace": [
+        "report_spec.rb:32:in `block (2 levels) in <main>'"
+      ]
+    }
+  ]
+}
