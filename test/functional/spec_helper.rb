@@ -3,5 +3,5 @@ require 'minitest/reporters/json_reporter'
 
 require 'minitest/autorun'
 
-MiniTest::Reporters.use!(MiniTest::Reporters::JsonReporter.new)
-# MiniTest::Reporters.use!
+Minitest::Reporters.use!(Minitest::Reporters::JsonReporter.new)
+# Minitest::Reporters.use!

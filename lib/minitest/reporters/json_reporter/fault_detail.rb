@@ -1,7 +1,7 @@
-# fault_detail.rb - class MiniTest::Reporters::FaultDetail
+# fault_detail.rb - class Minitest::Reporters::FaultDetail
 
-# MiniTest Base namespace for Minitest related objects
-module MiniTest
+# Minitest Base namespace for Minitest related objects
+module Minitest
   # Reporters - Extensible Reporting framework for Minitest
   module Reporters
     # superclass for SkipDetail, FailDetail and ErrorDetail

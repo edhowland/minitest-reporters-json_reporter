@@ -1,8 +1,8 @@
 
-# error_detail.rb - class MiniTest::Reporters::ErrorDetail
+# error_detail.rb - class Minitest::Reporters::ErrorDetail
 
-# MiniTest Namespace for all things Minitest
-module MiniTest
+# Minitest Namespace for all things Minitest
+module Minitest
   # Reporters Namespace for Minitest::Reporters reporters
   module Reporters
     # How to handle an error detail

@@ -1,11 +1,11 @@
-# pass_detail.rb - class MiniTest::Reporters::PassDetail
+# pass_detail.rb - class Minitest::Reporters::PassDetail
 
-# MiniTest Namespace for all things Minitest
-module MiniTest
+# Minitest Namespace for all things Minitest
+module Minitest
   # Reporters Extensible framework for custom Minitest reporters
   module Reporters
     # Handler for detail of passed tests
-    class PassDetail < MiniTest::Reporters::TestDetail
+    class PassDetail < Minitest::Reporters::TestDetail
       def initialize(test)
         super
         @type = 'passed'

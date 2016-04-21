@@ -3,10 +3,10 @@
 require_relative 'spec_helper'
 require_relative 'detail_helper'
 
-describe MiniTest::Reporters::FailDetail do
+describe Minitest::Reporters::FailDetail do
   describe 'query' do
     let(:tst) { FailTest.new }
-    let(:det) { MiniTest::Reporters::FailDetail.new(tst) }
+    let(:det) { Minitest::Reporters::FailDetail.new(tst) }
 
     it 'should return true' do
       det.query.must_equal true

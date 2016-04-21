@@ -1,7 +1,7 @@
-# fail_detail.rb - class MiniTest::Reporters::FailDetail
+# fail_detail.rb - class Minitest::Reporters::FailDetail
 
-# MiniTest Namespace for all things Minitest
-module MiniTest
+# Minitest Namespace for all things Minitest
+module Minitest
   # Reporters Extensible reporting framework for Minitest runs
   module Reporters
     # FailDetail Detail of failed test

@@ -1,7 +1,7 @@
-# test_detail.rb - class MiniTest::Reporters::TestDetail
+# test_detail.rb - class Minitest::Reporters::TestDetail
 
-# MiniTest Namespace for all things Minitest
-module MiniTest
+# Minitest Namespace for all things Minitest
+module Minitest
   # Reporters Extensible framework for custom Minitest reporters
   module Reporters
     # Base class for detail handlers

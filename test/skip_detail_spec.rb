@@ -20,9 +20,9 @@ end
 #
 # end
 
-describe MiniTest::Reporters::SkipDetail do
+describe Minitest::Reporters::SkipDetail do
   let(:tst) { SkipperTest.new }
-  let(:det) { MiniTest::Reporters::SkipDetail.new(tst) }
+  let(:det) { Minitest::Reporters::SkipDetail.new(tst) }
 
   describe 'initialize' do
     it 'should have predicate == :skipped?' do

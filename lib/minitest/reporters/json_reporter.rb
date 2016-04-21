@@ -1,4 +1,4 @@
-# json_reporter.rb - class MiniTest::Reporters::JsonReporter
+# json_reporter.rb - class Minitest::Reporters::JsonReporter
 
 require 'json'
 require 'time'
@@ -13,11 +13,11 @@ require_relative 'json_reporter/skip_detail'
 require_relative 'json_reporter/error_detail'
 require_relative 'json_reporter/fail_detail'
 
-# MiniTest namespace - plugins must live here
-module MiniTest
+# Minitest namespace - plugins must live here
+module Minitest
   # MiniTest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # MiniTest Reporter that produces a JSON output for interface in IDEs, editor
+    # Minitest Reporter that produces a JSON output for interface in IDEs, editor
     class JsonReporter < BaseReporter
       def initialize(my_options = {})
         super my_options
@@ -33,7 +33,7 @@ module MiniTest
       def metadata_h
         {
           generated_by: self.class.name,
-          version: MiniTest::Reporters::JsonReporter::VERSION,
+          version: Minitest::Reporters::JsonReporter::VERSION,
           time: Time.now.utc.iso8601
         }
       end
@@ -117,14 +117,14 @@ module MiniTest
       end
 
       def skipped(test)
-        MiniTest::Reporters::SkipDetail.new(test).query do |d|
+        Minitest::Reporters::SkipDetail.new(test).query do |d|
           @skipped += 1
           @storage[:skips] << d.to_h
         end
       end
 
       def errored(test)
-        MiniTest::Reporters::ErrorDetail.new(test).query do |d|
+        Minitest::Reporters::ErrorDetail.new(test).query do |d|
           d.backtrace = filter_backtrace(d.backtrace)
           @storage[:fails] << d.to_h
           @errored += 1
@@ -132,7 +132,7 @@ module MiniTest
       end
 
       def failed(test)
-        MiniTest::Reporters::FailDetail.new(test).query do |d|
+        Minitest::Reporters::FailDetail.new(test).query do |d|
           @storage[:fails] << d.to_h
           @failed += 1
         end
@@ -142,7 +142,7 @@ module MiniTest
       # to .passes array
       # if options[:verbose] == true
       def passed(test)
-        MiniTest::Reporters::PassDetail.new(test).query do |d|
+        Minitest::Reporters::PassDetail.new(test).query do |d|
           @passed += 1
           if options[:verbose]
             @storage[:passes] ||= []

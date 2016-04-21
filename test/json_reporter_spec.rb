@@ -3,12 +3,12 @@
 require_relative 'spec_helper'
 require_relative 'detail_helper'
 
-describe MiniTest::Reporters::JsonReporter do
-  let(:obj) { MiniTest::Reporters::JsonReporter.new }
+describe Minitest::Reporters::JsonReporter do
+  let(:obj) { Minitest::Reporters::JsonReporter.new }
 
   describe 'initialize' do
-    it 'should be an instance of MiniTest::Reporters::JsonReporter' do
-      obj.must_be_instance_of MiniTest::Reporters::JsonReporter
+    it 'should be an instance of Minitest::Reporters::JsonReporter' do
+      obj.must_be_instance_of Minitest::Reporters::JsonReporter
     end
 
     it 'should have default initial hash' do
@@ -58,12 +58,12 @@ describe MiniTest::Reporters::JsonReporter do
       obj.storage[:status][:color].must_equal 'green'
     end
 
-    it 'should have metadata.generated_by == MiniTest::Reporters::JsonReporter' do
+    it 'should have metadata.generated_by == Minitest::Reporters::JsonReporter' do
       obj.storage[:metadata][:generated_by].must_equal 'Minitest::Reporters::JsonReporter'
     end
 
     it 'should have metadata.version == [correct version]' do
-      obj.storage[:metadata][:version].must_equal MiniTest::Reporters::JsonReporter::VERSION
+      obj.storage[:metadata][:version].must_equal Minitest::Reporters::JsonReporter::VERSION
     end
 
     it 'should have metadata.time of length 20' do
@@ -72,7 +72,7 @@ describe MiniTest::Reporters::JsonReporter do
   end
 
   describe 'record' do
-    let(:rpt) { MiniTest::Reporters::JsonReporter.new }
+    let(:rpt) { Minitest::Reporters::JsonReporter.new }
     describe 'when running a passing test' do
       let(:passer) { FakePasser.new }
       subject { rpt.record(passer); rpt }
@@ -219,7 +219,7 @@ describe MiniTest::Reporters::JsonReporter do
 
   describe 'report' do
     let(:io) { StringIO.new '' }
-    let(:rpt) { MiniTest::Reporters::JsonReporter.new }
+    let(:rpt) { Minitest::Reporters::JsonReporter.new }
     before { $stdout = io }
     subject { rpt.start }
 
@@ -230,7 +230,7 @@ describe MiniTest::Reporters::JsonReporter do
     end
 
     describe 'when recording a failing test' do
-      let(:rpt_fail) { MiniTest::Reporters::JsonReporter.new }
+      let(:rpt_fail) { Minitest::Reporters::JsonReporter.new }
       before { rpt_fail.start; rpt_fail.record(FailTest.new) }
       subject { rpt_fail.report }
       it 'should have storage[:status][:code] == failed' do
@@ -241,7 +241,7 @@ describe MiniTest::Reporters::JsonReporter do
   end
 
   describe 'with verbose option' do
-    let(:rpt) { MiniTest::Reporters::JsonReporter.new verbose: true }
+    let(:rpt) { Minitest::Reporters::JsonReporter.new verbose: true }
     before { $stdout = StringIO.new(''); rpt.start }
     subject { rpt.record(FakePasser.new) }
     it 'should have non-nil passes' do

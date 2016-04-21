@@ -11,9 +11,9 @@ class TestFaker
   attr_reader :name
 end
 
-describe MiniTest::Reporters::TestDetail do
+describe Minitest::Reporters::TestDetail do
   let(:tst) { TestFaker.new }
-  let(:det) { MiniTest::Reporters::TestDetail.new(tst) }
+  let(:det) { Minitest::Reporters::TestDetail.new(tst) }
 
   describe 'initialize' do
     it 'should have hash key name' do

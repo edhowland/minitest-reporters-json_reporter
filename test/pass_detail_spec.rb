@@ -25,9 +25,9 @@ class PassedTest
   end
 end
 
-describe MiniTest::Reporters::PassDetail do
+describe Minitest::Reporters::PassDetail do
   let(:tst) { PassedTest.new }
-  let(:det) { MiniTest::Reporters::PassDetail.new(tst) }
+  let(:det) { Minitest::Reporters::PassDetail.new(tst) }
 
   describe 'predicate' do
     it 'should be :passed?' do
@@ -56,7 +56,7 @@ describe MiniTest::Reporters::PassDetail do
 
   describe 'with InvalidTest' do
     let(:inv) { InvalidTest.new }
-    let(:det) { MiniTest::Reporters::PassDetail.new(inv) }
+    let(:det) { Minitest::Reporters::PassDetail.new(inv) }
     before { @value = 0 }
 
     it 'should query be false' do
