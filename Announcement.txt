@@ -1,4 +1,4 @@
-minitest-reporters-json_reporter version 0.1.1 has been released.
+minitest-reporters-json_reporter version 0.2.0 has been released.
 
 Home, Code: https://github.com/edhowland/minitest-reporters-json_reporter
 Bugs: https://github.com/edhowland/minitest-reporters-json_reporter/issues

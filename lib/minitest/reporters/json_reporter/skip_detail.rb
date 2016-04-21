@@ -1,11 +1,11 @@
-# skip_detail.rb - class MiniTest::Reporters::SkipDetail
+# skip_detail.rb - class Minitest::Reporters::SkipDetail
 
-# MiniTest Namespace for all things Minitest
-module MiniTest
+# Minitest Namespace for all things Minitest
+module Minitest
   # Reporters - Extensible reporting framework for Minitest
   module Reporters
     # How to handle a skipped test.
-    class SkipDetail < MiniTest::Reporters::FaultDetail
+    class SkipDetail < Minitest::Reporters::FaultDetail
       def initialize(test)
         super
         @type = 'skipped'

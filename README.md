@@ -1,11 +1,11 @@
 # Minitest::Reporters::JsonReporter
 
 This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
-You can use this gem to interface MiniTest output into automated tools like CI, CD or IDEs or code editors. An
+You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
 example interface might be to the Atom editor: [https://atom.io](https://atom.io)
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
 
-## Version 0.1.1
+## Version 0.2.0
 
 
 ## Installation
@@ -35,13 +35,10 @@ require 'minitest/reporters/json_reporter'
 In that same file, add something like this near the bottom of the file:
 
 ```
-MiniTest::Reporters.use! [ MiniTest::Reporters::JsonReporter.new ]
+Minitest::Reporters.use! [ Minitest::Reporters::JsonReporter.new ]
 ```
 
 Then run your tests as normal. You will get a JSON formatted string in stdout.
-The constructor accepts all the arguments as normal MiniTest::Reporters reporters. E.g. you can pass any IO object as the first arg to write the JSON to a file.
-You can also set any options in your test_helper.rb such as :verbose => true.
-
 
 There are 5 or 6   objects contained within this output: The 6th object: passes is only included if the --verbose option was passed to the test or set in the options parameter to the constructor.
 
@@ -65,13 +62,12 @@ $ ruby report_spec.rb  --verbose | jq .
   },
   "metadata": {
     "generated_by": "Minitest::Reporters::JsonReporter",
-    "version": "0.1.1",
-    "time": "2016-04-15T14:51:27Z",
+    "version": "0.2.0",
+    "time": "2016-04-21T19:09:34Z",
     "options": {
       "io": "STDOUT",
-      "verbose": true,
-      "seed": 43339,
-      "args": "--verbose --seed 43339"
+      "seed": 2579,
+      "args": "--seed 2579"
     }
   },
   "statistics": {
@@ -84,39 +80,26 @@ $ ruby report_spec.rb  --verbose | jq .
   "fails": [
     {
       "type": "failure",
-      "class": "second failure",
-      "name": "test_0001_anonymous",
-      "message": "Expected: 9\n  Actual: 3",
-      "backtrace": [],
-      "location": [
-        "report_spec.rb:20",
-        []
-      ]
-    },
-    {
-      "type": "failure",
       "class": "failure",
       "name": "test_0001_anonymous",
       "message": "Expected: 2\n  Actual: 1",
-      "backtrace": [],
-      "location": [
-        "report_spec.rb:14",
-        []
-      ]
+      "location": "report_spec.rb:14"
+    },
+    {
+      "type": "failure",
+      "class": "second failure",
+      "name": "test_0001_anonymous",
+      "message": "Expected: 9\n  Actual: 3",
+      "location": "report_spec.rb:20"
     },
     {
       "type": "error",
       "class": "Error",
       "name": "test_0001_anonymous",
       "message": "RuntimeError: should fail\n    report_spec.rb:6:in `block (2 levels) in <main>'",
+      "location": "report_spec.rb:6",
       "backtrace": [
         "report_spec.rb:6:in `block (2 levels) in <main>'"
-      ],
-      "location": [
-        "report_spec.rb:6",
-        [
-          "report_spec.rb:6:in `block (2 levels) in <main>'"
-        ]
       ]
     }
   ],
@@ -126,18 +109,7 @@ $ ruby report_spec.rb  --verbose | jq .
       "class": "skipped test",
       "name": "test_0001_anonymous",
       "message": "what a layabout",
-      "backtrace": [],
-      "location": [
-        "report_spec.rb:32",
-        []
-      ]
-    }
-  ],
-  "passes": [
-    {
-      "type": "pass",
-      "class": "working assertion",
-      "name": "test_0001_anonymous"
+      "location": "report_spec.rb:32"
     }
   ]
 }
