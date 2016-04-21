@@ -221,5 +221,15 @@ describe MiniTest::Reporters::JsonReporter do
       rpt.report
       io.to_s.wont_be_empty
     end
+
+    describe 'when recording a failing test' do
+      let(:rpt_fail) { MiniTest::Reporters::JsonReporter.new }
+      before { rpt_fail.start; rpt_fail.record(FailTest.new) }
+      subject { rpt_fail.report }
+      it 'should have storage[:status][:code] == failed' do
+        subject
+  rpt_fail.storage[:status][:code].must_equal 'Failed'
+      end
+    end
   end
 end
