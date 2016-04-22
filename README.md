@@ -7,6 +7,9 @@ I originally wrote this gem to interface to the Viper audible  code editor for t
 
 ## Version 0.2.0
 
+## Badges
+
+[![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)][gem]
 
 ## Installation
 
