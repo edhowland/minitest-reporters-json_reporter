@@ -10,6 +10,13 @@ module Minitest
         super
         @type = 'passed'
         @predicate = :passed?
+        @time = test.time
+      end
+
+      def to_h
+        h = super
+        h[:time] = @time
+        h
       end
     end
   end

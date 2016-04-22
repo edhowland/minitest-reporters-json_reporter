@@ -50,6 +50,7 @@ module Minitest
 
       def record(test)
         super
+
         skipped(test) || errored(test) || failed(test) || passed(test)
       end
 
