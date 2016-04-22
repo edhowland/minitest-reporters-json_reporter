@@ -60,6 +60,7 @@ module Minitest
         # options only exists once test run starts
         @storage[:metadata][:options] = transform_store(options)
         @storage[:statistics] = statistics_h
+        @storage[:timings] = timings_h
         # Only add this if not already added and verbose option is set
         @storage[:passes] ||= [] if options[:verbose]
 
@@ -106,9 +107,19 @@ module Minitest
         color_h('Success', 'green')
       end
 
+      def timings_h
+        {
+          total_seconds: total_time,
+          runs_per_second: count / total_time,
+          assertions_per_second: assertions / total_time
+        }
+#                [total_time, count / total_time, assertions / total_time]
+      end
+
       def statistics_h
         {
           total: @failed + @errored + @skipped + @passed,
+          assertions: assertions,
           failed: @failed,
           errored: @errored,
           skipped: @skipped,

@@ -240,6 +240,41 @@ describe Minitest::Reporters::JsonReporter do
     end
   end
 
+  describe 'statistics.assertions' do
+    let(:rpt) { Minitest::Reporters::JsonReporter.new }
+    before { $stdout = StringIO.new(''); rpt.start }
+    subject { rpt.record(FakePasser.new); rpt.report }
+
+    it 'should not be nil' do
+      subject
+      rpt.storage[:statistics][:assertions].wont_be_nil
+    end
+  end
+
+  describe 'timings' do
+    let(:rpt) { Minitest::Reporters::JsonReporter.new }
+    before { $stdout = StringIO.new(''); rpt.start }
+    subject { rpt.record(FakePasser.new); rpt.report }
+
+    it 'should have timings.total_seconds > 0.0' do
+      subject
+      rpt.storage[:timings][:total_seconds].must_be :>, 0.0
+    end
+
+    it 'should have timings.runs_per_second > 1.0' do
+      subject
+      rpt.storage[:timings][:runs_per_second].must_be :>=, 1.0
+    end
+
+    it 'should have timings.assertions_per_second > 1.0' do
+      subject
+      rpt.storage[:timings][:assertions_per_second].must_be :>=, 0.0
+end
+
+
+
+  end
+
   describe 'with verbose option' do
     let(:rpt) { Minitest::Reporters::JsonReporter.new verbose: true }
     before { $stdout = StringIO.new(''); rpt.start }
