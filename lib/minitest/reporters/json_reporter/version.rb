@@ -6,7 +6,7 @@ module Minitest
   module Reporters
     # Minitest Reporter that produces a JSON output for interface in IDEs, editor.
     class JsonReporter < BaseReporter
-      VERSION = '0.2.0'.freeze
+      VERSION = '0.2.1'.freeze
     end
   end
 end
