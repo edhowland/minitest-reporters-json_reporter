@@ -1,19 +1,24 @@
 # pass_detail_spec.rb - specs for pass_detail
 
+require_relative 'detail_helper'
 require_relative 'spec_helper'
 
 # TODO: class documentation
-class InvalidTest
-  def name;
-    'invalid';
+class InvalidTest < FakeBaseTest
+    def initialize 
+    super 'invalid'
   end
+
+#  def name;
+#    'invalid';
+#  end
 
   def passed?
     false
   end
 end
 
-class PassedTest
+class PassedTest < FakeBaseTest
   def initialize
     @name = 'MyPassingTest'
   end

@@ -15,9 +15,11 @@ class FakeBaseTest
   def initialize(name)
     @name = name
     @assertions = 0
+    @time = 0.1
   end
 
   attr_accessor :assertions
+  attr_reader :time
   attr_reader :name
 
   def passed?

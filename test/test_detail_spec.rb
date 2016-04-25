@@ -1,11 +1,11 @@
 # test_detail_spec.rb - specs for test_detail
-
+require_relative 'detail_helper'
 require_relative 'spec_helper'
 
 # TODO: class documentation
-class TestFaker
+class TestFaker < FakeBaseTest
   def initialize
-    @name = 'FakeDouble'
+    super  'FakeDouble'
   end
 
   attr_reader :name

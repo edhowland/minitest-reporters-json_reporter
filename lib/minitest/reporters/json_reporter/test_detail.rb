@@ -12,6 +12,7 @@ module Minitest
         @name = test.name
         @predicate = :nil?
         @test_obj = test
+        @time = test.time
       end
 
       attr_reader :test_obj, :predicate
@@ -30,7 +31,8 @@ module Minitest
         {
           type: @type,
           class: @class_name,
-          name: @name
+          name: @name,
+          time: @time
         }
       end
 
