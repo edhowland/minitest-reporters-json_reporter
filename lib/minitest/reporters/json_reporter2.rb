@@ -26,6 +26,7 @@ class JsonReporter2 < BaseReporter
           status: status_h,
           metadata: metadata_h,
           statistics: statistics_h,
+          timings: timings_h,
           fails: failures_h,
           skips: skips_h
         }
@@ -78,6 +79,14 @@ class JsonReporter2 < BaseReporter
           errors: errors,
           skips: skips,
           passes: (count - (failures + errors + skips))
+        }
+      end
+
+      def timings_h
+        {
+          total_seconds: total_time,
+          runs_per_second: count / total_time,
+          assertions_per_second: assertions / total_time
         }
       end
 
