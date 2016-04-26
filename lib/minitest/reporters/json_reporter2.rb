@@ -7,12 +7,11 @@ require 'minitest'
 require 'minitest/reporters'
 
 require_relative 'json_reporter/version'
-
-# TODO module documentation
+# Minitest namespace - plugins must live here
 module Minitest
-  # TODO module documentation
+  # Minitest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # TODO: class documentation
+    # Minitest Reporter that produces a JSON output for interface in IDEs, CD/CI tools and codeeditors
     class JsonReporter2 < BaseReporter
       def initialize options={}
         super

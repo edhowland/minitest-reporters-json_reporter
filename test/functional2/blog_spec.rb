@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-require './blog'
+require_relative 'blog'
 
 class TestBlog < Minitest::Test
   def setup
