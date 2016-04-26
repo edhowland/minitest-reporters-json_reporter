@@ -91,8 +91,29 @@ class JsonReporter2 < BaseReporter
       end
 
         def failures_h
-        tests.reject {|e| e.skipped? or e.passed? }.map {|e| result_h(e, (e.error? ? 'error' : 'failure')) }
+        tests.reject {|e| e.skipped? or e.passed? }.map {|e| failure_h(e) }
       end
+
+      def failure_h(result)
+        if result.error?
+          error_h(result)
+        else
+          failed_h(result)
+        end
+      end
+
+      def error_h(result)
+        h = result_h(result, 'error')
+        h[:location] = location(result.failure)
+        h
+      end
+
+      def failed_h(result)
+        h = result_h(result, 'failed')
+        h[:location] = location(result.failure)
+        h
+      end
+
 
 
         def skips_h
