@@ -24,13 +24,27 @@ class JsonReporter2 < BaseReporter
       def report
         super
         @storage = {
-          fails: results.reject {|e| e.skipped? or e.passed? }.map {|e| result_h(e, (e.error? ? 'error' : 'failure')) },
-          skips: results.select {|e| e.skipped? }.map {|e| result_h(e, 'skipped') },
-          passes: @passes.map {|e| result_h(e, 'passed') }
+          fails: failures_h,
+          skips: skips_h,
+          passes: passes_h 
         }
 
         io.write(JSON.dump(@storage))
       end
+
+        def failures_h
+        results.reject {|e| e.skipped? or e.passed? }.map {|e| result_h(e, (e.error? ? 'error' : 'failure')) }
+      end
+
+
+        def skips_h
+        results.select {|e| e.skipped? }.map {|e| result_h(e, 'skipped') }
+      end
+
+      def passes_h
+        @passes.map {|e| result_h(e, 'passed') }
+      end
+
 
         def result_h(result, type)
         {
