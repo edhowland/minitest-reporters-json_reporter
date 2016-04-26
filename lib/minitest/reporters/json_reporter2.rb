@@ -29,6 +29,7 @@ class JsonReporter2 < BaseReporter
         super
         @storage = {
           metadata: metadata_h,
+          statistics: statistics_h,
           fails: failures_h,
           skips: skips_h
         }
@@ -50,6 +51,16 @@ class JsonReporter2 < BaseReporter
         o[:io] = o[:io].class.name
         o[:io] = 'STDOUT' if opts[:io] == $stdout
         o
+      end
+
+      def statistics_h
+        {
+          total: count,
+          assertions: assertions,
+          failures: failures,
+          errors: errors,
+          skips: skips
+        }
       end
 
         def failures_h
