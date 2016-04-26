@@ -23,6 +23,7 @@ class JsonReporter2 < BaseReporter
       def report
         super
         @storage = {
+          status: status_h,
           metadata: metadata_h,
           statistics: statistics_h,
           fails: failures_h,
@@ -32,6 +33,27 @@ class JsonReporter2 < BaseReporter
 
         io.write(JSON.dump(@storage))
       end
+
+        def status_h
+        {
+          code: ['Failed', 'Passed with skipped tests', 'Success'][color_i],
+          color: ['red', 'yellow', 'green'][color_i]
+        }
+      end
+
+      # return index corresponding to red, yellow or green
+      # if errors or failures, skips or passes (default)
+      def color_i
+        if (failures + errors) > 0
+          0
+        elsif skips > 0
+          1
+        else
+          2
+        end
+      end
+
+
       def metadata_h
         {
           generated_by: self.class.name,
