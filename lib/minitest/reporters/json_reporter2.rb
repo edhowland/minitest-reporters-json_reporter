@@ -1,8 +1,12 @@
 # json_reporter2.rb - ..
 
 require 'json'
+require 'time'
+
 require 'minitest'
 require 'minitest/reporters'
+
+require_relative 'json_reporter/version'
 
 # TODO module documentation
 module Minitest
@@ -24,12 +28,20 @@ class JsonReporter2 < BaseReporter
       def report
         super
         @storage = {
+          metadata: metadata_h,
           fails: failures_h,
           skips: skips_h
         }
         @storage[:passes] = passes_h if options[:verbose]
 
         io.write(JSON.dump(@storage))
+      end
+      def metadata_h
+        {
+          generated_by: self.class.name,
+          version: Minitest::Reporters::JsonReporter::VERSION,
+          time: Time.now.utc.iso8601
+        }
       end
 
         def failures_h
