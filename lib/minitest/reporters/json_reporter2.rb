@@ -16,13 +16,8 @@ module Reporters
 class JsonReporter2 < BaseReporter
   def initialize options={}
         super
-        @passes = []
       end
 
-        def record(result)
-        super
-        @passes << result if result.passed? && options[:verbose]
-      end
 
 
       def report
@@ -65,16 +60,16 @@ class JsonReporter2 < BaseReporter
       end
 
         def failures_h
-        results.reject {|e| e.skipped? or e.passed? }.map {|e| result_h(e, (e.error? ? 'error' : 'failure')) }
+        tests.reject {|e| e.skipped? or e.passed? }.map {|e| result_h(e, (e.error? ? 'error' : 'failure')) }
       end
 
 
         def skips_h
-        results.select {|e| e.skipped? }.map {|e| result_h(e, 'skipped') }
+        tests.select {|e| e.skipped? }.map {|e| result_h(e, 'skipped') }
       end
 
       def passes_h
-        @passes.map {|e| result_h(e, 'passed') }
+        tests.select {|e| e.passed? }.map{|e| result_h(e, 'passed') } 
       end
 
 
