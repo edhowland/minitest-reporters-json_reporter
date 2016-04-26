@@ -24,7 +24,7 @@ class JsonReporter2 < BaseReporter
       def report
         super
         @storage = {
-#          fails: results.map {|e| failure_h(e) }
+          fails: results.reject {|e| e.skipped? or e.passed? }.map {|e| result_h(e, (e.error? ? 'error' : 'failure')) },
           skips: results.select {|e| e.skipped? }.map {|e| result_h(e, 'skipped') },
           passes: @passes.map {|e| result_h(e, 'passed') }
         }
