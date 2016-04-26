@@ -11,14 +11,12 @@ require_relative 'json_reporter/version'
 # TODO module documentation
 module Minitest
   # TODO module documentation
-module Reporters
-  # TODO: class documentation
-class JsonReporter2 < BaseReporter
-  def initialize options={}
+  module Reporters
+    # TODO: class documentation
+    class JsonReporter2 < BaseReporter
+      def initialize options={}
         super
       end
-
-
 
       def report
         super
@@ -53,7 +51,6 @@ class JsonReporter2 < BaseReporter
           2
         end
       end
-
 
       def metadata_h
         {
@@ -115,8 +112,6 @@ class JsonReporter2 < BaseReporter
         h
       end
 
-
-
         def skips_h
         tests.select {|e| e.skipped? }.map {|e| skip_h(e) }
       end
@@ -127,11 +122,9 @@ class JsonReporter2 < BaseReporter
         h
       end
 
-
       def passes_h
         tests.select {|e| e.passed? }.map{|e| result_h(e, 'passed') } 
       end
-
 
         def result_h(result, type)
         {
@@ -141,7 +134,6 @@ class JsonReporter2 < BaseReporter
           time: result.time
         }
       end
-
 
       def location(exception)
         last_before_assertion = ''
@@ -153,7 +145,6 @@ class JsonReporter2 < BaseReporter
 
         last_before_assertion.sub(/:in .*$/, '')
       end
-
-end
-end
+    end
+  end
 end
