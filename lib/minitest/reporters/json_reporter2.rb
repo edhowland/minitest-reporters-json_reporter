@@ -25,9 +25,9 @@ class JsonReporter2 < BaseReporter
         super
         @storage = {
           fails: failures_h,
-          skips: skips_h,
-          passes: passes_h 
+          skips: skips_h
         }
+        @storage[:passes] = passes_h if options[:verbose]
 
         io.write(JSON.dump(@storage))
       end
