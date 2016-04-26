@@ -40,8 +40,16 @@ class JsonReporter2 < BaseReporter
         {
           generated_by: self.class.name,
           version: Minitest::Reporters::JsonReporter::VERSION,
-          time: Time.now.utc.iso8601
+          time: Time.now.utc.iso8601,
+          options: transform(options)
         }
+      end
+
+      def transform(opts)
+        o = opts.clone
+        o[:io] = o[:io].class.name
+        o[:io] = 'STDOUT' if opts[:io] == $stdout
+        o
       end
 
         def failures_h
