@@ -105,6 +105,7 @@ class JsonReporter2 < BaseReporter
       def error_h(result)
         h = result_h(result, 'error')
         h[:location] = location(result.failure)
+        h[:backtrace] = filter_backtrace(result.failure.backtrace)
         h
       end
 
