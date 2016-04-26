@@ -130,6 +130,7 @@ module Minitest
           type: type,
           class: result.class.name,
           name: result.name,
+          assertions: result.assertions,
           time: result.time
         }
       end
