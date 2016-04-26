@@ -1,4 +1,4 @@
-# json_reporter2.rb - ..
+# json_reporter2.rb - class Minitest::Reporters::JsonReporter2
 
 require 'json'
 require 'time'
@@ -96,8 +96,15 @@ class JsonReporter2 < BaseReporter
 
 
         def skips_h
-        tests.select {|e| e.skipped? }.map {|e| result_h(e, 'skipped') }
+        tests.select {|e| e.skipped? }.map {|e| skip_h(e) }
       end
+
+      def skip_h(result)
+        h = result_h(result, 'skipped')
+        h[:location] = location(result.failure)
+        h
+      end
+
 
       def passes_h
         tests.select {|e| e.passed? }.map{|e| result_h(e, 'passed') } 
@@ -112,6 +119,19 @@ class JsonReporter2 < BaseReporter
           time: result.time
         }
       end
+
+
+      def location(exception)
+        last_before_assertion = ''
+
+        exception.backtrace.reverse_each do |s|
+          break if s =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/
+          last_before_assertion = s
+        end
+
+        last_before_assertion.sub(/:in .*$/, '')
+      end
+
 end
 end
 end
