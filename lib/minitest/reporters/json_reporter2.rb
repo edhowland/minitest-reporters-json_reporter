@@ -59,7 +59,8 @@ class JsonReporter2 < BaseReporter
           assertions: assertions,
           failures: failures,
           errors: errors,
-          skips: skips
+          skips: skips,
+          passes: (count - (failures + errors + skips))
         }
       end
 
