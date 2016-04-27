@@ -54,5 +54,29 @@ describe Minitest::Reporters::JsonReporter do
     it 'should have metadata:options non_empty' do
       subject[:metadata][:options].wont_be_empty
     end
+
+    it 'should have statistics:total 0' do
+      subject[:statistics][:total].must_equal 0
+    end
+
+    it 'should have statistics:assertions 0' do
+      subject[:statistics][:assertions].must_equal 0
+    end
+
+    it 'should have statistics:failures 0' do
+      subject[:statistics][:failures].must_equal 0
+    end
+
+    it 'should have statistics:errors 0' do
+      subject[:statistics][:errors].must_equal 0
+    end
+
+    it 'should have statistics:skips 0' do
+      subject[:statistics][:errors].must_equal 0
+    end
+
+    it 'should have statistics:passes 0' do
+      subject[:statistics][:passes].must_equal 0
+    end
   end
 end
