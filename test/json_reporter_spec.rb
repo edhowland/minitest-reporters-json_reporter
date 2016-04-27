@@ -78,5 +78,17 @@ describe Minitest::Reporters::JsonReporter do
     it 'should have statistics:passes 0' do
       subject[:statistics][:passes].must_equal 0
     end
+
+    it 'should have timings:total_seconds be float' do
+      subject[:timings][:total_seconds].must_be_instance_of Float
+    end
+
+    it 'should have timings:runs_per_second be Float' do
+      subject[:timings][:runs_per_second].must_be_instance_of Float
+    end
+
+    it 'should have timings:assertions_per_second be Float' do
+      subject[:timings][:assertions_per_second].must_be_instance_of Float
+    end
   end
 end
