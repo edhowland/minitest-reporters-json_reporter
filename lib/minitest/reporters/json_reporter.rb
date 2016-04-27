@@ -17,6 +17,8 @@ module Minitest
         super
       end
 
+      attr_accessor :storage
+
       def report
         super
         @storage = {
