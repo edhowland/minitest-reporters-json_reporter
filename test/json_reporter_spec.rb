@@ -111,7 +111,6 @@ describe Minitest::Reporters::JsonReporter do
       rpt.start
 
       # begin running tests
-      # binding.pry
       rpt.record skipper
       rpt.record passer
       rpt.record passer
@@ -138,4 +137,39 @@ describe Minitest::Reporters::JsonReporter do
       subject[:statistics][:passes].must_equal 2
     end
   end
+
+  describe 'when running 1 failure, 2 tests, 3 skips' do
+  before do
+      rpt.record FakeFailer.new
+      rpt.record FakePasser.new
+      rpt.record FakePasser.new
+      3.times { rpt.record(FakeSkipper.new) }
+    end
+
+    subject { rpt.report; rpt.storage }
+
+    it 'should be red' do
+  subject[:status][:color].must_equal 'red'
+    end
+
+    it 'should have statistics:total 6' do
+      subject[:statistics][:total].must_equal 6
+    end
+
+    it 'should have statistics:failures 1' do
+      subject[:statistics][:failures].must_equal 1
+    end
+
+    it 'should have statistics:errors 0' do
+      subject[:statistics][:errors].must_equal 0
+    end
+
+    it 'should have statistics:passes 2' do
+      subject[:statistics][:passes].must_equal 2
+    end
+    it 'should have statistics:skips 3' do
+      subject[:statistics][:skips].must_equal 3
+    end
+end
+
 end
