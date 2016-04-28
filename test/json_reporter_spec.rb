@@ -207,4 +207,32 @@ end
     end
 end
 
+  describe 'when running 1 error, 2 skips and 3 passes' do
+    before do
+      rpt.record FakeError.new
+    2.times { rpt.record(FakeSkipper.new) }
+      3.times { rpt.record(FakePasser.new) }
+    end
+    subject { rpt.report; rpt.storage }
+
+    it 'should be red' do
+      subject[:status][:color].must_equal 'red'
+    end
+
+    it 'should have statistics:errors 1' do
+      subject[:statistics][:errors].must_equal 1
+    end
+
+    it 'should have non-empty fails[]' do
+      subject[:fails].wont_be_empty
+      subject[:fails].length.must_equal 1
+  end
+
+    it 'should have non-empty skips[]' do
+      subject[:skips].wont_be_empty
+      subject[:skips].length.must_equal 2
+    end
+
+end
+
 end
