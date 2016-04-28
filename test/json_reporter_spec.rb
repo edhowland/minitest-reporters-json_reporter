@@ -94,9 +94,10 @@ describe Minitest::Reporters::JsonReporter do
   end
 
   describe 'when running one failure' do
-    subject {rpt.record(FailTest.new);  rpt.report; rpt.storage }
+    subject {rpt.record(FakeFailer.new);  rpt.report; rpt.storage }
 
     it 'should have 1 failure' do
+      subject
       rpt.failures.must_equal 1
     end
   end
@@ -119,24 +120,20 @@ describe Minitest::Reporters::JsonReporter do
     subject { rpt.report; rpt.storage }
 
     it 'should be yellow' do
-      skip('do later')
       subject[:status][:color].must_equal 'yellow'
     end
 
     it 'should have statistics:total > 0' do
-      skip('do later')
 
       subject[:statistics][:total].must_be :>, 0
     end
 
     it 'should have statistics:skips 1' do
-      skip('do later')
 
       subject[:statistics][:skips].must_equal 1
     end
 
     it 'should have statistics:passes 2' do
-      skip('do later')
 
       subject[:statistics][:passes].must_equal 2
     end

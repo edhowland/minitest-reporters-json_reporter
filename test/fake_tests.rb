@@ -1,5 +1,22 @@
 # fake_tests.rb - methods, classes for  specs to simulate Minitest tests
 
+# modify Minitest::Reporters::JsonReporter to override count of failures, errors and skips
+class Minitest::Reporters::JsonReporter
+  def failures
+    tests.reject {|e| e.skipped? or e.error? or e.passed? }.length
+  end
+
+    def errors
+    tests.select {|e| e.error? }.length
+  end
+
+    def skips
+    tests.select {|s| s.skipped? }.length
+  end
+end
+
+
+
 def make_assertion message
   raise Minitest::Assertion.new message
 end
@@ -67,17 +84,13 @@ class FakeError < FakeNonPasserBase
   end
 end
 
-class FailTest < FakeNonPasserBase
+class FakeFailer < FakeNonPasserBase
   def initialize
     super 'up creek, less paddle'
   end
 
   def failure
-    begin
-      make_assertion 'x does match y'
-    rescue => err
-      err
-    end
+    mk_exc 'bad assertion'
   end
 end
 

@@ -21,6 +21,7 @@ module Minitest
 
       def report
         super
+
 #binding.pry
         @storage = {
           status: status_h,
