@@ -1,10 +1,11 @@
 # timings_spec.rb - specs for timings
-require_relative 'detail_helper'
 require_relative 'spec_helper'
+require_relative 'fake_tests'
+
 
 describe 'timings are accumulated for multiple tests' do
-  let(:err) { FaultyTest.new }
-  let(:bad) { FailTest.new }
+  let(:err) { FakeError.new }
+  let(:bad) { FakeFailer.new }
   let(:ok) { FakePasser.new }
   let(:rpt) { Minitest::Reporters::JsonReporter.new }
   before do
