@@ -172,4 +172,39 @@ describe Minitest::Reporters::JsonReporter do
     end
 end
 
+  describe 'when running 25 passes' do
+  before { 25.times { rpt.record(FakePasser.new) } }
+    subject { rpt.report; rpt.storage }
+
+    it 'should be green' do
+      subject[:status][:color].must_equal 'green'
+    end
+
+    it 'should have nil passes[]' do
+      subject[:passes].must_be_nil
+    end
+
+    it 'should have statistics:passes 25' do
+      subject[:statistics][:passes].must_equal 25
+    end
+
+    it 'should have statistics:total 25' do
+      subject[:statistics][:total].must_equal 25
+    end
+
+    it 'should have 0  errors, failures and skips' do
+      subject[:statistics][:failures].must_equal 0
+      subject[:statistics][:errors].must_equal 0
+      subject[:statistics][:skips].must_equal 0
+    end
+
+    it 'should have empty fails[]' do
+      subject[:fails].must_be_empty
+    end
+
+    it 'should have have empty skips[]' do
+      subject[:skips].must_be_empty
+    end
+end
+
 end
