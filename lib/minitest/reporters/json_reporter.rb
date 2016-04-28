@@ -21,6 +21,7 @@ module Minitest
 
       def report
         super
+#binding.pry
         @storage = {
           status: status_h,
           metadata: metadata_h,
@@ -102,6 +103,7 @@ module Minitest
 
       def error_h(result)
         h = result_h(result, 'error')
+        h[:message] = result.failure.message
         h[:location] = location(result.failure)
         h[:backtrace] = filter_backtrace(result.failure.backtrace)
         h
@@ -109,6 +111,7 @@ module Minitest
 
       def failed_h(result)
         h = result_h(result, 'failed')
+        h[:message] = result.failure.message
         h[:location] = location(result.failure)
         h
       end
@@ -119,6 +122,7 @@ module Minitest
 
       def skip_h(result)
         h = result_h(result, 'skipped')
+        h[:message] = result.failure.message
         h[:location] = location(result.failure)
         h
       end

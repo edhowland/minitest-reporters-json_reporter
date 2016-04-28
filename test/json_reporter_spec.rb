@@ -1,6 +1,7 @@
 # json_reporter_spec.rb - specs for json_reporter
 
 require_relative 'spec_helper'
+require_relative 'fake_tests'
 
 describe Minitest::Reporters::JsonReporter do
   let(:rpt) { Minitest::Reporters::JsonReporter.new }
@@ -72,7 +73,7 @@ describe Minitest::Reporters::JsonReporter do
     end
 
     it 'should have statistics:skips 0' do
-      subject[:statistics][:errors].must_equal 0
+      subject[:statistics][:skips].must_equal 0
     end
 
     it 'should have statistics:passes 0' do
@@ -89,6 +90,55 @@ describe Minitest::Reporters::JsonReporter do
 
     it 'should have timings:assertions_per_second be Float' do
       subject[:timings][:assertions_per_second].must_be_instance_of Float
+    end
+  end
+
+  describe 'when running one failure' do
+    subject {rpt.record(FailTest.new);  rpt.report; rpt.storage }
+
+    it 'should have 1 failure' do
+      rpt.failures.must_equal 1
+    end
+  end
+
+  describe 'when running 1 skip, 2 passes in verbose mode' do
+    let(:rpt) { Minitest::Reporters::JsonReporter.new :verbose => true }
+    let(:skipper) { FakeSkipper.new }
+    let(:passer) { FakePasser.new }
+    before do
+      rpt.io = StringIO.new('')
+      rpt.start
+
+      # begin running tests
+      # binding.pry
+      rpt.record skipper
+      rpt.record passer
+      rpt.record passer
+    end
+
+    subject { rpt.report; rpt.storage }
+
+    it 'should be yellow' do
+      skip('do later')
+      subject[:status][:color].must_equal 'yellow'
+    end
+
+    it 'should have statistics:total > 0' do
+      skip('do later')
+
+      subject[:statistics][:total].must_be :>, 0
+    end
+
+    it 'should have statistics:skips 1' do
+      skip('do later')
+
+      subject[:statistics][:skips].must_equal 1
+    end
+
+    it 'should have statistics:passes 2' do
+      skip('do later')
+
+      subject[:statistics][:passes].must_equal 2
     end
   end
 end
