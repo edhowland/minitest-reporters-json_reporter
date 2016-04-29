@@ -23,7 +23,13 @@ module Minitest
       def report
         super
 
-        @storage = {
+        @storage = to_json
+        # formate @storage as JSON and write to output stream
+        io.write(JSON.dump(@storage))
+      end
+
+      def to_json
+        h = {
           status: status_h,
           metadata: metadata_h,
           statistics: statistics_h,
@@ -31,12 +37,11 @@ module Minitest
           fails: failures_h,
           skips: skips_h
         }
-        @storage[:passes] = passes_h if options[:verbose]
-
+        h[:passes] = passes_h if options[:verbose]
         # elaborate if something went wrong
         # @storage[:status][:message] = '' if expr and options[:verbose] == false
 
-        io.write(JSON.dump(@storage))
+        h
       end
 
       def status_h
