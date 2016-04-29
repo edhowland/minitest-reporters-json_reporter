@@ -133,6 +133,11 @@ describe Minitest::Reporters::JsonReporter do
     it 'should have statistics:passes 2' do
       subject[:statistics][:passes].must_equal 2
     end
+
+    it 'should have  skips' do
+      subject[:skips].wont_be_nil
+      subject[:skips].wont_be_empty
+    end
   end
 
   describe 'when running 1 failure, 2 tests, 3 skips' do
@@ -227,6 +232,12 @@ describe Minitest::Reporters::JsonReporter do
 
     it 'should have nil skips[]' do
       subject[:skips].must_be_nil
+    end
+
+    it 'should have status:message :You have skipped tests ..."' do
+      subject[:status][:message].wont_be_nil
+      subject[:status][:message].wont_be_empty
+      subject[:status][:message].must_equal 'You have skipped tests. Run with --verbose for details.'
     end
 
     it 'should have nil passes' do

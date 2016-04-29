@@ -15,7 +15,7 @@ Style/Semicolon:
 #    - 'lib/minitest/reporters/json_reporter.rb'
 
 Metrics/ClassLength:
-  Max: 120
+  Max: 135
 
 Style/GlobalVars:
   Exclude:

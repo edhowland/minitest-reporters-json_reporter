@@ -23,25 +23,36 @@ module Minitest
       def report
         super
 
-        @storage = to_json
+        @storage = to_h
         # formate @storage as JSON and write to output stream
         io.write(JSON.dump(@storage))
       end
 
-      def to_json
-        h = {
+      ##
+      # Convert summary and detail to  hash
+      def to_h
+        summary_h.merge(detail_h)
+      end
+
+      ##
+      # Create the summary part of the JSON
+      def summary_h
+        {
           status: status_h,
           metadata: metadata_h,
           statistics: statistics_h,
-          timings: timings_h,
-          fails: failures_h
+          timings: timings_h
         }
-        h[:skips] = skips_h if options[:verbose]
-        h[:passes] = passes_h if options[:verbose]
+      end
 
-        # elaborate if there skipps and no verbose
-        # @storage[:status][:message] = '' if expr and options[:verbose] == false
-
+      ##
+      # Create the detail part of the JSON.
+      def detail_h
+        h = { fails: failures_h }
+        if options[:verbose]
+          h[:skips] = skips_h
+          h[:passes] = passes_h
+        end
         h
       end
 
@@ -49,9 +60,10 @@ module Minitest
         {
           code: ['Failed', 'Passed with skipped tests', 'Success'][color_i],
           color: %w(red yellow green)[color_i]
-        }
+        }.merge(extra_message_h)
       end
 
+      ##
       # return index corresponding to red, yellow or green
       # if errors or failures, skips or passes (default)
       def color_i
@@ -61,6 +73,17 @@ module Minitest
           1
         else
           2
+        end
+      end
+
+      ##
+      # return a hash with status:message if skips > 0 and no verboseoption
+      def extra_message_h
+        if !options[:verbose] && skips > 0
+          { message:
+            'You have skipped tests. Run with --verbose for details.' }
+        else
+          {}
         end
       end
 
