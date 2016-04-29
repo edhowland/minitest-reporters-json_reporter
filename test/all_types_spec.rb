@@ -1,8 +1,7 @@
-# all_types_spec.rb - specs for 
+# all_types_spec.rb - specs for
 
 require_relative 'spec_helper'
 require_relative 'fake_tests'
-
 
 describe Minitest::Reporters::JsonReporter do
   let(:rpt) { Minitest::Reporters::JsonReporter.new }
@@ -15,10 +14,10 @@ describe Minitest::Reporters::JsonReporter do
       rpt.record(FakeError.new)
       rpt.record(FakePasser.new)
     end
-  subject { rpt.report; rpt.storage }
+    subject { rpt.report; rpt.storage }
 
     it 'should have skips 1' do
-  subject
+      subject
       rpt.skips.must_equal 1
     end
 
@@ -31,5 +30,5 @@ describe Minitest::Reporters::JsonReporter do
       subject
       rpt.errors.must_equal 1
     end
-end
+  end
 end

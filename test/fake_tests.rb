@@ -3,22 +3,16 @@
 # modify Minitest::Reporters::JsonReporter to override count of failures, errors and skips
 class Minitest::Reporters::JsonReporter
   def failures
-    tests.reject {|e| e.skipped? or e.error? or e.passed? }.length
+    tests.count { |e| !e.skipped? && !e.error? && !e.passed? }
   end
 
-    def errors
-    tests.select {|e| e.error? }.length
+  def errors
+    tests.count(&:error?)
   end
 
-    def skips
-    tests.select {|s| s.skipped? }.length
+  def skips
+    tests.count(&:skipped?)
   end
-end
-
-
-
-def make_assertion message
-  raise Minitest::Assertion.new message
 end
 
 def assert(expr)
@@ -95,7 +89,7 @@ class FakeFailer < FakeNonPasserBase
 end
 
 class FakeSkipper < FakeNonPasserBase
-  def initialize 
+  def initialize
     super 'lazy S.O.G.'
   end
 
@@ -103,4 +97,3 @@ class FakeSkipper < FakeNonPasserBase
     true
   end
 end
-

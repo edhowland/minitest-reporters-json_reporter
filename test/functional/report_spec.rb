@@ -23,9 +23,9 @@ end
 describe 'working assertion' do
   subject { true }
   it 'should have 2 working assertions' do
-  subject.wont_be_nil
+    subject.wont_be_nil
     subject.must_equal true
-end
+  end
 end
 
 describe 'skipped test' do

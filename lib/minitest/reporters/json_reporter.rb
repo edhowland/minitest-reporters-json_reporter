@@ -13,7 +13,7 @@ module Minitest
   module Reporters
     # Minitest Reporter that produces a JSON output for interface in IDEs, CD/CI tools and codeeditors
     class JsonReporter < BaseReporter
-      def initialize options={}
+      def initialize(options = {})
         super
       end
 
@@ -38,10 +38,10 @@ module Minitest
         io.write(JSON.dump(@storage))
       end
 
-        def status_h
+      def status_h
         {
           code: ['Failed', 'Passed with skipped tests', 'Success'][color_i],
-          color: ['red', 'yellow', 'green'][color_i]
+          color: %w(red yellow green)[color_i]
         }
       end
 
@@ -92,8 +92,8 @@ module Minitest
         }
       end
 
-        def failures_h
-        tests.reject {|e| e.skipped? or e.passed? or e.failure.nil? }.map {|e| failure_h(e) }
+      def failures_h
+        tests.reject { |e| e.skipped? || e.passed? || e.failure.nil? }.map { |e| failure_h(e) }
       end
 
       def failure_h(result)
@@ -119,8 +119,8 @@ module Minitest
         h
       end
 
-        def skips_h
-        tests.select {|e| e.skipped? }.map {|e| skip_h(e) }
+      def skips_h
+        tests.select(&:skipped?).map { |e| skip_h(e) }
       end
 
       def skip_h(result)
@@ -131,10 +131,10 @@ module Minitest
       end
 
       def passes_h
-        tests.select {|e| e.passed? }.map{|e| result_h(e, 'passed') } 
+        tests.select(&:passed?).map { |e| result_h(e, 'passed') }
       end
 
-        def result_h(result, type)
+      def result_h(result, type)
         {
           type: type,
           class: result.class.name,

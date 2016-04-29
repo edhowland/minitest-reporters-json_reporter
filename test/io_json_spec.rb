@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 require_relative 'fake_tests'
 
 describe Minitest::Reporters::JsonReporter do
-  let(:rpt) { Minitest::Reporters::JsonReporter.new(:verbose => true) }
+  let(:rpt) { Minitest::Reporters::JsonReporter.new(verbose: true) }
   before { rpt.io = StringIO.new(''); rpt.start }
 
   describe 'io populates a JSON string' do

@@ -7,9 +7,9 @@ describe Minitest::Reporters::JsonReporter do
   let(:rpt) { Minitest::Reporters::JsonReporter.new }
   before { rpt.io = StringIO.new(''); rpt.start }
   describe 'when running no tests' do
-  subject { rpt.report; rpt.storage }
+    subject { rpt.report; rpt.storage }
     it 'should have non-nil fails[]' do
-  subject[:fails].wont_be_nil
+      subject[:fails].wont_be_nil
     end
 
     it 'should have no fails' do
@@ -94,7 +94,7 @@ describe Minitest::Reporters::JsonReporter do
   end
 
   describe 'when running one failure' do
-    subject {rpt.record(FakeFailer.new);  rpt.report; rpt.storage }
+    subject { rpt.record(FakeFailer.new); rpt.report; rpt.storage }
 
     it 'should have 1 failure' do
       subject
@@ -103,7 +103,7 @@ describe Minitest::Reporters::JsonReporter do
   end
 
   describe 'when running 1 skip, 2 passes in verbose mode' do
-    let(:rpt) { Minitest::Reporters::JsonReporter.new :verbose => true }
+    let(:rpt) { Minitest::Reporters::JsonReporter.new verbose: true }
     let(:skipper) { FakeSkipper.new }
     let(:passer) { FakePasser.new }
     before do
@@ -123,17 +123,14 @@ describe Minitest::Reporters::JsonReporter do
     end
 
     it 'should have statistics:total > 0' do
-
       subject[:statistics][:total].must_be :>, 0
     end
 
     it 'should have statistics:skips 1' do
-
       subject[:statistics][:skips].must_equal 1
     end
 
     it 'should have statistics:passes 2' do
-
       subject[:statistics][:passes].must_equal 2
     end
   end
@@ -149,7 +146,7 @@ describe Minitest::Reporters::JsonReporter do
     subject { rpt.report; rpt.storage }
 
     it 'should be red' do
-  subject[:status][:color].must_equal 'red'
+      subject[:status][:color].must_equal 'red'
     end
 
     it 'should have statistics:total 6' do
@@ -173,7 +170,7 @@ describe Minitest::Reporters::JsonReporter do
   end
 
   describe 'when running 25 passes' do
-  before { 25.times { rpt.record(FakePasser.new) } }
+    before { 25.times { rpt.record(FakePasser.new) } }
     subject { rpt.report; rpt.storage }
 
     it 'should be green' do
@@ -210,7 +207,7 @@ describe Minitest::Reporters::JsonReporter do
   describe 'when running 1 error, 2 skips and 3 passes' do
     before do
       rpt.record FakeError.new
-    2.times { rpt.record(FakeSkipper.new) }
+      2.times { rpt.record(FakeSkipper.new) }
       3.times { rpt.record(FakePasser.new) }
     end
     subject { rpt.report; rpt.storage }

@@ -2,7 +2,6 @@
 require_relative 'spec_helper'
 require_relative 'fake_tests'
 
-
 describe 'timings are accumulated for multiple tests' do
   let(:err) { FakeError.new }
   let(:bad) { FakeFailer.new }
@@ -22,8 +21,8 @@ describe 'timings are accumulated for multiple tests' do
     rpt.storage[:timings][:total_seconds].must_be :>, 0.0
   end
 
-#  it 'should be near 0.3' do
-#    subject
-#    rpt.storage[:timings][:total_seconds].must_be :>=, 0.3
-#  end
+  #  it 'should be near 0.3' do
+  #    subject
+  #    rpt.storage[:timings][:total_seconds].must_be :>=, 0.3
+  #  end
 end

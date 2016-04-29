@@ -20,3 +20,7 @@ Metrics/ClassLength:
 Style/GlobalVars:
   Exclude:
     - 'test/**/*'
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/fake_tests.rb'
