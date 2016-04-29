@@ -22,7 +22,6 @@ module Minitest
       def report
         super
 
-#binding.pry
         @storage = {
           status: status_h,
           metadata: metadata_h,
@@ -32,6 +31,9 @@ module Minitest
           skips: skips_h
         }
         @storage[:passes] = passes_h if options[:verbose]
+
+        # elaborate if something went wrong
+        # @storage[:status][:message] ||= "You have some miscounted tests: total: #{count} counted: #{tests.length}" if count != tests.length
 
         io.write(JSON.dump(@storage))
       end
@@ -91,7 +93,7 @@ module Minitest
       end
 
         def failures_h
-        tests.reject {|e| e.skipped? or e.passed? }.map {|e| failure_h(e) }
+        tests.reject {|e| e.skipped? or e.passed? or e.failure.nil? }.map {|e| failure_h(e) }
       end
 
       def failure_h(result)

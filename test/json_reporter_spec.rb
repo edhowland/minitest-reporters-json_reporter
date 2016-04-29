@@ -139,7 +139,7 @@ describe Minitest::Reporters::JsonReporter do
   end
 
   describe 'when running 1 failure, 2 tests, 3 skips' do
-  before do
+    before do
       rpt.record FakeFailer.new
       rpt.record FakePasser.new
       rpt.record FakePasser.new
@@ -170,7 +170,7 @@ describe Minitest::Reporters::JsonReporter do
     it 'should have statistics:skips 3' do
       subject[:statistics][:skips].must_equal 3
     end
-end
+  end
 
   describe 'when running 25 passes' do
   before { 25.times { rpt.record(FakePasser.new) } }
@@ -205,7 +205,7 @@ end
     it 'should have have empty skips[]' do
       subject[:skips].must_be_empty
     end
-end
+  end
 
   describe 'when running 1 error, 2 skips and 3 passes' do
     before do
@@ -226,13 +226,11 @@ end
     it 'should have non-empty fails[]' do
       subject[:fails].wont_be_empty
       subject[:fails].length.must_equal 1
-  end
+    end
 
     it 'should have non-empty skips[]' do
       subject[:skips].wont_be_empty
       subject[:skips].length.must_equal 2
     end
-
-end
-
+  end
 end

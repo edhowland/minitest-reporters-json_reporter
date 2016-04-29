@@ -103,3 +103,4 @@ class FakeSkipper < FakeNonPasserBase
     true
   end
 end
+
