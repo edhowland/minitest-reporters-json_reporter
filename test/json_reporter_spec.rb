@@ -16,12 +16,12 @@ describe Minitest::Reporters::JsonReporter do
       subject[:fails].must_be_empty
     end
 
-    it 'should have non-nil skips' do
-      subject[:skips].wont_be_nil
+    it 'should have nil skips' do
+      subject[:skips].must_be_nil
     end
 
     it 'should have empty skips[]' do
-      subject[:skips].must_be_empty
+      subject[:skips].must_be_nil
     end
 
     it 'should have nil passes[]' do
@@ -199,8 +199,8 @@ describe Minitest::Reporters::JsonReporter do
       subject[:fails].must_be_empty
     end
 
-    it 'should have have empty skips[]' do
-      subject[:skips].must_be_empty
+    it 'should  have nil skips[]' do
+      subject[:skips].must_be_nil
     end
   end
 
@@ -225,9 +225,12 @@ describe Minitest::Reporters::JsonReporter do
       subject[:fails].length.must_equal 1
     end
 
-    it 'should have non-empty skips[]' do
-      subject[:skips].wont_be_empty
-      subject[:skips].length.must_equal 2
+    it 'should have nil skips[]' do
+      subject[:skips].must_be_nil
+    end
+
+    it 'should have nil passes' do
+      subject[:passes].must_be_nil
     end
   end
 end

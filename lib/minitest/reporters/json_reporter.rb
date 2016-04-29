@@ -34,11 +34,12 @@ module Minitest
           metadata: metadata_h,
           statistics: statistics_h,
           timings: timings_h,
-          fails: failures_h,
-          skips: skips_h
+          fails: failures_h
         }
+        h[:skips] = skips_h if options[:verbose]
         h[:passes] = passes_h if options[:verbose]
-        # elaborate if something went wrong
+
+        # elaborate if there skipps and no verbose
         # @storage[:status][:message] = '' if expr and options[:verbose] == false
 
         h
