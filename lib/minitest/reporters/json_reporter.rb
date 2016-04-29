@@ -11,7 +11,8 @@ require_relative 'json_reporter/version'
 module Minitest
   # Minitest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # Minitest Reporter that produces a JSON output for interface in IDEs, CD/CI tools and codeeditors
+    # Minitest Reporter that produces a JSON output for interface in
+    # IDEs, CD/CI tools and codeeditors
     class JsonReporter < BaseReporter
       def initialize(options = {})
         super
@@ -33,7 +34,7 @@ module Minitest
         @storage[:passes] = passes_h if options[:verbose]
 
         # elaborate if something went wrong
-        # @storage[:status][:message] ||= "You have some miscounted tests: total: #{count} counted: #{tests.length}" if count != tests.length
+        # @storage[:status][:message] = '' if expr and options[:verbose] == false
 
         io.write(JSON.dump(@storage))
       end
@@ -93,7 +94,8 @@ module Minitest
       end
 
       def failures_h
-        tests.reject { |e| e.skipped? || e.passed? || e.failure.nil? }.map { |e| failure_h(e) }
+        tests.reject { |e| e.skipped? || e.passed? || e.failure.nil? }
+             .map { |e| failure_h(e) }
       end
 
       def failure_h(result)
