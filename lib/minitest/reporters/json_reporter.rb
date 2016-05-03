@@ -15,7 +15,6 @@ module Minitest
     # Minitest Reporter that produces a JSON output for interface in
     # IDEs, CD/CI tools and codeeditors
     class JsonReporter < BaseReporter
-
       ##
       # Constructor for Minitest::Reporters::JsonReporter
       # Takes possible options. E.g. :verbose => true
