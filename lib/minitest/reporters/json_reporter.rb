@@ -103,6 +103,9 @@ module Minitest
         {
           generated_by: self.class.name,
           version: Minitest::Reporters::JsonReporter::VERSION,
+          ruby_version: RUBY_VERSION,
+          ruby_patchlevel: RUBY_PATCHLEVEL,
+          ruby_platform: RUBY_PLATFORM,
           time: Time.now.utc.iso8601,
           options: transform(options)
         }
