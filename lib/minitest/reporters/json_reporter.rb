@@ -11,15 +11,25 @@ require_relative 'json_reporter/version'
 module Minitest
   # Minitest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
+    ##
     # Minitest Reporter that produces a JSON output for interface in
     # IDEs, CD/CI tools and codeeditors
     class JsonReporter < BaseReporter
+
+      ##
+      # Constructor for Minitest::Reporters::JsonReporter
+      # Takes possible options. E.g. :verbose => true
       def initialize(options = {})
         super
       end
 
+      ##
+      # Hash that represents the final elements prior to being converted to JSON
       attr_accessor :storage
 
+      ##
+      # Called by runner to report the conclusion of the test run
+      # Converts result of to_h to JSON and calls io.write to output it.
       def report
         super
 
@@ -27,6 +37,8 @@ module Minitest
         # formate @storage as JSON and write to output stream
         io.write(JSON.dump(@storage))
       end
+
+      protected
 
       ##
       # Convert summary and detail to  hash
