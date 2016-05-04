@@ -48,26 +48,26 @@ Then run your tests as normal. You will get a JSON formatted string in stdout.
 ## Object Summary
 
 
-1. [ ] status of the overall test run.
-  1. [ ] code - Success, Passed with skipped tests or Failed.
-  2. [ ] color green, yellow or red.
-2. [ ] metadata
-  1. [ ] generated_by Class name of the Minitest Reporter.
-  2. [ ] version - Version of the minitest-reporters-json_reporter gem.
-  3. [ ] ruby_version - RUBY_VERSION.
-  4. [ ] ruby_patchlevel - RUBY_PATCHLEVEL.
-  5. [ ] ruby_platform - RUBY_PLATFORM.
-  6. [ ] time - Time of test run in UTC and ISO-8601 format.
-  7. [ ] options - Options object as constructed by passed options, superclasses and command line args.
-    1. [ ] io - The class name of the IO object. Will be the string 'STDOUT' if equal to $stdout.
-   2. [ ] keys of the options hash, if any.
-    3. [ ] args Array of arguments passed to the program.
-    4. [ ] total_count - Total number of tests ran.
-3.[ ] statistics - Contains the total number of runs, the number of assertions, the number of fails, skips and passes.
-4.[ ] Timings - Including total_seconds, runs_per_second and assertions_per_second in float format
-5.[ ] fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message, number of assertions, the timing and location of the test and the filtered backtrace array if an error type.
-6.[ ] skips[] - Information about the skipped test including its message, number of assertions, the time to run the skip and location.
-7.[ ] passes[] - Information for all passed test runs including the type, the test name, class, the number of assertions and timing.
+* status of the overall test run.
+  * code - Success, Passed with skipped tests or Failed.
+  * color green, yellow or red.
+* metadata
+  * generated_by Class name of the Minitest Reporter.
+  * version - Version of the minitest-reporters-json_reporter gem.
+  * ruby_version - RUBY_VERSION.
+  * ruby_patchlevel - RUBY_PATCHLEVEL.
+* ruby_platform - RUBY_PLATFORM.
+  * time - Time of test run in UTC and ISO-8601 format.
+  * options - Options object as constructed by passed options, superclasses and command line args.
+    * io - The class name of the IO object. Will be the string 'STDOUT' if equal to $stdout.
+    * keys of the options hash, if any.
+    * args Array of arguments passed to the program.
+    * total_count - Total number of tests ran.
+* statistics - Contains the total number of runs, the number of assertions, the number of fails, skips and passes.
+* Timings - Including total_seconds, runs_per_second and assertions_per_second in float format
+* fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message, number of assertions, the timing and location of the test and the filtered backtrace array if an error type.
+* skips[] - Information about the skipped test including its message, number of assertions, the time to run the skip and location.
+* passes[] - Information for all passed test runs including the type, the test name, class, the number of assertions and timing.
 
 
 ### Sample output
