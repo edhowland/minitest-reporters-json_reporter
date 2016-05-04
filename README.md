@@ -178,6 +178,29 @@ $ ruby report_spec.rb | jq .
 
 ```
 
+## Customizing the JSON format
+
+You can adjust the contents of the returned JSON by sub-classing the Minitest::Reporters::JsonReporter class.
+Override the 'to_h' method and delete or modifythe hash it returns.
+
+Here is a simple example that eliminates the 'metadata' and 'timmings' components:
+
+```
+# example spec_helper.rb:
+
+class Minitest::Reporters::SlimJsonReporter < Minitest::Reporters::JsonReporter
+    def to_h
+    h = super
+    h.delete(:metadata)
+    h.delete(:timings)
+    h
+  end
+end
+
+Minitest::Reporters.use!( Minitest::Reporters::SlimJsonReporter.new )
+```
+
+
 
 ## Contributing
 
@@ -188,4 +211,21 @@ $ ruby report_spec.rb | jq .
 5. Create a new Pull Request
 
 Note: Extra credit if git flow feature branching was used.
+
+
+## Resources
+
+* Code: [https::/github.com/edhowland/minitest-reporters-json_reporter](https::/github.com/edhowland/minitest-reporters-json_reporter)
+* Bugs: https://github.com/edhowland/minitest-reporters-json_reporter/issues
+* Gem: [https://rubygems.org/gems/minitest-reporters-json_reporter](https://rubygems.org/gems/minitest-reporters-json_reporter) 
+* Documentation: [http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.2.0](http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.2.0)
+
+###### Feedback
+
+If you find this gem helpful, please slip me a note via e-mail: ed.howland@gmail.com
+
+
+I would like to know if anyone has used this approach to interface Minitest to any automated framework or editor.
+
+Thanks, Ed.
 
