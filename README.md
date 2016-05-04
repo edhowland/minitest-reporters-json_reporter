@@ -48,26 +48,59 @@ Then run your tests as normal. You will get a JSON formatted string in stdout.
 ## Object Summary
 
 
-* status of the overall test run.
-  * code - Success, Passed with skipped tests or Failed.
-  * color green, yellow or red.
-* metadata
-  * generated_by Class name of the Minitest Reporter.
-  * version - Version of the minitest-reporters-json_reporter gem.
-  * ruby_version - RUBY_VERSION.
-  * ruby_patchlevel - RUBY_PATCHLEVEL.
-  * ruby_platform - RUBY_PLATFORM.
-  * time - Time of test run in UTC and ISO-8601 format.
-  * options - Options object as constructed by passed options, superclasses and command line args.
-    * io - The class name of the IO object. Will be the string 'STDOUT' if equal to $stdout.
-    * keys of the options hash, if any.
-    * args Array of arguments passed to the program.
-    * total_count - Total number of tests ran.
-* statistics - Contains the total number of runs, the number of assertions, the number of fails, skips and passes.
-* Timings - Including total_seconds, runs_per_second and assertions_per_second in float format
-* fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message, number of assertions, the timing and location of the test and the filtered backtrace array if an error type.
-* skips[] - Information about the skipped test including its message, number of assertions, the time to run the skip and location.
-* passes[] - Information for all passed test runs including the type, the test name, class, the number of assertions and timing.
+* status of the overall test run. Object.
+  * code - Success, Passed with skipped tests or Failed. String.
+  * color green, yellow or red. String.
+* metadata The metadata of this particular test run. Object.
+  * generated_by Class name of the Minitest Reporter. Will usually be Minitest::Reporters::JsonReporter. String.
+  * version - Version of the minitest-reporters-json_reporter gem. String.
+  * ruby_version - RUBY_VERSION. String.
+  * ruby_patchlevel - RUBY_PATCHLEVEL. Integer.
+  * ruby_platform - RUBY_PLATFORM. String.
+  * time - Time of test run in UTC and ISO-8601 format. String.
+  * options - Options object as constructed by passed options, superclasses and command line args. Object.
+    * io - The class name of the IO object. Will be the string 'STDOUT' if equal to $stdout. String.
+    * keys of the options hash, if any. Various key/value pairs.
+    * args Array of arguments passed to the program. Array of String.
+    * total_count - Total number of tests ran. Integer.
+* statisticsThe accumulated counts for this test run.   Object.
+  * total Number of total runs. Integer.
+  * assertions Count of assertions performed. Integer.
+  * fails Number of failed tests. Integer.
+  * errors Number of errors encountered. Integer.
+  * skips Number of skipped tests. Integer.
+  * passes Number of passed tests. Integer.
+* timings Object containing the computed timing information for the entire test run. Object.
+  * total_seconds total number of seconds for the entire test run. Float.
+  * runs_per_second Averaged number of runs per second. Float.
+  * assertions_per_second Averaged number of assertions per second. Float.
+* fails - Array of failed or errored tests. Array of Object.
+  * type Type of the failure. Either 'failure' or 'error'. String.
+  * classClass name of the test. String.
+  * name Name of the test. String.
+  * assertions Number of the assertions for this test. Integer.
+  * time Time in seconds for this test. Float.
+  * message Message reported by this failure or error. String.
+  * location File name and line number. file:line. String.
+  * backtrace (exists only if type is 'error') Array of backtrace paths and line numbers. Array of String.
+* skips Array of skipped tests. Array of Object.
+  * type The string 'skipped'. String.
+  * class Class name of the test. String.
+  * name The name of the test. String.
+  * assertions The count of the assertions for this test. Integer.
+  * time The time of this test in seconds. Float.
+  * message The message string passed to the 'skip()' method. String.
+  * location File name and line number. file:line. String.
+* passes Array of passed test runs. Array of Object.
+  * type The string 'passed'. String.
+  * class Class name of the test. String.
+  * name The name of the test. String.
+  * assertions The count of the assertions for this test. Integer.
+  * time The time of this test in seconds. Float.
+
+The last 2 objects: skips[] and passes[] are absent unless the --verbose command
+line flag was passed or if the options[:verbose] value is true.
+
 
 
 ### Sample output
