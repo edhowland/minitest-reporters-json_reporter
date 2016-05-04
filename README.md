@@ -48,37 +48,26 @@ Then run your tests as normal. You will get a JSON formatted string in stdout.
 ## Object Summary
 
 
-1. status -  Status of the overall test run.
-
-    1.1 code - Success, Passed with skipped tests or Failed.  
-    1.2 - color green, yellow or red.  
-
-2. metadata
-
-    2.1 generated_by Class name of the Minitest Reporter.  
-    2.2 version - Version of the minitest-reporters-json_reporter gem.  
-    2.3 ruby_version - RUBY_VERSION.  
-    2.4 ruby_patchlevel - RUBY_PATCHLEVEL.  
-    2.5 ruby_platform - RUBY_PLATFORM.  
-    2.6 time - Time of test run in UTC and ISO-8601 format.  
-    2.7 options - Options object as constructed by passed options, superclasses and command line args..  
-
-        2.7.1 io - The class name of the IO object. Will be the string 'STDOUT' if equal to $stdout.  
-        2.7.2 keys of the options hash, if any. ...  
-        2.7.3 args Array of arguments passed to the program.  
-          2.7.4 total_count - Total number of tests ran.  
-
-3. statistics - Contains the total number of runs, the number of assertions, the number of fails, skips and passes.
-4. Timings - Including total_seconds, runs_per_second and assertions_per_second in float format
-5. fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message, number of assertions, the timing and location of the test and the filtered backtrace array if an error type.
-
-### Optional objects
-
-If the '--verbose' flag was passed on the command line or the options[:verbose]  = true was passed to the constructor
-you will get 2 additional objects: skips[] and passes[]
-
-6. skips[] - Information about the skipped test including its message, number of assertions, the time to run the skip and location.
-7. passes[] - Information for all passed test runs including the type, the test name, class, the number of assertions and timing.
+1. [ ] status of the overall test run.
+  1. [ ] code - Success, Passed with skipped tests or Failed.
+  2. [ ] color green, yellow or red.
+2. [ ] metadata
+  1. [ ] generated_by Class name of the Minitest Reporter.
+  2. [ ] version - Version of the minitest-reporters-json_reporter gem.
+  3. [ ] ruby_version - RUBY_VERSION.
+  4. [ ] ruby_patchlevel - RUBY_PATCHLEVEL.
+  5. [ ] ruby_platform - RUBY_PLATFORM.
+  6. [ ] time - Time of test run in UTC and ISO-8601 format.
+  7. [ ] options - Options object as constructed by passed options, superclasses and command line args.
+    1. [ ] io - The class name of the IO object. Will be the string 'STDOUT' if equal to $stdout.
+   2. [ ] keys of the options hash, if any.
+    3. [ ] args Array of arguments passed to the program.
+    4. [ ] total_count - Total number of tests ran.
+3.[ ] statistics - Contains the total number of runs, the number of assertions, the number of fails, skips and passes.
+4.[ ] Timings - Including total_seconds, runs_per_second and assertions_per_second in float format
+5.[ ] fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message, number of assertions, the timing and location of the test and the filtered backtrace array if an error type.
+6.[ ] skips[] - Information about the skipped test including its message, number of assertions, the time to run the skip and location.
+7.[ ] passes[] - Information for all passed test runs including the type, the test name, class, the number of assertions and timing.
 
 
 ### Sample output
