@@ -56,7 +56,7 @@ Then run your tests as normal. You will get a JSON formatted string in stdout.
   * version - Version of the minitest-reporters-json_reporter gem.
   * ruby_version - RUBY_VERSION.
   * ruby_patchlevel - RUBY_PATCHLEVEL.
-* ruby_platform - RUBY_PLATFORM.
+  * ruby_platform - RUBY_PLATFORM.
   * time - Time of test run in UTC and ISO-8601 format.
   * options - Options object as constructed by passed options, superclasses and command line args.
     * io - The class name of the IO object. Will be the string 'STDOUT' if equal to $stdout.
