@@ -9,6 +9,7 @@ This is an extension  gem for the minitest-reporters gem. It adds JSON output as
 You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
 example interface might be to the Atom editor: [https://atom.io](https://atom.io)
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
+Using this gem with Viper also requires the 'viper_ruby' package. See [https://github.com/edhowland/viper_ruby](https://github.com/edhowland/viper_ruby)
 
 ## Version 0.2.1
 
