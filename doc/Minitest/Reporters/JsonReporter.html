@@ -121,9 +121,20 @@ editor.</p>
     <dl class="constants">
       
         <dt id="VERSION-constant" class="">VERSION =
-          
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Version of the Minitest::Reporters::JsonReporter gem.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.2.0</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.2.1</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
   
@@ -146,8 +157,6 @@ editor.</p>
   
   
     
-      <span class="note title readonly">readonly</span>
-    
     
   
   
@@ -157,7 +166,7 @@ editor.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute storage.</p>
+<p>Hash that represents the final elements prior to being converted to JSON.</p>
 </div></span>
   
 </li>
@@ -179,51 +188,7 @@ editor.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#green%3F-instance_method" title="#green? (instance method)">- (Boolean) <strong>green?</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#init_status-instance_method" title="#init_status (instance method)">- (Object) <strong>init_status</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (JsonReporter) <strong>initialize</strong>(my_options = {}) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (JsonReporter) <strong>initialize</strong>(options = {}) </a>
     
 
     
@@ -240,74 +205,8 @@ editor.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of JsonReporter.</p>
+<p>Constructor for Minitest::Reporters::JsonReporter Takes possible options.</p>
 </div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#metadata_h-instance_method" title="#metadata_h (instance method)">- (Object) <strong>metadata_h</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#record-instance_method" title="#record (instance method)">- (Object) <strong>record</strong>(test) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#red%3F-instance_method" title="#red? (instance method)">- (Boolean) <strong>red?</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -329,29 +228,10 @@ editor.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#yellow%3F-instance_method" title="#yellow? (instance method)">- (Boolean) <strong>yellow?</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Called by runner to report the conclusion of the test run Converts result
+of to_h to JSON and calls io.write to output it.</p>
+</div></span>
   
 </li>
 
@@ -366,7 +246,7 @@ editor.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Minitest::Reporters::JsonReporter (class)">JsonReporter</a></span></tt>) <strong>initialize</strong>(my_options = {}) 
+    - (<tt><span class='object_link'><a href="" title="Minitest::Reporters::JsonReporter (class)">JsonReporter</a></span></tt>) <strong>initialize</strong>(options = {}) 
   
 
   
@@ -375,7 +255,8 @@ editor.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of JsonReporter</p>
+<p>Constructor for Minitest::Reporters::JsonReporter Takes possible options.
+E.g. :verbose =&gt; true</p>
 
 
   </div>
@@ -391,23 +272,13 @@ editor.</p>
 
 22
 23
-24
-25
-26
-27
-28
-29</pre>
+24</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 22</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_my_options'>my_options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>super</span> <span class='id identifier rubyid_my_options'>my_options</span>
-  <span class='ivar'>@skipped</span> <span class='op'>=</span> <span class='int'>0</span>
-  <span class='ivar'>@failed</span> <span class='op'>=</span> <span class='int'>0</span>
-  <span class='ivar'>@errored</span> <span class='op'>=</span> <span class='int'>0</span>
-  <span class='ivar'>@passed</span> <span class='op'>=</span> <span class='int'>0</span>
-  <span class='ivar'>@storage</span> <span class='op'>=</span> <span class='id identifier rubyid_init_status'>init_status</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -420,11 +291,11 @@ editor.</p>
     <h2>Instance Attribute Details</h2>
     
       
-      <span id=""></span>
+      <span id="storage=-instance_method"></span>
       <div class="method_details first">
   <h3 class="signature first" id="storage-instance_method">
   
-    - (<tt>Object</tt>) <strong>storage</strong>  <span class="extras">(readonly)</span>
+    - (<tt>Object</tt>) <strong>storage</strong> 
   
 
   
@@ -433,7 +304,7 @@ editor.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute storage</p>
+<p>Hash that represents the final elements prior to being converted to JSON</p>
 
 
   </div>
@@ -447,12 +318,12 @@ editor.</p>
       <pre class="lines">
 
 
-31
-32
-33</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_storage'>storage</span>
   <span class='ivar'>@storage</span>
@@ -470,9 +341,9 @@ editor.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="green?-instance_method">
+  <h3 class="signature first" id="report-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>green?</strong> 
+    - (<tt>Object</tt>) <strong>report</strong> 
   
 
   
@@ -481,98 +352,16 @@ editor.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
+<p>Called by runner to report the conclusion of the test run Converts result
+of to_h to JSON and calls io.write to output it.</p>
+
 
   </div>
 </div>
 <div class="tags">
   
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-73
-74
-75</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 73</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_green?'>green?</span>
-  <span class='op'>!</span><span class='id identifier rubyid_red?'>red?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_yellow?'>yellow?</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="init_status-instance_method">
-  
-    - (<tt>Object</tt>) <strong>init_status</strong> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-41
-42
-43
-44
-45
-46
-47
-48
-49</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 41</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_init_status'>init_status</span>
-  <span class='lbrace'>{</span>
-    <span class='label'>status:</span> <span class='id identifier rubyid_green_status'>green_status</span><span class='comma'>,</span>
-    <span class='label'>metadata:</span> <span class='id identifier rubyid_metadata_h'>metadata_h</span><span class='comma'>,</span>
-    <span class='label'>statistics:</span> <span class='id identifier rubyid_statistics_h'>statistics_h</span><span class='comma'>,</span>
-    <span class='label'>fails:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
-    <span class='label'>skips:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='rbrace'>}</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="metadata_h-instance_method">
-  
-    - (<tt>Object</tt>) <strong>metadata_h</strong> 
-  
-
-  
-
-  
-</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -589,196 +378,12 @@ editor.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 33</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_metadata_h'>metadata_h</span>
-  <span class='lbrace'>{</span>
-    <span class='label'>generated_by:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
-    <span class='label'>version:</span> <span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='op'>::</span><span class='const'>JsonReporter</span><span class='op'>::</span><span class='const'>VERSION</span><span class='comma'>,</span>
-    <span class='label'>time:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span><span class='period'>.</span><span class='id identifier rubyid_iso8601'>iso8601</span>
-  <span class='rbrace'>}</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="record-instance_method">
-  
-    - (<tt>Object</tt>) <strong>record</strong>(test) 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-51
-52
-53
-54</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 51</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_test'>test</span><span class='rparen'>)</span>
-  <span class='kw'>super</span>
-  <span class='id identifier rubyid_skipped'>skipped</span><span class='lparen'>(</span><span class='id identifier rubyid_test'>test</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_errored'>errored</span><span class='lparen'>(</span><span class='id identifier rubyid_test'>test</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_failed'>failed</span><span class='lparen'>(</span><span class='id identifier rubyid_test'>test</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_passed'>passed</span><span class='lparen'>(</span><span class='id identifier rubyid_test'>test</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="red?-instance_method">
-  
-    - (<tt>Boolean</tt>) <strong>red?</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-77
-78
-79</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 77</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_red?'>red?</span>
-  <span class='ivar'>@failed</span> <span class='op'>+</span> <span class='ivar'>@errored</span> <span class='op'>&gt;</span> <span class='int'>0</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="report-instance_method">
-  
-    - (<tt>Object</tt>) <strong>report</strong> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 56</span>
-
 <span class='kw'>def</span> <span class='id identifier rubyid_report'>report</span>
   <span class='kw'>super</span>
 
-  <span class='id identifier rubyid_set_status'>set_status</span> <span class='comment'># sets the success or failure and color in the status object
-</span>  <span class='comment'># options only exists once test run starts
-</span>  <span class='ivar'>@storage</span><span class='lbracket'>[</span><span class='symbol'>:metadata</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:options</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_transform_store'>transform_store</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='ivar'>@storage</span><span class='lbracket'>[</span><span class='symbol'>:statistics</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_statistics_h'>statistics_h</span>
-  <span class='comment'># Only add this if not already added and verbose option is set
-</span>  <span class='ivar'>@storage</span><span class='lbracket'>[</span><span class='symbol'>:passes</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:verbose</span><span class='rbracket'>]</span>
-
-  <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='ivar'>@storage</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="yellow?-instance_method">
-  
-    - (<tt>Boolean</tt>) <strong>yellow?</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-69
-70
-71</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/minitest/reporters/json_reporter.rb', line 69</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_yellow?'>yellow?</span>
-  <span class='ivar'>@skipped</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_red?'>red?</span>
+  <span class='ivar'>@storage</span> <span class='op'>=</span> <span class='id identifier rubyid_to_h'>to_h</span>
+  <span class='comment'># formate @storage as JSON and write to output stream
+</span>  <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='ivar'>@storage</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -790,7 +395,7 @@ editor.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Apr 21 20:48:52 2016 by
+  Generated on Tue May  3 20:15:41 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.2).
 </div>

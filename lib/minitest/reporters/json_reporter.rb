@@ -2,164 +2,202 @@
 
 require 'json'
 require 'time'
+
 require 'minitest'
 require 'minitest/reporters'
 
 require_relative 'json_reporter/version'
-require_relative 'json_reporter/test_detail'
-require_relative 'json_reporter/pass_detail'
-require_relative 'json_reporter/fault_detail'
-require_relative 'json_reporter/skip_detail'
-require_relative 'json_reporter/error_detail'
-require_relative 'json_reporter/fail_detail'
-
 # Minitest namespace - plugins must live here
 module Minitest
   # Minitest::Reporters from minitest-reporters gem: See: https://github.com/kern/minitest-reporters
   module Reporters
-    # Minitest Reporter that produces a JSON output for interface in IDEs, editor
+    ##
+    # Minitest Reporter that produces a JSON output for interface in
+    # IDEs, CD/CI tools and codeeditors
     class JsonReporter < BaseReporter
-      def initialize(my_options = {})
-        super my_options
-        @skipped = 0
-        @failed = 0
-        @errored = 0
-        @passed = 0
-        @storage = init_status
+      ##
+      # Constructor for Minitest::Reporters::JsonReporter
+      # Takes possible options. E.g. :verbose => true
+      def initialize(options = {})
+        super
       end
 
-      attr_reader :storage
+      ##
+      # Hash that represents the final elements prior to being converted to JSON
+      attr_accessor :storage
+
+      ##
+      # Called by runner to report the conclusion of the test run
+      # Converts result of to_h to JSON and calls io.write to output it.
+      def report
+        super
+
+        @storage = to_h
+        # formate @storage as JSON and write to output stream
+        io.write(JSON.dump(@storage))
+      end
+
+      protected
+
+      ##
+      # Convert summary and detail to  hash
+      def to_h
+        summary_h.merge(detail_h)
+      end
+
+      ##
+      # Create the summary part of the JSON
+      def summary_h
+        {
+          status: status_h,
+          metadata: metadata_h,
+          statistics: statistics_h,
+          timings: timings_h
+        }
+      end
+
+      ##
+      # Create the detail part of the JSON.
+      def detail_h
+        h = { fails: failures_h }
+        if options[:verbose]
+          h[:skips] = skips_h
+          h[:passes] = passes_h
+        end
+        h
+      end
+
+      def status_h
+        {
+          code: ['Failed', 'Passed with skipped tests', 'Success'][color_i],
+          color: %w(red yellow green)[color_i]
+        }.merge(extra_message_h)
+      end
+
+      ##
+      # return index corresponding to red, yellow or green
+      # if errors or failures, skips or passes (default)
+      def color_i
+        if (failures + errors) > 0
+          0
+        elsif skips > 0
+          1
+        else
+          2
+        end
+      end
+
+      ##
+      # return a hash with status:message if skips > 0 and no verboseoption
+      def extra_message_h
+        if !options[:verbose] && skips > 0
+          { message:
+            'You have skipped tests. Run with --verbose for details.' }
+        else
+          {}
+        end
+      end
 
       def metadata_h
         {
           generated_by: self.class.name,
           version: Minitest::Reporters::JsonReporter::VERSION,
-          time: Time.now.utc.iso8601
+          ruby_version: RUBY_VERSION,
+          ruby_patchlevel: RUBY_PATCHLEVEL,
+          ruby_platform: RUBY_PLATFORM,
+          time: Time.now.utc.iso8601,
+          options: transform(options)
         }
       end
 
-      def init_status
-        {
-          status: green_status,
-          metadata: metadata_h,
-          statistics: statistics_h,
-          fails: [],
-          skips: []
-        }
-      end
-
-      def record(test)
-        super
-        skipped(test) || errored(test) || failed(test) || passed(test)
-      end
-
-      def report
-        super
-
-        set_status # sets the success or failure and color in the status object
-        # options only exists once test run starts
-        @storage[:metadata][:options] = transform_store(options)
-        @storage[:statistics] = statistics_h
-        # Only add this if not already added and verbose option is set
-        @storage[:passes] ||= [] if options[:verbose]
-
-        io.write(JSON.dump(@storage))
-      end
-
-      def yellow?
-        @skipped > 0 && !red?
-      end
-
-      def green?
-        !red? && !yellow?
-      end
-
-      def red?
-        @failed + @errored > 0
-      end
-
-      private
-
-      def set_status
-        @storage[:status] = if red?
-                              red_status
-                            elsif yellow?
-                              yellow_status
-                            else
-                              green_status
-                            end
-      end
-
-      def color_h(code, color)
-        { code: code, color: color }
-      end
-
-      def red_status
-        color_h('Failed', 'red')
-      end
-
-      def yellow_status
-        color_h('Passed, with skipped tests', 'yellow')
-      end
-
-      def green_status
-        color_h('Success', 'green')
+      def transform(opts)
+        o = opts.clone
+        o[:io] = o[:io].class.name
+        o[:io] = 'STDOUT' if opts[:io] == $stdout
+        o
       end
 
       def statistics_h
         {
-          total: @failed + @errored + @skipped + @passed,
-          failed: @failed,
-          errored: @errored,
-          skipped: @skipped,
-          passed: @passed
+          total: count,
+          assertions: assertions,
+          failures: failures,
+          errors: errors,
+          skips: skips,
+          passes: (count - (failures + errors + skips))
         }
       end
 
-      def skipped(test)
-        Minitest::Reporters::SkipDetail.new(test).query do |d|
-          @skipped += 1
-          @storage[:skips] << d.to_h
+      def timings_h
+        {
+          total_seconds: total_time,
+          runs_per_second: count / total_time,
+          assertions_per_second: assertions / total_time
+        }
+      end
+
+      def failures_h
+        tests.reject { |e| e.skipped? || e.passed? || e.failure.nil? }
+             .map { |e| failure_h(e) }
+      end
+
+      def failure_h(result)
+        if result.error?
+          error_h(result)
+        else
+          failed_h(result)
         end
       end
 
-      def errored(test)
-        Minitest::Reporters::ErrorDetail.new(test).query do |d|
-          d.backtrace = filter_backtrace(d.backtrace)
-          @storage[:fails] << d.to_h
-          @errored += 1
-        end
+      def error_h(result)
+        h = result_h(result, 'error')
+        h[:message] = result.failure.message
+        h[:location] = location(result.failure)
+        h[:backtrace] = filter_backtrace(result.failure.backtrace)
+        h
       end
 
-      def failed(test)
-        Minitest::Reporters::FailDetail.new(test).query do |d|
-          @storage[:fails] << d.to_h
-          @failed += 1
-        end
+      def failed_h(result)
+        h = result_h(result, 'failed')
+        h[:message] = result.failure.message
+        h[:location] = location(result.failure)
+        h
       end
 
-      # If it is increments @passed and optionally adds PassDetail object
-      # to .passes array
-      # if options[:verbose] == true
-      def passed(test)
-        Minitest::Reporters::PassDetail.new(test).query do |d|
-          @passed += 1
-          if options[:verbose]
-            @storage[:passes] ||= []
-            @storage[:passes] << d.to_h
-          end
-        end
+      def skips_h
+        tests.select(&:skipped?).map { |e| skip_h(e) }
       end
 
-      # transform_store options: make pretty object for our JSON [metadata.options]
-      # If :io is the IO class and == $stdout: "STDOUT"
-      # Delete key: total_count
-      def transform_store(opts)
-        o = opts.clone
-        o[:io] = o[:io].class.name
-        o[:io] = 'STDOUT' if opts[:io] == $stdout
-        o.delete(:total_count)
-        o
+      def skip_h(result)
+        h = result_h(result, 'skipped')
+        h[:message] = result.failure.message
+        h[:location] = location(result.failure)
+        h
+      end
+
+      def passes_h
+        tests.select(&:passed?).map { |e| result_h(e, 'passed') }
+      end
+
+      def result_h(result, type)
+        {
+          type: type,
+          class: result.class.name,
+          name: result.name,
+          assertions: result.assertions,
+          time: result.time
+        }
+      end
+
+      def location(exception)
+        last_before_assertion = ''
+
+        exception.backtrace.reverse_each do |s|
+          break if s =~ /in .(assert|refute|flunk|pass|fail|raise|must|wont)/
+          last_before_assertion = s
+        end
+
+        last_before_assertion.sub(/:in .*$/, '')
       end
     end
   end
