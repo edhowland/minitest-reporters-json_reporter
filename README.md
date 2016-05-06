@@ -11,7 +11,7 @@ example interface might be to the Atom editor: [https://atom.io](https://atom.io
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
 Using this gem with Viper also requires the 'viper_ruby' package. See [https://github.com/edhowland/viper_ruby](https://github.com/edhowland/viper_ruby)
 
-## Version 0.9.0
+## Version 0.9.1
 
 ## Installation
 
@@ -67,7 +67,7 @@ Then run your tests as normal. You will get a JSON formatted string in stdout.
 * statisticsThe accumulated counts for this test run.   Object.
   * total Number of total runs. Integer.
   * assertions Count of assertions performed. Integer.
-  * fails Number of failed tests. Integer.
+  * failures Number of failed tests. Integer.
   * errors Number of errors encountered. Integer.
   * skips Number of skipped tests. Integer.
   * passes Number of passed tests. Integer.
@@ -114,7 +114,7 @@ $ ruby report_spec.rb | jq .
   "status": {    "code": "Failed",    "color": "red"  },
   "metadata": {
     "generated_by": "Minitest::Reporters::JsonReporter",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "ruby_version": "2.2.2",
     "ruby_patchlevel": 95,
     "ruby_platform": "x86_64-linux",
@@ -219,7 +219,7 @@ Note: Extra credit if git flow feature branching was used.
 * Code: [https::/github.com/edhowland/minitest-reporters-json_reporter](https::/github.com/edhowland/minitest-reporters-json_reporter)
 * Bugs: https://github.com/edhowland/minitest-reporters-json_reporter/issues
 * Gem: [https://rubygems.org/gems/minitest-reporters-json_reporter](https://rubygems.org/gems/minitest-reporters-json_reporter) 
-* Documentation: [http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.0](http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.0)
+* Documentation: [http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.1](http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.1)
 
 ###### Feedback
 
