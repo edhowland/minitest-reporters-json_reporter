@@ -1,3 +1,5 @@
+# Links:
+# Build status: https://travis-ci.org/edhowland/minitest-reporters-json_reporter
 language: ruby
 rvm:
  - 2.2
