@@ -8,7 +8,7 @@ module Minitest
     class JsonReporter < BaseReporter
       ##
       # Version of the Minitest::Reporters::JsonReporter gem.
-      VERSION = '0.2.1'.freeze
+      VERSION = '0.9.0'.freeze
     end
   end
 end
