@@ -1,4 +1,20 @@
-# detail_helper.rb - methods, classes for *_detail_spec.rb specs
+# fake_tests.rb - methods, classes for  specs to simulate Minitest tests
+
+# modify Minitest::Reporters::JsonReporter to override count of failures, errors and skips
+class Minitest::Reporters::JsonReporter
+  def failures
+    tests.count { |e| !e.skipped? && !e.error? && !e.passed? }
+  end
+
+  def errors
+    tests.count(&:error?)
+  end
+
+  def skips
+    tests.count(&:skipped?)
+  end
+end
+
 def assert(expr)
   fail('bad juju') unless expr
 end
@@ -10,14 +26,15 @@ rescue => err
   err
 end
 
-# TODO: class documentation
 class FakeBaseTest
   def initialize(name)
     @name = name
     @assertions = 0
+    @time = 0.1
   end
 
   attr_accessor :assertions
+  attr_reader :time
   attr_reader :name
 
   def passed?
@@ -37,7 +54,6 @@ class FakeBaseTest
   end
 end
 
-# TODO: class documentation
 class FakePasser < FakeBaseTest
   def initialize
     super 'passer'
@@ -47,38 +63,37 @@ class FakePasser < FakeBaseTest
     true
   end
 end
-
-class FaultyTest < FakeBaseTest
+class FakeNonPasserBase < FakeBaseTest
   def initialize(name = 'juju')
     super name
     @failure = mk_exc('bad juju')
   end
 
   attr_reader :failure
+end
 
+class FakeError < FakeNonPasserBase
   def error?
     true
   end
 end
 
-# TODO: class documentation
-class FailTest < FakeBaseTest
+class FakeFailer < FakeNonPasserBase
   def initialize
     super 'up creek, less paddle'
   end
 
   def failure
-    mk_exc 'crap'
+    mk_exc 'bad assertion'
   end
 end
 
-# TODO: class documentation
-class FakeSkipper < FaultyTest
+class FakeSkipper < FakeNonPasserBase
+  def initialize
+    super 'lazy S.O.G.'
+  end
+
   def skipped?
     true
   end
-
-  #  def failure
-  #    mk_exc 'skipped'
-  #  end
 end

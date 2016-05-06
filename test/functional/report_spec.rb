@@ -22,8 +22,10 @@ end
 
 describe 'working assertion' do
   subject { true }
-
-  specify { subject.must_equal true }
+  it 'should have 2 working assertions' do
+    subject.wont_be_nil
+    subject.must_equal true
+  end
 end
 
 describe 'skipped test' do

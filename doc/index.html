@@ -63,12 +63,17 @@
 
     <div id="content"><div id='filecontents'><h1>Minitest::Reporters::JsonReporter</h1>
 
-<p>This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
-You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
+<p>This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.</p>
+
+<p>[<img src="https://badge.fury.io/rb/minitest-reporters-json_reporter.svg" alt="Gem Version">][gem]</p>
+
+<h2>Abstract</h2>
+
+<p>You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
 example interface might be to the Atom editor: <a href="https://atom.io">https://atom.io</a>
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: <a href="https://github.com/edhowland/viper">https://github.com/edhowland/viper</a></p>
 
-<h2>Version 0.2.0</h2>
+<h2>Version 0.2.1</h2>
 
 <h2>Installation</h2>
 
@@ -101,18 +106,27 @@ I originally wrote this gem to interface to the Viper audible  code editor for t
 
 <p>Then run your tests as normal. You will get a JSON formatted string in stdout.</p>
 
-<p>There are 5 or 6   objects contained within this output: The 6th object: passes is only included if the --verbose option was passed to the test or set in the options parameter to the constructor.</p>
+<h2>Object Summary</h2>
 
 <ol>
 <li>status -  Status of the overall test run. Can be &#39;Success&#39;, &#39;Passed with skipped tests&#39; or &#39;Failed&#39;. There also a color attribute: green, yellow or red - respectfully.</li>
 <li>metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format. Also include options object computed by super classes including command line arguments.</li>
-<li>statistics - Contains counts of the status of test cases. Includes: Total, Skipped, Failed Errored and Passed.</li>
-<li>fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message and location of the test and the filtered backtrace array if an error type.</li>
-<li>skips - Array of each skipped. Each object contains the information as a failed test, including the skip message, if any.</li>
-<li>passes - Array of passing tests if the --verbose option was set . This object is normally absent otherwise.</li>
+<li>statistics - Contains the total number of runs, the number of assertions, the number of fails, skips and passes.</li>
+<li>Timings - Including total_seconds, runs_per_second and assertions_per_second in float format</li>
+<li>fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message, number of assertions, the timing and location of the test and the filtered backtrace array if an error type.</li>
 </ol>
 
-<p>Here is a sample output:</p>
+<h3>Optional objects</h3>
+
+<p>If the &#39;--verbose&#39; flag was passed on the command line or the options[:verbose]  = true was passed to the constructor
+you will get 2 additional objects: skips[] and passes[]</p>
+
+<ol>
+<li>skips[] - Information about the skipped test including its message, number of assertions, the time to run the skip and location.</li>
+<li>passes[] - Information for all passed test runs including the type, the test name, class, the number of assertions and timing.</li>
+</ol>
+
+<h3>Sample output</h3>
 
 <pre class="code ruby"><code class="ruby"><span class='comment'># Use jq to pretty print the JSON output
 </span></code></pre>
@@ -128,12 +142,10 @@ I originally wrote this gem to interface to the Viper audible  code editor for t
 </ol>
 
 <p>Note: Extra credit if git flow feature branching was used.</p>
-
-<p>^.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Thu Apr 21 20:48:52 2016 by
+  Generated on Tue May  3 20:15:41 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.2).
 </div>
