@@ -1,8 +1,8 @@
-minitest-reporters-json_reporter version 0.9.1 has been released.
+minitest-reporters-json_reporter version 0.9.3 has been released.
 
 Home, Code: https://github.com/edhowland/minitest-reporters-json_reporter
 Bugs: https://github.com/edhowland/minitest-reporters-json_reporter/issues
-Docs:http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.1
+Docs:http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.3
 
 minitest-reporters-json_reporter is an extension to the Ruby minitest-reporters gem that provides JSON output from your Minitest or MiniSpec test run.
 This version is the beta/release candidate before the official 1.0 version.
