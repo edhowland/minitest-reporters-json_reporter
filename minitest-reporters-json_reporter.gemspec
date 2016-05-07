@@ -1,13 +1,12 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'minitest/reporters'
 
-require 'minitest/reporters/json_reporter/version'
 
+# Must hard code the exact version number because of circular dependency
 Gem::Specification.new do |spec|
   spec.name          = 'minitest-reporters-json_reporter'
-  spec.version       = Minitest::Reporters::JsonReporter::VERSION
+  spec.version       = '0.9.3'
   spec.authors       = ['edhowland']
   spec.email         = ['ed.howland@gmail.com']
 
@@ -27,4 +26,6 @@ See: https://atom.io. Originally written to interface with the Viper Audible edi
 
   spec.add_development_dependency 'bundler', '~> 1.9'
   spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'minitest', '~> 5.7'
+  spec.add_development_dependency 'minitest-reporters', '~> 1.1.8'
 end
