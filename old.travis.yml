@@ -1,5 +1,6 @@
 # Links:
 # Build status: https://travis-ci.org/edhowland/minitest-reporters-json_reporter
+# Debug failed tests in Vagrant Travis box: http://ruby-journal.com/debug-your-failed-test-in-travis-ci/
 language: ruby
 rvm:
  - 2.2
