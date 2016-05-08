@@ -3,7 +3,9 @@
 This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
 
 [![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)][gem]
-[![Build Status](https://secure.travis-ci.org/edhowland/minitest-reporters-json_reporter.png)][travis]
+[![Build Status](https://travis-ci.org/edhowland/minitest-reporters-json_reporter.png?branch=master)](https://travis-ci.org/edhowland/minitest-reporters-json_reporter)
+
+
 
 ## Abstract
 
