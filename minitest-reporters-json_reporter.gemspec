@@ -24,7 +24,7 @@ See: https://atom.io. Originally written to interface with the Viper Audible edi
   spec.add_runtime_dependency 'minitest', '~> 5.7'
   spec.add_runtime_dependency 'minitest-reporters', '~> 1.1.8'
 
-  spec.add_development_dependency 'bundler', '~> 1.9'
+  spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'minitest', '~> 5.7'
   spec.add_development_dependency 'minitest-reporters', '~> 1.1.8'
