@@ -219,10 +219,10 @@ Note: Extra credit if git flow feature branching was used.
 
 ## Resources
 
-* Code: [https::/github.com/edhowland/minitest-reporters-json_reporter](https::/github.com/edhowland/minitest-reporters-json_reporter)
-* Bugs: https://github.com/edhowland/minitest-reporters-json_reporter/issues
-* Gem: [https://rubygems.org/gems/minitest-reporters-json_reporter](https://rubygems.org/gems/minitest-reporters-json_reporter) 
-* Documentation: [http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.1](http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.1)
+* Code: [https://github.com/edhowland/minitest-reporters-json_reporter](https://github.com/edhowland/minitest-reporters-json_reporter)
+* Bugs: [https://github.com/edhowland/minitest-reporters-json_reporter/issues](https://github.com/edhowland/minitest-reporters-json_reporter/issues)
+* Docs: [http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.1](http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.1)
+* Gem: [https://rubygems.org/gems/minitest-reporters-json_reporter](https://rubygems.org/gems/minitest-reporters-json_reporter)
 
 ###### Feedback
 
