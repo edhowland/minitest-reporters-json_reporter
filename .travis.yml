@@ -7,3 +7,13 @@ rvm:
 #- 1.9.3
 #- jruby-19mode
 #- rbx-2
+
+
+notifications:
+  email:
+    recipients:
+      - ed.howland@gmail.com
+
+    on_success: always
+    on_failure: always
+
