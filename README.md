@@ -5,6 +5,7 @@ This is an extension  gem for the minitest-reporters gem. It adds JSON output as
 [![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)][gem]
 [![Build Status](https://travis-ci.org/edhowland/minitest-reporters-json_reporter.png?branch=master)](https://travis-ci.org/edhowland/minitest-reporters-json_reporter)
 [![Coverage Status](https://coveralls.io/repos/github/edhowland/minitest-reporters-json_reporter/badge.svg?branch=master)](https://coveralls.io/github/edhowland/minitest-reporters-json_reporter?branch=master)
+[![Code Climate](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter/badges/gpa.svg)](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter)
 
 
 
@@ -15,7 +16,7 @@ example interface might be to the Atom editor: [https://atom.io](https://atom.io
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
 Using this gem with Viper also requires the 'viper_ruby' package. See [https://github.com/edhowland/viper_ruby](https://github.com/edhowland/viper_ruby)
 
-## Version 0.9.8
+## Version 0.9.9
 
 ## Installation
 
@@ -118,7 +119,7 @@ $ ruby report_spec.rb | jq .
   "status": {    "code": "Failed",    "color": "red"  },
   "metadata": {
     "generated_by": "Minitest::Reporters::JsonReporter",
-    "version": "0.9.8",
+    "version": "0.9.9",
     "ruby_version": "2.2.2",
     "ruby_patchlevel": 95,
     "ruby_platform": "x86_64-linux",
