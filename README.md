@@ -9,16 +9,19 @@ This is an extension  gem for the minitest-reporters gem. It adds JSON output as
 [![Inline docs](http://inch-ci.org/github/edhowland/minitest-reporters-json_reporter.svg?style=shields)](http://inch-ci.org/github/edhowland/minitest-reporters-json_reporter)
 
 
-
-
 ## Abstract
 
 You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
 example interface might be to the Atom editor: [https://atom.io](https://atom.io)
+
+Use of JSON as a format for test runs opens up possibilities for different types of analysis.
+You can organize the output based on elapsed time or number of assertions of tests, for example.
+See the 'jq sort' example below.
+
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
 Using this gem with Viper also requires the 'viper_ruby' package. See [https://github.com/edhowland/viper_ruby](https://github.com/edhowland/viper_ruby)
 
-## Version 0.9.9
+## Version 0.9.10
 
 ## Installation
 
@@ -121,7 +124,7 @@ $ ruby report_spec.rb | jq .
   "status": {    "code": "Failed",    "color": "red"  },
   "metadata": {
     "generated_by": "Minitest::Reporters::JsonReporter",
-    "version": "0.9.9",
+    "version": "0.9.10",
     "ruby_version": "2.2.2",
     "ruby_patchlevel": 95,
     "ruby_platform": "x86_64-linux",
@@ -185,6 +188,50 @@ $ ruby report_spec.rb | jq .
 }
 
 ```
+
+## Example analysis feedback
+
+JSON can be parsed and manipulated to provide many types of useful information.
+Below are some example usages.
+We use the 'jq' program to parse and select and arrange the output.
+
+See: [JQ Developer Manual](https://stedolan.github.io/jq/manual/)
+
+^.
+
+### Sort by time, fastest to slowest.
+
+```
+$ cd test/functional
+
+$ ruby timings_spec.rb  --verbose | jq '.passes | sort_by(.time)'
+[
+  {
+    "type": "passed",
+    "class": "Timings Test",
+    "name": "test_0002_should be fast",
+    "assertions": 1,
+    "time": 3.9489998016506433e-05
+  },
+  {
+    "type": "passed",
+    "class": "Timings Test",
+    "name": "test_0003_should be slightly faster",
+    "assertions": 1,
+    "time": 1.0012405550223775
+  },
+  {
+    "type": "passed",
+    "class": "Timings Test",
+    "name": "test_0001_should be slow",
+    "assertions": 1,
+    "time": 5.00128460500855
+  }
+]
+
+```
+
+
 
 ## Customizing the JSON format
 
