@@ -233,6 +233,60 @@ $ ruby timings_spec.rb  --verbose |jq '.passes | sort_by(.time) | reverse'
 
 ```
 
+### Group By Class example
+
+Minitest usually runs your tests in a random sequence. This is
+great for test isolation and to check for state bleed-thru, but can be annoying if trying 
+to determine where similar tests are failing. You can use the jq 'sort_by' or 'group_by' filters to get them back in 
+some semblace of order.
+
+Here we group the .fails[] array by their class name. (The file: 'group_by_spec.rb' 
+contains 4 tests inside 2 classes.)
+
+```
+$ ruby group_by_spec.rb |jq '.fails | group_by(.class)' 
+[
+  [
+    {
+      "type": "error",
+      "class": "TestNumericalGroup",
+      "name": "test_4_times_6_equals_24",
+      "assertions": 0,
+      "time": 1.4187011402100325e-05,
+      "message": "NoMethodError: undefined method `assert_equals' for #<TestNumericalGroup:0x007fb664b9c9a0>\n    group_by_spec.rb:14:in `test_4_times_6_equals_24'",
+      "location": "group_by_spec.rb:14",
+      "backtrace": [
+        "group_by_spec.rb:14:in `test_4_times_6_equals_24'"
+      ]
+    },
+    {
+      "type": "failed",
+      "class": "TestNumericalGroup",
+      "name": "test_positive_integers_are_greater_than_0",
+      "assertions": 1,
+      "time": 3.641500370576978e-05,
+      "message": "Expected -1 to be > 0.",
+      "location": "group_by_spec.rb:10"
+    }
+  ],
+  [
+    {
+      "type": "error",
+      "class": "TestStringGroup",
+      "name": "test_string_is_hello_world",
+      "assertions": 0,
+      "time": 4.987296415492892e-05,
+      "message": "NoMethodErr
+
+      ]
+    }
+  ]
+]
+```
+
+Note the above result is an array of 2 arrays grouped by the .class key.
+
+
 
 
 ## Customizing the JSON format

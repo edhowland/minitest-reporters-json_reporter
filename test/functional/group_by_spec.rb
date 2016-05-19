@@ -10,4 +10,22 @@ class TestNumericalGroup < Minitest::Test
     assert_operator -1, :>, 0 
   end
 
+  def test_4_times_6_equals_24
+    assert_equals(4 * 6, 24)
+  end
+end
+
+# TODO: class documentation
+class TestStringGroup < Minitest::Test
+  def setup
+    @value = 'Goodby World'
+  end
+
+  def test_string_is_hello_world
+    assert_equals @value, 'Hello World'
+  end
+
+  def test_value_length_equals_2
+    assert_equals @value.length, 2
+  end
 end
