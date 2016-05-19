@@ -197,35 +197,37 @@ We use the 'jq' program to parse and select and arrange the output.
 
 See: [JQ Developer Manual](https://stedolan.github.io/jq/manual/)
 
-^.
 
-### Sort by time, fastest to slowest.
+
+### Sort by time, slowest first
+
+This sort would show you the slowest tests first, getting faster further down the array.
+Similar to Minitest::Reporters::MeanTimeReporter which produces a report summary showing the slowest running tests.
+
 
 ```
-$ cd test/functional
-
-$ ruby timings_spec.rb  --verbose | jq '.passes | sort_by(.time)'
+$ ruby timings_spec.rb  --verbose |jq '.passes | sort_by(.time) | reverse'
 [
   {
     "type": "passed",
     "class": "Timings Test",
-    "name": "test_0002_should be fast",
+    "name": "test_0001_should be slow",
     "assertions": 1,
-    "time": 3.9489998016506433e-05
+    "time": 5.000420842028689
   },
   {
     "type": "passed",
     "class": "Timings Test",
     "name": "test_0003_should be slightly faster",
     "assertions": 1,
-    "time": 1.0012405550223775
+    "time": 1.0011706260265782
   },
   {
     "type": "passed",
     "class": "Timings Test",
-    "name": "test_0001_should be slow",
+    "name": "test_0002_should be fast",
     "assertions": 1,
-    "time": 5.00128460500855
+    "time": 3.091397229582071e-05
   }
 ]
 
