@@ -7,7 +7,7 @@ require_relative 'spec_helper'
 
 class TestNumericalGroup < Minitest::Test
   def test_positive_integers_are_greater_than_0
-    assert_operator -1, :>, 0 
+    assert_operator(-1, :>, 0)
   end
 
   def test_4_times_6_equals_24

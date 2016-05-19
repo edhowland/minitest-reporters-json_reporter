@@ -2,7 +2,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-
 # Must hard code the exact version number because of circular dependency
 Gem::Specification.new do |spec|
   spec.name          = 'minitest-reporters-json_reporter'

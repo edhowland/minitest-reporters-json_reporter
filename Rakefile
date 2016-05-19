@@ -11,4 +11,4 @@ task :yard do
   sh 'yardoc -o ./doc'
 end
 
-task :default => [:test]
+task default:  [:test]
