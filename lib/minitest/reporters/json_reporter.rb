@@ -67,6 +67,8 @@ module Minitest
         h
       end
 
+      ##
+      # Returns the statushash portion of the output.
       def status_h
         {
           code: ['Failed', 'Passed with skipped tests', 'Success'][color_i],
@@ -98,6 +100,8 @@ module Minitest
         end
       end
 
+      ##
+      # Returns the metadata hash portion of the output.
       def metadata_h
         {
           generated_by: self.class.name,
@@ -110,6 +114,9 @@ module Minitest
         }
       end
 
+      ##
+      # Transforms the options hash part of the metadata object to represent the
+      # 'io' object as the string 'STDOUT' if it is $stdout.
       def transform(opts)
         o = opts.clone
         o[:io] = o[:io].class.name
@@ -117,6 +124,8 @@ module Minitest
         o
       end
 
+      ##
+      # Returns the statistics hash object as part of the output.
       def statistics_h
         {
           total: count,
@@ -128,6 +137,8 @@ module Minitest
         }
       end
 
+      ##
+      # Returns the timings hash object as part of the output.
       def timings_h
         {
           total_seconds: total_time,
@@ -136,11 +147,16 @@ module Minitest
         }
       end
 
+      ##
+      # Returns the fails array of failure or error hash objects as part of
+      # the output.
       def failures_h
         tests.reject { |e| e.skipped? || e.passed? || e.failure.nil? }
              .map { |e| failure_h(e) }
       end
 
+      ##
+      # Returns either a failed_h or error_h given a result (test).
       def failure_h(result)
         if result.error?
           error_h(result)
@@ -149,6 +165,9 @@ module Minitest
         end
       end
 
+      ##
+      # Returns the error hash object given a result (test) as part of the
+      # fails[] array.
       def error_h(result)
         h = result_h(result, 'error')
         h[:message] = result.failure.message
@@ -157,6 +176,8 @@ module Minitest
         h
       end
 
+      ##
+      # Returns the failure hash object given a result (test).
       def failed_h(result)
         h = result_h(result, 'failed')
         h[:message] = result.failure.message
@@ -164,10 +185,14 @@ module Minitest
         h
       end
 
+      ##
+      # Returns the skips[] array object as part of the output.
       def skips_h
         tests.select(&:skipped?).map { |e| skip_h(e) }
       end
 
+      ##
+      # Returns the formatted skip hash object given a result (test).
       def skip_h(result)
         h = result_h(result, 'skipped')
         h[:message] = result.failure.message
@@ -175,10 +200,16 @@ module Minitest
         h
       end
 
+      ##
+      # Returns the passes[] array object as part of the output.
       def passes_h
         tests.select(&:passed?).map { |e| result_h(e, 'passed') }
       end
 
+      ##
+      # Returns the common part of a result hash.
+      # Given a type string and a result (test).
+      # Includes the type, the class, the name and the time of the result.
       def result_h(result, type)
         {
           type: type,
@@ -189,6 +220,9 @@ module Minitest
         }
       end
 
+      ##
+      # Returns the location (pathname:line_number) of the line that produced
+      # the failure or error.
       def location(exception)
         last_before_assertion = ''
 

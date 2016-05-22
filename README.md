@@ -2,7 +2,7 @@
 
 This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
 
-[![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)][gem]
+[![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)](https://badge.fury.io/rb/minitest-reporters-json_reporter)
 [![Build Status](https://travis-ci.org/edhowland/minitest-reporters-json_reporter.png?branch=master)](https://travis-ci.org/edhowland/minitest-reporters-json_reporter)
 [![Coverage Status](https://coveralls.io/repos/github/edhowland/minitest-reporters-json_reporter/badge.svg?branch=master)](https://coveralls.io/github/edhowland/minitest-reporters-json_reporter?branch=master)
 [![Code Climate](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter/badges/gpa.svg)](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter)
@@ -194,7 +194,7 @@ $ ruby report_spec.rb | jq .
 JSON can be parsed and manipulated to provide many types of useful information.
 Below are some example usages.
 We use the 'jq' program to parse and select and arrange the output.
-
+The version of 'jq' is 1.5. It can be downloaded/install instructions here: [Download JQ](https://stedolan.github.io/jq/download/)
 See: [JQ Developer Manual](https://stedolan.github.io/jq/manual/)
 
 
@@ -206,30 +206,12 @@ Similar to Minitest::Reporters::MeanTimeReporter which produces a report summary
 
 
 ```
-$ ruby timings_spec.rb  --verbose |jq '.passes | sort_by(.time) | reverse'
-[
-  {
-    "type": "passed",
-    "class": "Timings Test",
-    "name": "test_0001_should be slow",
-    "assertions": 1,
-    "time": 5.000420842028689
-  },
-  {
-    "type": "passed",
-    "class": "Timings Test",
-    "name": "test_0003_should be slightly faster",
-    "assertions": 1,
-    "time": 1.0011706260265782
-  },
-  {
-    "type": "passed",
-    "class": "Timings Test",
-    "name": "test_0002_should be fast",
-    "assertions": 1,
-    "time": 3.091397229582071e-05
-  }
-]
+
+$ ruby group_by_spec.rb | jq '.fails|group_by(.class)|flatten[]|.name'
+"test_4_times_6_equals_24"
+"test_positive_integers_are_greater_than_0"
+"test_string_is_hello_world"
+"test_value_length_equals_2"
 
 ```
 
@@ -244,44 +226,12 @@ Here we group the .fails[] array by their class name. (The file: 'group_by_spec.
 contains 4 tests inside 2 classes.)
 
 ```
-$ ruby group_by_spec.rb |jq '.fails | group_by(.class)' 
-[
-  [
-    {
-      "type": "error",
-      "class": "TestNumericalGroup",
-      "name": "test_4_times_6_equals_24",
-      "assertions": 0,
-      "time": 1.4187011402100325e-05,
-      "message": "NoMethodError: undefined method `assert_equals' for #<TestNumericalGroup:0x007fb664b9c9a0>\n    group_by_spec.rb:14:in `test_4_times_6_equals_24'",
-      "location": "group_by_spec.rb:14",
-      "backtrace": [
-        "group_by_spec.rb:14:in `test_4_times_6_equals_24'"
-      ]
-    },
-    {
-      "type": "failed",
-      "class": "TestNumericalGroup",
-      "name": "test_positive_integers_are_greater_than_0",
-      "assertions": 1,
-      "time": 3.641500370576978e-05,
-      "message": "Expected -1 to be > 0.",
-      "location": "group_by_spec.rb:10"
-    }
-  ],
-  [
-    {
-      "type": "error",
-      "class": "TestStringGroup",
-      "name": "test_string_is_hello_world",
-      "assertions": 0,
-      "time": 4.987296415492892e-05,
-      "message": "NoMethodErr
+$ruby group_by_spec.rb | jq '.fails|group_by(.class)|flatten[]|.name' 
+"test_4_times_6_equals_24"
+"test_positive_integers_are_greater_than_0"
+"test_string_is_hello_world"
+"test_value_length_equals_2"
 
-      ]
-    }
-  ]
-]
 ```
 
 Note the above result is an array of 2 arrays grouped by the .class key.
