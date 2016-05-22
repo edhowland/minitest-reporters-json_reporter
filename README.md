@@ -2,7 +2,7 @@
 
 This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
 
-[![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)][gem]
+[![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)](https://badge.fury.io/rb/minitest-reporters-json_reporter)
 [![Build Status](https://travis-ci.org/edhowland/minitest-reporters-json_reporter.png?branch=master)](https://travis-ci.org/edhowland/minitest-reporters-json_reporter)
 [![Coverage Status](https://coveralls.io/repos/github/edhowland/minitest-reporters-json_reporter/badge.svg?branch=master)](https://coveralls.io/github/edhowland/minitest-reporters-json_reporter?branch=master)
 [![Code Climate](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter/badges/gpa.svg)](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter)
