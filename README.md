@@ -226,12 +226,15 @@ Here we group the .fails[] array by their class name. (The file: 'group_by_spec.
 contains 4 tests inside 2 classes.)
 
 ```
-$ruby group_by_spec.rb | jq '.fails|group_by(.class)|flatten[]|.name' 
+$ ruby group_by_spec.rb |jq '.fails | group_by(.class) | flatten[] | .class, .name'
+"TestNumericalGroup"
 "test_4_times_6_equals_24"
+"TestNumericalGroup"
 "test_positive_integers_are_greater_than_0"
+"TestStringGroup"
 "test_string_is_hello_world"
+"TestStringGroup"
 "test_value_length_equals_2"
-
 ```
 
 Note the above result is an array of 2 arrays grouped by the .class key.
