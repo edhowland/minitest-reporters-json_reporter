@@ -2,21 +2,26 @@
 
 This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.
 
-[![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)][gem]
+[![Gem Version](https://badge.fury.io/rb/minitest-reporters-json_reporter.svg)](https://badge.fury.io/rb/minitest-reporters-json_reporter)
 [![Build Status](https://travis-ci.org/edhowland/minitest-reporters-json_reporter.png?branch=master)](https://travis-ci.org/edhowland/minitest-reporters-json_reporter)
 [![Coverage Status](https://coveralls.io/repos/github/edhowland/minitest-reporters-json_reporter/badge.svg?branch=master)](https://coveralls.io/github/edhowland/minitest-reporters-json_reporter?branch=master)
 [![Code Climate](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter/badges/gpa.svg)](https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter)
-
+[![Inline docs](http://inch-ci.org/github/edhowland/minitest-reporters-json_reporter.svg?style=shields)](http://inch-ci.org/github/edhowland/minitest-reporters-json_reporter)
 
 
 ## Abstract
 
 You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
 example interface might be to the Atom editor: [https://atom.io](https://atom.io)
+
+Use of JSON as a format for test runs opens up possibilities for different types of analysis.
+You can organize the output based on elapsed time or number of assertions of tests, for example.
+See the 'jq sort' example below.
+
 I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: [https://github.com/edhowland/viper](https://github.com/edhowland/viper)
 Using this gem with Viper also requires the 'viper_ruby' package. See [https://github.com/edhowland/viper_ruby](https://github.com/edhowland/viper_ruby)
 
-## Version 0.9.9
+## Version 0.9.12
 
 ## Installation
 
@@ -119,7 +124,7 @@ $ ruby report_spec.rb | jq .
   "status": {    "code": "Failed",    "color": "red"  },
   "metadata": {
     "generated_by": "Minitest::Reporters::JsonReporter",
-    "version": "0.9.9",
+    "version": "0.9.12",
     "ruby_version": "2.2.2",
     "ruby_patchlevel": 95,
     "ruby_platform": "x86_64-linux",
@@ -184,6 +189,59 @@ $ ruby report_spec.rb | jq .
 
 ```
 
+## Example analysis feedback
+
+JSON can be parsed and manipulated to provide many types of useful information.
+Below are some example usages.
+We use the 'jq' program to parse and select and arrange the output.
+The version of 'jq' is 1.5. It can be downloaded/install instructions here: [Download JQ](https://stedolan.github.io/jq/download/)
+See: [JQ Developer Manual](https://stedolan.github.io/jq/manual/)
+
+
+
+### Sort by time, slowest first
+
+This sort would show you the slowest tests first, getting faster further down the array.
+Similar to Minitest::Reporters::MeanTimeReporter which produces a report summary showing the slowest running tests.
+
+
+```
+$ ruby timings_spec.rb  --verbose | jq '.passes | sort_by(.time) | reverse[] | .name, .time'
+"test_0001_should be slow"
+5.001584862009622
+"test_0003_should be slightly faster"
+1.0003409570199437
+"test_0002_should be fast"
+2.9060000088065863e-05
+```
+
+### Group By Class example
+
+Minitest usually runs your tests in a random sequence. This is
+great for test isolation and to check for state bleed-thru, but can be annoying if trying 
+to determine where similar tests are failing. You can use the jq 'sort_by' or 'group_by' filters to get them back in 
+some semblace of order.
+
+Here we group the .fails[] array by their class name. (The file: 'group_by_spec.rb' 
+contains 4 tests inside 2 classes.)
+
+```
+$ ruby group_by_spec.rb |jq '.fails | group_by(.class) | flatten[] | .class, .name'
+"TestNumericalGroup"
+"test_4_times_6_equals_24"
+"TestNumericalGroup"
+"test_positive_integers_are_greater_than_0"
+"TestStringGroup"
+"test_string_is_hello_world"
+"TestStringGroup"
+"test_value_length_equals_2"
+```
+
+Note the above result is an array of 2 arrays grouped by the .class key.
+
+
+
+
 ## Customizing the JSON format
 
 You can adjust the contents of the returned JSON by sub-classing the Minitest::Reporters::JsonReporter class.
@@ -223,7 +281,7 @@ Note: Extra credit if git flow feature branching was used.
 
 * Code: [https://github.com/edhowland/minitest-reporters-json_reporter](https://github.com/edhowland/minitest-reporters-json_reporter)
 * Bugs: [https://github.com/edhowland/minitest-reporters-json_reporter/issues](https://github.com/edhowland/minitest-reporters-json_reporter/issues)
-* Docs: [http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.5](http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.5)
+* Docs: [http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.12](http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.5)
 * Gem: [https://rubygems.org/gems/minitest-reporters-json_reporter](https://rubygems.org/gems/minitest-reporters-json_reporter)
 
 ###### Feedback
