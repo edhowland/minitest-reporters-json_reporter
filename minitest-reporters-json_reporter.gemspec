@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 # Must hard code the exact version number because of circular dependency
 Gem::Specification.new do |spec|
   spec.name          = 'minitest-reporters-json_reporter'
-  spec.version       = '0.9.9'
+  spec.version       = '0.9.12'
   spec.authors       = ['edhowland']
   spec.email         = ['ed.howland@gmail.com']
 
