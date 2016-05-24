@@ -206,13 +206,13 @@ Similar to Minitest::Reporters::MeanTimeReporter which produces a report summary
 
 
 ```
-
-$ ruby group_by_spec.rb | jq '.fails|group_by(.class)|flatten[]|.name'
-"test_4_times_6_equals_24"
-"test_positive_integers_are_greater_than_0"
-"test_string_is_hello_world"
-"test_value_length_equals_2"
-
+$ ruby timings_spec.rb  --verbose | jq '.passes | sort_by(.time) | reverse[] | .name, .time'
+"test_0001_should be slow"
+5.001584862009622
+"test_0003_should be slightly faster"
+1.0003409570199437
+"test_0002_should be fast"
+2.9060000088065863e-05
 ```
 
 ### Group By Class example
