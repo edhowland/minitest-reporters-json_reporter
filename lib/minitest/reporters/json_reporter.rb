@@ -148,9 +148,15 @@ module Minitest
       end
 
       ##
+      # Deprecated: Use failures_a
+      def failures_h
+        failures_a
+      end
+
+      ##
       # Returns the fails array of failure or error hash objects as part of
       # the output.
-      def failures_h
+      def failures_a
         tests.reject { |e| e.skipped? || e.passed? || e.failure.nil? }
              .map { |e| failure_h(e) }
       end
