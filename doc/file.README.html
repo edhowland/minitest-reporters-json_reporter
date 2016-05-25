@@ -65,15 +65,25 @@
 
 <p>This is an extension  gem for the minitest-reporters gem. It adds JSON output as an output format.</p>
 
-<p>[<img src="https://badge.fury.io/rb/minitest-reporters-json_reporter.svg" alt="Gem Version">][gem]</p>
+<p><a href="https://badge.fury.io/rb/minitest-reporters-json_reporter"><img src="https://badge.fury.io/rb/minitest-reporters-json_reporter.svg" alt="Gem Version"></a>
+<a href="https://travis-ci.org/edhowland/minitest-reporters-json_reporter"><img src="https://travis-ci.org/edhowland/minitest-reporters-json_reporter.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/edhowland/minitest-reporters-json_reporter?branch=master"><img src="https://coveralls.io/repos/github/edhowland/minitest-reporters-json_reporter/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter"><img src="https://codeclimate.com/github/edhowland/minitest-reporters-json_reporter/badges/gpa.svg" alt="Code Climate"></a>
+<a href="http://inch-ci.org/github/edhowland/minitest-reporters-json_reporter"><img src="http://inch-ci.org/github/edhowland/minitest-reporters-json_reporter.svg?style=shields" alt="Inline docs"></a></p>
 
 <h2>Abstract</h2>
 
 <p>You can use this gem to interface Minitest output into automated tools like CI, CD or IDEs or code editors. An
-example interface might be to the Atom editor: <a href="https://atom.io">https://atom.io</a>
-I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: <a href="https://github.com/edhowland/viper">https://github.com/edhowland/viper</a></p>
+example interface might be to the Atom editor: <a href="https://atom.io">https://atom.io</a></p>
 
-<h2>Version 0.2.1</h2>
+<p>Use of JSON as a format for test runs opens up possibilities for different types of analysis.
+You can organize the output based on elapsed time or number of assertions of tests, for example.
+See the &#39;jq sort&#39; example below.</p>
+
+<p>I originally wrote this gem to interface to the Viper audible  code editor for the blind community. See: <a href="https://github.com/edhowland/viper">https://github.com/edhowland/viper</a>
+Using this gem with Viper also requires the &#39;viper_ruby&#39; package. See <a href="https://github.com/edhowland/viper_ruby">https://github.com/edhowland/viper_ruby</a></p>
+
+<h2>Version 1.0.0</h2>
 
 <h2>Installation</h2>
 
@@ -108,28 +118,150 @@ I originally wrote this gem to interface to the Viper audible  code editor for t
 
 <h2>Object Summary</h2>
 
-<ol>
-<li>status -  Status of the overall test run. Can be &#39;Success&#39;, &#39;Passed with skipped tests&#39; or &#39;Failed&#39;. There also a color attribute: green, yellow or red - respectfully.</li>
-<li>metadata - General information about this test run. Includes generator name, version and the test run completion time in UTC formatted in ISO8601 format. Also include options object computed by super classes including command line arguments.</li>
-<li>statistics - Contains the total number of runs, the number of assertions, the number of fails, skips and passes.</li>
-<li>Timings - Including total_seconds, runs_per_second and assertions_per_second in float format</li>
-<li>fails - Array of failed or errored tests. Each object herein contains the information of each test, its name, class, error message, number of assertions, the timing and location of the test and the filtered backtrace array if an error type.</li>
-</ol>
+<ul>
+<li>status of the overall test run. Object.
 
-<h3>Optional objects</h3>
+<ul>
+<li>code - Success, Passed with skipped tests or Failed. String.</li>
+<li>color green, yellow or red. String.</li>
+</ul></li>
+<li>metadata The metadata of this particular test run. Object.
 
-<p>If the &#39;--verbose&#39; flag was passed on the command line or the options[:verbose]  = true was passed to the constructor
-you will get 2 additional objects: skips[] and passes[]</p>
+<ul>
+<li>generated_by Class name of the Minitest Reporter. Will usually be Minitest::Reporters::JsonReporter. String.</li>
+<li>version - Version of the minitest-reporters-json_reporter gem. String.</li>
+<li>ruby_version - RUBY_VERSION. String.</li>
+<li>ruby_patchlevel - RUBY_PATCHLEVEL. Integer.</li>
+<li>ruby_platform - RUBY_PLATFORM. String.</li>
+<li>time - Time of test run in UTC and ISO-8601 format. String.</li>
+<li>options - Options object as constructed by passed options, superclasses and command line args. Object.</li>
+<li>io - The class name of the IO object. Will be the string &#39;STDOUT&#39; if equal to $stdout. String.</li>
+<li>keys of the options hash, if any. Various key/value pairs.</li>
+<li>args Array of arguments passed to the program. Array of String.</li>
+<li>total_count - Total number of tests ran. Integer.</li>
+</ul></li>
+<li>statisticsThe accumulated counts for this test run.   Object.
 
-<ol>
-<li>skips[] - Information about the skipped test including its message, number of assertions, the time to run the skip and location.</li>
-<li>passes[] - Information for all passed test runs including the type, the test name, class, the number of assertions and timing.</li>
-</ol>
+<ul>
+<li>total Number of total runs. Integer.</li>
+<li>assertions Count of assertions performed. Integer.</li>
+<li>failures Number of failed tests. Integer.</li>
+<li>errors Number of errors encountered. Integer.</li>
+<li>skips Number of skipped tests. Integer.</li>
+<li>passes Number of passed tests. Integer.</li>
+</ul></li>
+<li>timings Object containing the computed timing information for the entire test run. Object.
+
+<ul>
+<li>total_seconds total number of seconds for the entire test run. Float.</li>
+<li>runs_per_second Averaged number of runs per second. Float.</li>
+<li>assertions_per_second Averaged number of assertions per second. Float.</li>
+</ul></li>
+<li>fails - Array of failed or errored tests. Array of Object.
+
+<ul>
+<li>type Type of the failure. Either &#39;failure&#39; or &#39;error&#39;. String.</li>
+<li>classClass name of the test. String.</li>
+<li>name Name of the test. String.</li>
+<li>assertions Number of the assertions for this test. Integer.</li>
+<li>time Time in seconds for this test. Float.</li>
+<li>message Message reported by this failure or error. String.</li>
+<li>location File name and line number. file:line. String.</li>
+<li>backtrace (exists only if type is &#39;error&#39;) Array of backtrace paths and line numbers. Array of String.</li>
+</ul></li>
+<li>skips Array of skipped tests. Array of Object.
+
+<ul>
+<li>type The string &#39;skipped&#39;. String.</li>
+<li>class Class name of the test. String.</li>
+<li>name The name of the test. String.</li>
+<li>assertions The count of the assertions for this test. Integer.</li>
+<li>time The time of this test in seconds. Float.</li>
+<li>message The message string passed to the &#39;skip()&#39; method. String.</li>
+<li>location File name and line number. file:line. String.</li>
+</ul></li>
+<li>passes Array of passed test runs. Array of Object.
+
+<ul>
+<li>type The string &#39;passed&#39;. String.</li>
+<li>class Class name of the test. String.</li>
+<li>name The name of the test. String.</li>
+<li>assertions The count of the assertions for this test. Integer.</li>
+<li>time The time of this test in seconds. Float.</li>
+</ul></li>
+</ul>
+
+<p>The last 2 objects: skips[] and passes[] are absent unless the --verbose command
+line flag was passed or if the options[:verbose] value is true.</p>
 
 <h3>Sample output</h3>
 
 <pre class="code ruby"><code class="ruby"><span class='comment'># Use jq to pretty print the JSON output
 </span></code></pre>
+
+<h2>Example analysis feedback</h2>
+
+<p>JSON can be parsed and manipulated to provide many types of useful information.
+Below are some example usages.
+We use the &#39;jq&#39; program to parse and select and arrange the output.
+The version of &#39;jq&#39; is 1.5. It can be downloaded/install instructions here: <a href="https://stedolan.github.io/jq/download/">Download JQ</a>
+See: <a href="https://stedolan.github.io/jq/manual/">JQ Developer Manual</a></p>
+
+<h3>Sort by time, slowest first</h3>
+
+<p>This sort would show you the slowest tests first, getting faster further down the array.
+Similar to Minitest::Reporters::MeanTimeReporter which produces a report summary showing the slowest running tests.</p>
+
+<pre class="code ruby"><code class="ruby">$ ruby timings_spec.rb  --verbose | jq &#39;.passes | sort_by(.time) | reverse[] | .name, .time&#39;
+&quot;test_0001_should be slow&quot;
+5.001584862009622
+&quot;test_0003_should be slightly faster&quot;
+1.0003409570199437
+&quot;test_0002_should be fast&quot;
+2.9060000088065863e-05
+</code></pre>
+
+<h3>Group By Class example</h3>
+
+<p>Minitest usually runs your tests in a random sequence. This is
+great for test isolation and to check for state bleed-thru, but can be annoying if trying 
+to determine where similar tests are failing. You can use the jq &#39;sort_by&#39; or &#39;group_by&#39; filters to get them back in 
+some semblace of order.</p>
+
+<p>Here we group the .fails[] array by their class name. (The file: &#39;group_by_spec.rb&#39; 
+contains 4 tests inside 2 classes.)</p>
+
+<pre class="code ruby"><code class="ruby">$ ruby group_by_spec.rb |jq &#39;.fails | group_by(.class) | flatten[] | .class, .name&#39;
+&quot;TestNumericalGroup&quot;
+&quot;test_4_times_6_equals_24&quot;
+&quot;TestNumericalGroup&quot;
+&quot;test_positive_integers_are_greater_than_0&quot;
+&quot;TestStringGroup&quot;
+&quot;test_string_is_hello_world&quot;
+&quot;TestStringGroup&quot;
+&quot;test_value_length_equals_2&quot;
+</code></pre>
+
+<h2>Customizing the JSON format</h2>
+
+<p>You can adjust the contents of the returned JSON by sub-classing the Minitest::Reporters::JsonReporter class.
+Override the &#39;to_h&#39; method and delete or modifythe hash it returns.</p>
+
+<p>Here is a simple example that eliminates the &#39;metadata&#39; and &#39;timmings&#39; components:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># example spec_helper.rb:
+</span>
+<span class='kw'>class</span> <span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='op'>::</span><span class='const'>SlimJsonReporter</span> <span class='op'>&lt;</span> <span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='op'>::</span><span class='const'>JsonReporter</span>
+    <span class='kw'>def</span> <span class='id identifier rubyid_to_h'>to_h</span>
+    <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='kw'>super</span>
+    <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:timings</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_h'>h</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='period'>.</span><span class='id identifier rubyid_use!'>use!</span><span class='lparen'>(</span> <span class='const'>Minitest</span><span class='op'>::</span><span class='const'>Reporters</span><span class='op'>::</span><span class='const'>SlimJsonReporter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rparen'>)</span>
+</code></pre>
 
 <h2>Contributing</h2>
 
@@ -142,10 +274,27 @@ you will get 2 additional objects: skips[] and passes[]</p>
 </ol>
 
 <p>Note: Extra credit if git flow feature branching was used.</p>
+
+<h2>Resources</h2>
+
+<ul>
+<li>Code: <a href="https://github.com/edhowland/minitest-reporters-json_reporter">https://github.com/edhowland/minitest-reporters-json_reporter</a></li>
+<li>Bugs: <a href="https://github.com/edhowland/minitest-reporters-json_reporter/issues">https://github.com/edhowland/minitest-reporters-json_reporter/issues</a></li>
+<li>Docs: <a href="http://www.rubydoc.info/gems/minitest-reporters-json_reporter/1.0.0">http://www.rubydoc.info/gems/minitest-reporters-json_reporter/1.0.0</a></li>
+<li>Gem: <a href="https://rubygems.org/gems/minitest-reporters-json_reporter">https://rubygems.org/gems/minitest-reporters-json_reporter</a></li>
+</ul>
+
+<h6>Feedback</h6>
+
+<p>If you find this gem helpful, please slip me a note via e-mail: <a href="mailto:ed.howland@gmail.com">ed.howland@gmail.com</a></p>
+
+<p>I would like to know if anyone has used this approach to interface Minitest to any automated framework or editor.</p>
+
+<p>Thanks, Ed.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Tue May  3 20:15:41 2016 by
+  Generated on Wed May 25 22:22:25 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.2).
 </div>
