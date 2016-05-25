@@ -59,7 +59,7 @@ module Minitest
       ##
       # Create the detail part of the JSON.
       def detail_h
-        h = { fails: failures_h }
+        h = { fails: failures_a }
         if options[:verbose]
           h[:skips] = skips_h
           h[:passes] = passes_h
@@ -149,9 +149,9 @@ module Minitest
 
       ##
       # Deprecated: Use failures_a
-      def failures_h
-        failures_a
-      end
+      # def failures_h
+      #  failures_a
+      # end
 
       ##
       # Returns the fails array of failure or error hash objects as part of
