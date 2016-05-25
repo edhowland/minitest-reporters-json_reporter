@@ -237,10 +237,6 @@ $ ruby group_by_spec.rb |jq '.fails | group_by(.class) | flatten[] | .class, .na
 "test_value_length_equals_2"
 ```
 
-Note the above result is an array of 2 arrays grouped by the .class key.
-
-
-
 
 ## Customizing the JSON format
 

@@ -1,21 +1,17 @@
-minitest-reporters-json_reporter version 0.9.5 has been released.
+minitest-reporters-json_reporter version 1.0.0 has been released.
 
 Home, Code: https://github.com/edhowland/minitest-reporters-json_reporter
 Bugs: https://github.com/edhowland/minitest-reporters-json_reporter/issues
-Docs:http://www.rubydoc.info/gems/minitest-reporters-json_reporter/0.9.5
+Docs:http://www.rubydoc.info/gems/minitest-reporters-json_reporter/1.0.0
 
 minitest-reporters-json_reporter is an extension to the Ruby minitest-reporters gem that provides JSON output from your Minitest or MiniSpec test run.
-This version is the beta/release candidate before the official 1.0 version.
 
 Changes:
+o Badges! We have stinkin' badges.
+o Improved class/method documentation.
+o README.md contains better and more 'jq' examples.
 
-Rewritten to be:
-o conformant with Minitest::Reporters superclass.
-o Simpler and easy to customize.
-o More inclusive of elements from the Minitest test run.
-o Includes:
-  o Timings.
-  o Count of assertions.
+This version forms the foundation for the PR on the upstream minitest-reporters gem.
 
 Abstract
 
@@ -24,9 +20,14 @@ for Minitest, but no JSON format until now. If you want to hook up an IDE or som
 framework like a CI or CD tool, it is natural to send output in some parsable format like XML or JSON. This extension summarizes the result of
 a test run in  format like JSON.a test run in an easible consumable format.
 
+Another use case is doing data mining on your test runs. Using a tool like 'jq',
+you canspot trends, find long running tests and group test failures in some
+order.
 
-Usage is very simple. Just require 'minitest/reporters/json_reporter' in your test_helper.rb or spec_helper.rb.
-This gem also depends on 'minitest' and 'minitest/reporters'.  Then, you should also invoke the use! method of Minitest::Reporters class with a call to Minitest::Reporters::JsonReporter.new. 
+Usage is very simple. Just require 'minitest/reporters/json_reporter' in your 
+test_helper.rb or spec_helper.rb.
+Then, you should also invoke the use! method of Minitest::Reporters class
+with a call to Minitest::Reporters::JsonReporter.new. 
 Here is an example test_helper.rb:
 # ... Other requires
 
