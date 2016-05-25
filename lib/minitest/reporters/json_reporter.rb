@@ -62,7 +62,7 @@ module Minitest
         h = { fails: failures_a }
         if options[:verbose]
           h[:skips] = skips_a
-          h[:passes] = passes_h
+          h[:passes] = passes_a
         end
         h
       end
@@ -202,7 +202,7 @@ module Minitest
 
       ##
       # Returns the passes[] array object as part of the output.
-      def passes_h
+      def passes_a
         tests.select(&:passed?).map { |e| result_h(e, 'passed') }
       end
 
