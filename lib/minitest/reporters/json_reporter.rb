@@ -33,6 +33,10 @@ module Minitest
         super
 
         @storage = to_h
+        
+        output = io
+        output = options[:io] unless options[:io].nil?
+        
         # formate @storage as JSON and write to output stream
         io.write(JSON.dump(@storage))
       end
