@@ -15,11 +15,15 @@ module Minitest
     # Minitest Reporter that produces a JSON output for interface in
     # IDEs, CD/CI tools and codeeditors
     class JsonReporter < BaseReporter
+      attr_accessor :output
+      
       ##
       # Constructor for Minitest::Reporters::JsonReporter
       # Takes possible options. E.g. :verbose => true
       def initialize(options = {})
         super
+        
+        self.output = options[:io] unless options[:io].nil?
       end
 
       ##
@@ -34,7 +38,11 @@ module Minitest
 
         @storage = to_h
         # formate @storage as JSON and write to output stream
-        io.write(JSON.dump(@storage))
+        if output.nil?
+          io.write(JSON.dump(@storage))
+        else
+          output.write(JSON.dump(@storage))
+        end
       end
 
       protected
